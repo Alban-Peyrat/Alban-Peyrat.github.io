@@ -1,2 +1,13 @@
-* {font-family: calibri;
-} 
+* {font-family: Calibri, sans-serif;
+color: #dcc9dc;
+font-size: 15px;} 
+
+body {margin: 1% 2% 1% 2%;
+background-color:#2b2b2b;}
+
+.crimson {color: #990000;}
+
+Header *{margin-left: auto;
+margin-right:auto;
+text-align:center;
+font-size:25px;}
