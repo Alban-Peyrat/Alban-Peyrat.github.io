@@ -1,13 +1,62 @@
 * {font-family: Calibri, sans-serif;
 color: #dcc9dc;
-font-size: 15px;} 
+font-size: 14px;} 
 
-body {margin: 1% 2% 1% 2%;
-background-color:#2b2b2b;}
+body {margin: 1% 2% 1% 2%; background-color:#2b2b2b;}
 
 .crimson {color: #990000;}
 
-Header *{margin-left: auto;
+header span{
+font-size:2em;}
+
+Header {margin-bottom:2%;
+Margin-left: auto;
 margin-right:auto;
-text-align:center;
-font-size:25px;}
+text-align:center; 
+} 
+
+#horiz_menu {
+  list-style-type: none;
+  margin-left: 0;
+  padding: 0;
+  Overflow: hidden;
+Text-align : center ;
+}
+
+#horiz_menu li {
+Display:inline;
+} 
+
+.horiz_menu {
+Padding: 1% 2% 1% 2%;
+Width:15%;
+Background-color: #990000;
+text-decoration:none;
+Display:inline-block;
+}
+
+.horiz_menu:hover{Background-color: #2b2b2b ;
+} 
+
+#contenu { margin-left:5%;
+Margin-right :5%;
+} 
+
+#contenu p {text-indent: 2em;
+Text-align: justify;}
+
+H1 {font-size:20px;
+Color: #990000 ;
+Text-indent:8em;}
+
+H2 {font-size:18px;
+Color: #990000 ;
+}
+
+H3 {font-size:17px;
+Color: #990000 ;
+Text-indent: 2em;}; 
+
+H4 {font-size:16px;
+Color: #990000 ;
+Text-indent: 4em;}
