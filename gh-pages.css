@@ -1,81 +1,81 @@
 * {
-font-family: Calibri, sans-serif;
-color: #dcc9dc;
-font-size: 14px;
+	font-family: Calibri, sans-serif;
+	color: #dcc9dc;
+	font-size: 14px;
 } 
 
 body {
-margin: 1% 2% 1% 2%;
-background-color: #2b2b2b;
+	margin: 1% 2% 1% 2%;
+	background-color: #2b2b2b;
 }
 
-.crimson {
-color: #990000;
+.vermillion {
+	color: #e34234;
 }
 
 header span{
-font-size: 2em;
+	font-size: 2em;
 }
 
 header {
-margin-bottom: 2%;
-margin-left: auto;
-margin-right: auto;
-text-align: center; 
+	margin-bottom: 2%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
 } 
 
 #horiz_menu {
-  list-style-type: none;
-  margin-left: 0;
-  padding: 0;
-  overflow: hidden;
-text-align: center;
+	list-style-type: none;
+	margin-left: 0;
+	padding: 0;
+	overflow: hidden;
+	text-align: center;
 }
 
 #horiz_menu li {
-display: inline;
+	display: inline;
 } 
 
 .horiz_menu {
-padding: 1% 2% 1% 2%;
-width: 15%;
-background-color: #990000;
-text-decoration: none;
-display: inline-block;
+	padding: 1% 2% 1% 2%;
+	width: 15%;
+	background-color: #990000;
+	text-decoration: none;
+	display: inline-block;
 }
 
 .horiz_menu:hover{
-background-color: #2b2b2b;
+	background-color: #2b2b2b;
 } 
 
 #contenu {
-margin-left: 5%;
-margin-right: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
 } 
 
 #contenu p {
-text-indent: 2em;
+	text-indent: 2em;
 }
 
 h1 {
-font-size: 20px;
-color: #990000;
-text-indent: 8em;
+	font-size: 20px;
+	color: #e34234;
+	text-indent: 8em;
 }
 
 h2 {
-font-size: 18px;
-color: #990000;
+	font-size: 18px;
+	color: #e34234;
 }
 
 h3 {
-font-size: 17px;
-color: #990000;
-text-indent: 2em;
+	font-size: 17px;
+	color: #e34234;
+	text-indent: 2em;
 }
 
 h4 {
-font-size: 16px;
-color: #990000;
-text-indent: 4em;
+	font-size: 16px;
+	color: #e34234;
+	text-indent: 4em;
 }
