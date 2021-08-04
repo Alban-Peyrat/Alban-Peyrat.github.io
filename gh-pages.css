@@ -1,16 +1,16 @@
 * {
 	font-family: Calibri, sans-serif;
-	color: #dcc9dc;
+	color: #EBE0EB;
 	font-size: 14px;
 } 
 
 body {
 	margin: 1% 2% 1% 2%;
-	background-color: #2b2b2b;
+	background-color: #1F1F1F;
 }
 
 .vermillion {
-	color: #e34234;
+	color: #FF8A00;
 }
 
 header span{
@@ -45,7 +45,8 @@ header {
 }
 
 .horiz_menu:hover{
-	background-color: #2b2b2b;
+	background-color: #FF8A00;
+	color: #1F1F1F
 } 
 
 #contenu {
@@ -59,23 +60,23 @@ header {
 
 h1 {
 	font-size: 20px;
-	color: #e34234;
+	color: #FF8A00;
 	text-indent: 8em;
 }
 
 h2 {
 	font-size: 18px;
-	color: #e34234;
+	color: #FF8A00;
 }
 
 h3 {
 	font-size: 17px;
-	color: #e34234;
+	color: #FF8A00;
 	text-indent: 2em;
 }
 
 h4 {
 	font-size: 16px;
-	color: #e34234;
+	color: #FF8A00;
 	text-indent: 4em;
 }
