@@ -96,12 +96,10 @@ button {font-size: 28px;
 #buttonZoom {
 	background-color: #1F1F1F1F;
 	border: solid 1px #990000;
-	cursor:  pointer;
 }
 
 #buttonNB {
 	background-color: #FFFFFF;
 	border: solid 1px #000000;
 	color:  #000000;
-	cursor:  pointer;
 }
