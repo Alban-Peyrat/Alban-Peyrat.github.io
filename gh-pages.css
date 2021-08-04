@@ -81,3 +81,27 @@ h4 {
 	color: #FF8A00;
 	text-indent: 4em;
 }
+
+button {font-size: 28px;
+	cursor: pointer;
+}
+
+#accessButtons {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 999;
+}
+
+#buttonZoom {
+	background-color: #1F1F1F1F;
+	border: solid 1px #990000;
+	cursor:  pointer;
+}
+
+#buttonNB {
+	background-color: #FFFFFF;
+	border: solid 1px #000000;
+	color:  #000000;
+	cursor:  pointer;
+}
