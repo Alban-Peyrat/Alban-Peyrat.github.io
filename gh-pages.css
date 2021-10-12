@@ -22,6 +22,7 @@ header {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
+	width: 800px;
 } 
 
 #horiz_menu {
@@ -51,8 +52,9 @@ header {
 } 
 
 #contenu {
-	margin-left: 5%;
-	margin-right: 5%;
+	width: 800px;
+	margin-left:auto;
+	margin-right:auto;
 } 
 
 #contenu p {
@@ -111,6 +113,9 @@ button {font-size: 28px;
 }
 
 #divLiens {
+	width: 800px;
+	margin-left:auto;
+	margin-right:auto;
 	background-color: #990000;
 	padding-top: 2px;
 	padding-bottom: 2px;
