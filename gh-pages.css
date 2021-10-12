@@ -13,6 +13,10 @@ header span{
 	font-size: 28px;
 }
 
+header a {
+	text-decoration: none;
+}
+
 header {
 	margin-bottom: 2%;
 	margin-left: auto;
@@ -98,4 +102,16 @@ button {font-size: 28px;
 	background-color: #FFFFFF;
 	border: solid 1px #000000;
 	color:  #000000;
+}
+
+#divLiens * {
+	margin-rifht: auto;
+	margin-left: auto;
+	text-align: center;
+}
+
+#divLiens {
+	background-color: #990000;
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
