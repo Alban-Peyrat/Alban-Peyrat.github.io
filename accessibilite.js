@@ -7,7 +7,6 @@ const zooms = [
     "a",
     "li",
     "headerPres",
-    "headerDoc",
     "h1",
     "h2",
     "h3",
@@ -18,7 +17,6 @@ const zooms = [
     "14px",
     "14px",
     "28px",
-    "15px",
     "20px",
     "18px",
     "17px",
@@ -29,7 +27,6 @@ const zooms = [
     "21px",
     "21px",
     "42px",
-    "23px",
     "30px",
     "27px",
     "26px",
@@ -40,7 +37,6 @@ const zooms = [
     "28px",
     "28px",
     "56px",
-    "30px",
     "40px",
     "36px",
     "34px",
@@ -53,9 +49,7 @@ const NBText = [
     "p",
     "a",
     "li",
-    "menu",
     "headerPres",
-    "headerDoc",
     "h1",
     "h2",
     "h3",
@@ -67,9 +61,7 @@ const NBText = [
     "#EBE0EB",
     "#EBE0EB",
     "#EBE0EB",
-    "#EBE0EB",
     "#FF8A00",
-    "#EBE0EB",
     "#FF8A00",
     "#FF8A00",
     "#FF8A00",
@@ -80,8 +72,6 @@ const NBText = [
   {"prop":[
     "#000000",
     "#000000",
-    "#000000",
-    "#FFFFFF",
     "#000000",
     "#000000",
     "#000000",
@@ -94,7 +84,6 @@ const NBText = [
 ];
 
 const body = document.getElementsByTagName("body");
-const menu = document.getElementsByClassName("horiz_menu");
 const divLiens = document.getElementById("divLiens");
 const p = document.getElementsByTagName("p");
 const a = document.getElementsByTagName("a");
@@ -103,21 +92,20 @@ const buttonZoom = document.getElementById("buttonZoom");
 const buttonZoomSpan = buttonZoom.getElementsByTagName("span");
 const buttonNB = document.getElementById("buttonNB");
 const headerPres = document.getElementById("headerPres");
-const headerDoc = document.getElementById("headerDoc");
 const h1 = document.getElementsByTagName("h1");
 const h2 = document.getElementsByTagName("h2");
 const h3 = document.getElementsByTagName("h3");
 const h4 = document.getElementsByTagName("h4");
 
-const zoomArray = [p, a, li, headerPres, headerDoc, h1, h2, h3, h4];
-const NBTextArray = [p, a, li, menu, headerPres, headerDoc, h1, h2, h3, h4, buttonZoom, buttonZoomSpan];
+const zoomArray = [p, a, li, headerPres, h1, h2, h3, h4];
+const NBTextArray = [p, a, li, headerPres, h1, h2, h3, h4, buttonZoom, buttonZoomSpan];
 
 document.getElementById("buttonZoom").onclick = function(){
   zoomIn++;
   if (zoomIn > 3){
     zoomIn = 1;
   }
-  for (let ii=0;ii<8;ii++){
+  for (let ii=0;ii<7;ii++){
     if (zoomArray[ii].length > 1){
       for (let jj=0;jj<zoomArray[ii].length;jj++){
         zoomArray[ii][jj].style.fontSize = zooms[zoomIn].prop[ii];
@@ -130,7 +118,7 @@ document.getElementById("buttonZoom").onclick = function(){
 
 document.getElementById("buttonNB").onclick = function(){
   if (NB == false){
-    for (let ii=0;ii<12;ii++){
+    for (let ii=0;ii<10;ii++){
       if (NBTextArray[ii].length > 1){
         for (let jj=0;jj<NBTextArray[ii].length;jj++){
           NBTextArray[ii][jj].style.color = NBText[2].prop[ii];
@@ -140,12 +128,9 @@ document.getElementById("buttonNB").onclick = function(){
       }
     };
     document.body.style.background = "#FFFFFF";
-    for (let jj=0;jj<menu.length;jj++){
-      menu[jj].style.backgroundColor = "#000000";
-    };
     buttonZoom.style.backgroundColor = "#FFFFFF";
-    document.getElementById("divLiens").style.backgroundColor = "#FFFFFF";
-    document.getElementById("divLiens").style.border = "solid 1px #000000";
+    divLiens.style.backgroundColor = "#FFFFFF";
+    divLiens.style.border = "solid 1px #000000";
     buttonNB.style.display = "none";
     NB = true;
   }
