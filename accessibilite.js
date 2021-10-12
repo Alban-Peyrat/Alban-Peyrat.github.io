@@ -95,6 +95,7 @@ const NBText = [
 
 const body = document.getElementsByTagName("body");
 const menu = document.getElementsByClassName("horiz_menu");
+const divLiens = document.getElementById("divLiens");
 const p = document.getElementsByTagName("p");
 const a = document.getElementsByTagName("a");
 const li = document.getElementsByTagName("li");
@@ -143,6 +144,8 @@ document.getElementById("buttonNB").onclick = function(){
       menu[jj].style.backgroundColor = "#000000";
     };
     buttonZoom.style.backgroundColor = "#FFFFFF";
+    document.getElementById("divLiens").style.backgroundColor = "#FFFFFF";
+    document.getElementById("divLiens").style.border = "solid 1px #000000";
     buttonNB.style.display = "none";
     NB = true;
   }
