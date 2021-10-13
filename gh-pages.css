@@ -1,7 +1,7 @@
 * {
 	font-family: Calibri, sans-serif;
 	color: #EBE0EB;
-	font-size: 14px;
+	font-size: 18px;
 } 
 
 body {
@@ -10,7 +10,7 @@ body {
 }
 
 header span{
-	font-size: 28px;
+	font-size: 36px;
 }
 
 header a {
@@ -62,29 +62,29 @@ header {
 }
 
 h1 {
-	font-size: 20px;
+	font-size: 25px;
 	color: #FF8A00;
-	text-indent: 8em;
+	text-indent: 6em;
 }
 
 h2 {
-	font-size: 18px;
+	font-size: 23px;
 	color: #FF8A00;
 }
 
 h3 {
-	font-size: 17px;
+	font-size: 21px;
 	color: #FF8A00;
-	text-indent: 2em;
+	text-indent: 3em;
 }
 
 h4 {
-	font-size: 16px;
+	font-size: 20px;
 	color: #FF8A00;
-	text-indent: 4em;
+	text-indent: 5em;
 }
 
-button {font-size: 28px;
+button {font-size: 36px;
 	cursor: pointer;
 }
 
