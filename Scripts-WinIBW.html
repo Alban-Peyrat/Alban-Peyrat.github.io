@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alban Peyrat - Scripts pour WinIBW</title>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
+	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+</head>
+<body>
+<header>
+	<a href="https://alban-peyrat.github.io">
+		<span id="headerPres" style="color:#FF8A00">Présentation et documentation de mes outils numériques</span>
+	</a>
+</header>
+<div id="contenu">
+	<ul id="lienGitHub">
+		<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/archive/refs/heads/main.zip">Téléchargez les scripts pour WinIBW</a></li>
+		<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW">Accédez au dépôt GitHub des scripts pour WinIBW</a></li>
+	</ul>
+	<h1 id="scriptspourwinibw">Scripts pour WinIBW</h1>
+
+<p><strong>Rappel : pour installer les scripts dans WinIBW, référez-vous au <a href="http://documentation.abes.fr/sudoc/manuels/logiciel_winibw/scripts/index.html#CreerScriptUtilisateur">guide pour les scripts utilisateurs de l'Abes</a>.</strong></p>
+
+<p><em><a href="https://Alban-Peyrat.github.io/Scripts-WinIBW#liste-des-modifications">Cliquez ici pour atteindre la liste des modifications.</a></em></p>
+
+<p><em>Une refonte est en cours de réflexion. Les changements apportés le 13/10/2021 ne sont pas encore écrits dans la documentation. Les scripts en revanche sont bien actualisés.</em></p>
+
+<p>Les scripts proposés visent généralement à accélérer des traitements répétitifs dans WinIBW. Certains d'entre eux, classés en tant que concepts, visent à contrôler des données sans devoir les modifier via des outils externes type tableur.</p>
+
+<h2 id="contextedudveloppement">Contexte du développement</h2>
+
+<p>J'ai développé ces scripts lors de mon contrat à la Bibliothèque universitaire des Sciences du Vivant et de la Santé - Josy Reiffers (Bordeaux). Certaines de mes missions impliquaient des tâches répétitives ou plusieurs saisies d'une même donnée.</p>
+
+<p>Ce sont donc posées les questions suivantes :</p>
+
+<ul>
+<li>si dans 9 cas sur 10 je dois écrire la même information, n'est-il pas possible de l'écrire automatiquement et modifier manuellement le cas restant ?</li>
+
+<li>si je dois écrire plusieurs fois la même donnée, n'est-il pas possible de l'écrire une fois, la dupliquer et ainsi éviter des erreurs de saisies (et gagner du temps) ?</li>
+
+<li>si je génère des données plus rapidement, ne m'est-il pas possible de contrôler les erreurs de saisie de certaines de celles-ci sans effectuer un traitement sur Excel ?</li>
+</ul>
+
+<h2 id="delusagedecesscripts">De l'usage de ces scripts</h2>
+
+<p>Certains scripts sont pensés pour répondre à mes besoins dans mon environnement, ce qui veut dire qu'ils ne fonctionnent pas dans toutes les situations imaginables.</p>
+
+<p>Ces informations en tête, il est, je pense, préférable de bien prendre le temps de lire et comprendre le script avant toute utilisation, et le modifier si nécessaire, notamment car certains contiennent des données propres à mon établissement.</p>
+
+<p>De plus, certains de ces scripts seront peut-être sujets à des modifications, notamment car ils ne sont pas toujours très jolis à voir.</p>
+
+<h2 id="organisationdesscripts">Organisation des scripts</h2>
+
+<p>Les scripts sont divisés entre trois fichiers différents :</p>
+
+<ul>
+<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">scripts principaux</a>, qui contient majoritairement les scripts à activer :
+
+
+<ul>
+<li>AddSujetRAMEAU ;</li>
+
+<li>addUA400 ;</li>
+
+<li>addUB700S3 ;</li>
+
+<li>changeExAnom ;</li>
+
+<li>ChantierTheseAddUB183 ;</li>
+
+<li>ChantierTheseLoopAddUB183 ;</li>
+
+<li>decompUA200enUA400 ;</li>
+
+<li>getCoteEx ;</li>
+
+<li>getDataUAChantierThese ;</li>
+
+<li>getTitle ;</li>
+
+<li>getUA810b ;</li>
+
+<li>getUB310 ;</li>
+
+<li>PurifUB200a ;</li>
+
+<li>searchExcelPPNList ;</li></ul>
+</li>
+
+<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">scripts ressources</a>, qui contient les scripts qui facilitent l'exécution des autres :
+
+
+<ul>
+<li>appendNote ;</li>
+
+<li>CountOccurrences ;</li>
+
+<li>exportVar ;</li>
+
+<li>goToTag ;</li>
+
+<li>goToTagInputBox ;</li>
+
+<li>Sleep ;</li>
+
+<li>toEditMode ;</li>
+
+<li>uCaseNames ;</li></ul>
+</li>
+
+<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a>, qui contient des concepts que je n'utilise pas mais qui théoriquement fonctionnent, ou des scripts de mon bac à sable que je pense utiles à partager. Cerains sont en train d'être remplacés par des procécédes proches de CoCo-SAlma2 dans l'outil ConS<em>tance</em> :
+
+
+<ul>
+<li>ctrlUA103eqUA200f ;</li>
+
+<li>ctrlUB700S3.</li></ul>
+</li>
+</ul>
+
+<h2 id="notationsdeschampsenunimarc">Notations des champs en Unimarc</h2>
+
+<p>De manière générale, j'essaye d'utiliser une structure similaire entre mes scripts, notamment pour les champs UNIMARC :</p>
+
+<p>U + <em>type de notice</em> + <em>champ</em> + <em>sous-champ</em></p>
+
+<p>Avec :</p>
+
+<ul>
+<li>type de notice :
+
+
+<ul>
+<li>"A" pour les notices d'autorité auteur ;</li>
+
+<li>"B" pour les notices bibliographiques ;</li></ul>
+</li>
+
+<li>champ : le champ sous forme de nombre ;</li>
+
+<li>sous-champ :
+
+
+<ul>
+<li>lettre minuscule ;</li>
+
+<li>"S" + le chiffre.</li></ul>
+</li>
+</ul>
+
+<p>Exemples :</p>
+
+<ul>
+<li><code>UB200a</code> : dans une notice bibliographique, le sous-champ <code>a</code> de la zone 200 ;</li>
+
+<li><code>UA700S4</code> : dans une notice d'autorité auteur, le sous-champ <code>4</code> de la zone 700.</li>
+</ul>
+
+<h2 id="lesinformationsmodifierselonsonenvironnementdetravail">Les informations à modifier selon son environnement de travail</h2>
+
+<p>Certaines informations propres à ma bibliothèque sont à remplacer :</p>
+
+<ul>
+<li>le RCR de ma bibliothèque (330632101) ;</li>
+
+<li>le chemin d'accès au profil WinIBW (C:\/oclcpica/WinIBW30/Profiles).</li>
+</ul>
+
+<h2 id="desreliquatsdenotespersonnelles">Des reliquats de notes personnelles</h2>
+
+<p>Certaines parties de mes scripts ne servent qu'à moi et peuvent se trouver dans le code si j'oublie de les retirer. En l'occurrence :</p>
+
+<ul>
+<li>les notes sur les raccourcis en début de code ;</li>
+
+<li>la notion <code>_A_MOD_</code> en début de code.</li>
+</ul>
+
+<p>De plus, chaque script exportant du contenu contient la notation <code>$_#_$</code> au début de l'export, qui sert uniquement à traverser plus vite le document exporté.</p>
+
+<h2 id="lavalidationautomatique">La validation automatique</h2>
+
+<p>Il est à noter que normalement, aucun des scripts qui effectueraient des modifications sur une notice ne se termine par une validation automatique de celles-ci [24/08/2021] : je préfère toujours pouvoir vérifier que tout est bon avant validation.</p>
+
+<p>Toutefois, cette validation se met en place très facilement avec l'ajout de <code>Application.ActiveWindow.SimulateIBWKey "FR"</code> à la fin du script.</p>
+
+<h2 id="labsencedecontrledutypedenotice">L'absence de contrôle du type de notice</h2>
+
+<p>À l'heure actuelle, les scripts destinés à un type de notice particulier (lecture ou modification) ne contrôlent pas s'ils sont exécutés sur ce type de notice ou sur un autre. J'envisage à terme d'en configurer un, si j'y arrive.</p>
+
+<h2 id="sourcesextrieures">Sources extérieures</h2>
+
+<p>Voici les sources des quelques scripts que j'ai récupérés sur l'internet, en espérant n'en avoir oublié aucun :</p>
+
+<ol>
+<li><p>CountOccurrences : <a href="https://www.thoughtasylum.com/2009/07/30/VB-Script-Count-occurrences-in-a-text-string/">VBScript - Count occurrences in a text string / Stephen Millard, publié le 30 juillet 2009</a> [cons. le 29/05/2021]</p></li>
+
+<li><p>Sleep : <a href="https://stackoverflow.com/questions/1729075/how-to-set-delay-in-vbscript#answer-12921137">Réponse de Original Paulie D à la question How to set delay in vbscript de Mark posée le 13 novembre 2009 sur StackOverflow</a> [cons. le 29/05/2021]</p></li>
+
+<li><p>ExportVar : <a href="http://eddiejackson.net/wp/?p=8619">VBScript Text Files: Read, Write, Append / MrNetTek, publié le 19 novembre 2015</a> [cons. le 29/05/2021]</p></li>
+</ol>
+
+<h2 id="prsentationdesscripts">Présentation des scripts</h2>
+
+<h3 id="subaddsujetrameau"><code>SUB AddSujetRAMEAU()</code></h3>
+
+<p>Ouvre une boîte de dialogue permettant d'insérer des UB60X à partir du PPN.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subaddua400"><code>SUB addUA400()</code></h3>
+
+<p>Rajoute des UA400 pour les noms composés à une autorité auteur en se basant sur la UA200.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subaddub700s3"><code>SUB addUB700S3()</code></h3>
+
+<p>Remplace la UB700 actuelle de la notice bibliographique par une UB700 contenant le PPN du presse-papier et le $4 de l'ancienne UB700.</p>
+
+<p>Contient aussi un appel du <a href="https://Alban-Peyrat.github.io/Scripts-WinIBW#sub-changeexanomnotice">script supprimant des anomalies dans les exemplaires</a>.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="functionappendnotevartext"><code>FUNCTION appendNote(var, text)</code></h3>
+
+<p>Renvoie <code>var</code> comme équivalent à <code>text</code> si <code>var</code> était vide, sinon, renvoie <code>var</code> suivi d'un saut de ligne puis de <code>text</code>.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h3 id="subchangeexanomnotice"><code>SUB changeExAnom(notice)</code></h3>
+
+<p>Remplace le $btm de la zone eXX associée au RCR par $bx ou signale la présence de plusieurs eXX associées à ce RCR.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subchantiertheseaddub183"><code>SUB ChantierTheseAddUB183()</code></h3>
+
+<p>Ajoute une UB183 en fonction de la UB215 (notamment des chiffres détectés dans le $a).</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subchantiertheseloopaddub183"><code>SUB chantierTheseLoopAddUB183()</code></h3>
+
+<p>Exécute <code>ChantierTheseAddUB183</code>, sauf si l'utilisateur refuse l'ajout, sur la liste de PPN présente dans le presse-papier et exporte un rapport des modifications ou non effectuées.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="funccountoccurrencesp_strstringtocheckp_strsubstringp_boolcasesensitive"><code>FUNC CountOccurrences(p_strStringToCheck, p_strSubString, p_boolCaseSensitive)</code></h3>
+
+<p>Renvoi le nombre d'occurrences.</p>
+
+<p><a href="https://www.thoughtasylum.com/2009/07/30/VB-Script-Count-occurrences-in-a-text-string/">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">consulter le script</a></p>
+
+<h3 id="subctrlua103equa200f"><code>SUB ctrlUA103eqUA200f()</code></h3>
+
+<p>Exporte et compare le $a de UA103 et le $f de UA200 pour chaque PPN de la liste présente dans le presse-papier.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">Consulter le script</a></p>
+
+<h3 id="subctrlub700s3"><code>SUB ctrlUB700S3()</code></h3>
+
+<p>Exporte le premier $ de UB700 pour chaque PPN de la liste présente dans le presse-papier.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">Consulter le script</a></p>
+
+<h3 id="funcdecompua200enua400stringimpua200"><code>FUNC decompUA200enUA400([string]impUA200)</code></h3>
+
+<p>Renvoie les UA400 créés à partir de la décomposition du nom composé du UA200 importé (<code>impUA200</code>).</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subexportvarvarboolappend"><code>SUB exportVar(var, boolAppend)</code></h3>
+
+<p>Exporte <code>var</code> dans <code>export.txt</code> (même emplacement que <code>winibw.vbs</code>), réécrivant le fichier si <code>boolAppend</code> est false. Est utilisé par toutes les procédures qui exporte des données.</p>
+
+<p><a href="http://eddiejackson.net/wp/?p=8619">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">consulter le script</a></p>
+
+<h3 id="subgetcoteex"><code>SUB getCoteEx()</code></h3>
+
+<p>Renvoie dans le presse-papier la cote du document. Si plusieurs cotes sont présentes, donne le choix entre en sélectionner une, ou toutes les sélectionner, permettant également de choisir le séparateur.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subgetdatauachantierthese"><code>SUB getDataUAChantierThese()</code></h3>
+
+<p>Copie dans le presse-papier le PPN, l'année de soutenance, la discipline, le patronyme, le prénom, l'année de naissance, le sexe, le titre et la cote du document, séparés par des tabulations horizontales. Une option permet de réécrire ou d'éditer les champs directement depuis WinIBW.</p>
+
+<p>Créé dans le cadre d'un chantier sur les thèses, l'exploitation de ces données se fait dans un tableur Excel particulier.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subgettitle"><code>SUB getTitle()</code></h3>
+
+<p>Renvoie dans le presse-papier le titre du document en remplaçant les @ et $e. Si le titre est entièrement en majuscule, le renvoie en minuscule (sauf première lettre).</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subgetua810b"><code>SUB getUA810b()</code></h3>
+
+<p>Si un seul UA810 est présent, écrit le $b "né le" à partir des informations de la UA103 de la notice, sinon, renvoie le $b dans le presse-papier.</p>
+
+<p>Pour un bon fonctionnement, la UA103 doit comprendre AAAAMMJJ.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subgetub310"><code>SUB getUB310()</code></h3>
+
+<p>Copie dans le presse-papier la valeur du premier UB310.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subgototagstringtagstringnonepouremptysubtagbooltoendoffieldbooltofirstbooltolast"><code>SUB goToTag([string]tag, [string, "none" pour empty]subTag, [bool]toEndOfField, [bool]toFirst, [bool]toLast)</code></h3>
+
+<p>Attention, <code>subTag</code> ne doit pas contenir le $ ET est sensible à la casse.</p>
+
+<p>Place le curseur à l'emplacement indiqué par les paramètres. Si plusieurs occurrences sont rencontrées sans que <code>toFirst</code> ou <code>toLast</code> soit true, une boîte de dialogue s'ouvre pour sélectionner l'occurrence souhaitée.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h3 id="subgototaginputbox"><code>SUB goToTagInputBox()</code></h3>
+
+<p>Permet d'essayer <code>goToTag</code> en indiquant les paramètres voulus.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h3 id="functionpurifub200aub200isub541"><code>FUNCTION PurifUB200a(UB200, isUB541)</code></h3>
+
+<p>Renvoie l'adaptation d'un titre en son écriture en UNIMARC.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="subsearchexcelppnlist"><code>SUB searchExcelPPNList()</code></h3>
+
+<p>Recherche la liste de PPN contenue dans le presse-papier.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h3 id="subsleepinttime"><code>SUB Sleep([int]time)</code></h3>
+
+<p>Permet de mettre en pause un script pendant t = <code>time</code> (en secondes).</p>
+
+<p><a href="https://stackoverflow.com/questions/1729075/how-to-set-delay-in-vbscript#answer-12921137">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">consulter le script</a></p>
+
+<h3 id="subtoeditmodeboollgpmodeboolsave"><code>SUB toEditMode([bool]lgpMode, [bool]save)</code></h3>
+
+<p>Passe en mode édition (ou présentation).</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h3 id="functionucasenamesnoms"><code>FUNCTION uCaseNames(noms)</code></h3>
+
+<p>Renvoie <code>noms</code> après avoir mis une majuscule au début de chaque nom renseigné.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h2 id="listedesmodifications">Liste des modifications</h2>
+
+<ul>
+<li>le 02/08/2021
+
+
+<ul>
+<li>suppression de <code>PurifUB200a</code> car peu d'intérêts à être partagé ;</li>
+
+<li>suppression de <code>CollerPPN</code> car peu d'intérêts à être partagé ;</li>
+
+<li>suppression de <code>LastCHE</code> car peu d'intérêts à être partagé.</li></ul>
+</li>
+
+<li>le 23/08/2021 :
+
+
+<ul>
+<li>ajout de <code>AddSujetRAMEAU</code> pour ajouter des 60X ;</li>
+
+<li>ajout de <code>ctrlTraitementInterne</code> ;</li>
+
+<li>ajout de <code>getUB310</code> pour récupérer dans le presse-papier l'information de la première 310 ;</li>
+
+<li>ajout de <code>PurifUB200a</code> pour adapter un titre à son écriture en UNIMARC ;</li>
+
+<li>scission de <code>addUB700S3</code> : la partie sur l'exemplaire a été isolée dans un nouveau script, <code>changeExAnom</code>.</li></ul>
+</li>
+
+<li>le 24/08/2021 :
+
+
+<ul>
+<li><a href="https://Alban-Peyrat.github.io/Scripts-WinIBW#organisation-des-scripts">répartition des scripts entre plusieurs fichiers</a> ;</li>
+
+<li>actualisation des présentations des scripts, notamment en intégrant les dernières modifications ;</li>
+
+<li>adaptation du projet pour être cohérent avec les autres outils.</li></ul>
+</li>
+
+<li>le 25/08/2021 :
+
+
+<ul>
+<li>suppression de <code>ctrlTraitementInterne</code>, que j'avais dû arrêter en plein milieu du développement ;</li>
+
+<li>modification de la description de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a> et ajout de la mention de ConS<em>tance</em> ;</li></ul>
+</li>
+
+<li>le 01/09/2021 :
+
+
+<ul>
+<li>ajout de <code>appendNote</code> pour ajouter à une variable la donnée voulue ;</li>
+
+<li>ajout de <code>getDataUAChantierThese</code> pour exporter les données d'une thèse dans le cadre d'un chantier sur les thèses ;</li>
+
+<li>ajout de <code>uCaseNames</code> pour mettre des majuscules aux noms renseignés ;</li>
+
+<li>modification de <code>getCoteEx</code> dû à une réécriture du script. Détecte désormais l'intégralité des cotes associées au RCR et permet de sélectionner celles voulues, ou toutes ;</li>
+
+<li>probable mise à jour prochaine de <code>decompUA200enUA400</code> pour être plus efficace et utiliser <code>uCaseNames</code> ;</li></ul>
+</li>
+
+<li>le 02/09/2021 :
+
+
+<ul>
+<li>modification de <code>getDataUAChantierThese</code> pour réorganiser l'inputBox, rajouter de la précision à la note sur les noms d'épouse et empêcher des valeurs illégales pour le genre ;</li>
+
+<li>modification de <code>getCoteEx</code> pour afficher le numéro de l'occurrence et de l'exemplaire en cas de cotes multiples, ainsi que de gérer la sélection individuelle de plusieurs cotes.</li></ul>
+</li>
+
+<li>le 13/10/2021 :
+
+
+<ul>
+<li>sur le document et le dépôt : la liste des modifications est renvoyée au fonds avec un lien hypertexte vers celle-ci en début de page. Par ailleurs, la documentation complète viendra finalement s'ajouter dans ce document ;</li>
+
+<li>modification de <code>getTitle</code> : changement de la détection du champ 200 et de son successeur avec un chr(13) pour éviter le problème des nombres dans le titre (ex: "201 patients") ;</li>
+
+<li>modification de <code>getDataUAChantierThese</code> : mise en place d'une vraie solution pour la détection de genre (ajout d'un <code>_</code> devant les données entrées, ce qui empêche la détection du split ; ne prend désormais que le second caractère de l'occurrence au lieu de l'itégralité du texte de celle-ci). Ajout de la  possibilité de modifier les champs Nom, Prénom, et Titre dans une nouvelle boite de dialogue préremplie avec les données détectées. Quelques précisions sur le choix de restreindre cette option uniquement à ces trois champs :</li>
+
+<li>discpline requiert une correspondance exacte dans Excel, autant y utiliser la liste de données validées ;</li>
+
+<li>années de soutenance et de naissance : se modifient en 4 touches, il est peu nécessaire d'afficher l'information entrée quand réécrire l'année est directement dans Excel est généralement plus rapide ;</li>
+
+<li>nom, prénom, titre : certains cas requièrent une modification d'un carcatère dans des textes parfois longs, pouvoir modifier le nom sans devoir le retaper peut être plus agréable ;</li>
+
+<li>cote : copier-coller la cote via <code>getCoteEx</code> est plus précis que de la retaper ;</li>
+
+<li>majsucule : ce n'est pas une information dans l'<em>output</em> final ;</li>
+
+<li>notes : force la présence de toutes les notes ajoutées à l'output final ;</li>
+
+<li>Sexe : a déjà sa boîte de dialogue ;</li>
+
+<li>refonte de <code>addUA400</code> et <code>decompUA200enUA400</code> et ajout de <code>findUA200aUA200b</code> :</li>
+
+<li><code>decompUA200enUA400</code> prend désormais comme paramètre la $a et le $b originaux au lieu de prendre l'intégralité de la 200, la détection de ces deux sous-champs se fait donc désormais dans <code>findUA200aUA200b</code>. (L'externalisation de cette partie du code est liée à des scripts non partagés que j'utilise) ;</li>
+
+<li><code>addUA400</code> ne cessera plus de fonctionner s'il n'y a ni $f, ni $c dans le cas de nom non-composé ;</li>
+
+<li><code>addUA400</code> prend désormais en compte la présence d'un $x, $y ou $z avant de considérer le champ comme achevé ;</li>
+
+<li><code>decompUA200enUA400</code> est maintenant bien plus lisible ;</li>
+
+<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="https://Alban-Peyrat.github.io/Scripts-WinIBW#modifications-prvues">(voir les modifications prévues)</a>.</li>
+
+<li>refonte des scripts de type <code>get</code> et ajout du lanceur général (<code>generalLauncher</code>) : création d'une interface pour pouvoir lancer les scripts de type <code>add</code> et <code>get</code>. L'implentation de ce lanceur a été l'occasion de modifier tous les scripts de type <code>get</code> pour qu'ils puissent être utilisables dans d'autres scripts sans devoir stocker le résultat dans le presse-papier. De fait, il n'est plus possible de leur attribuer un raccourci sans créer spécialement un nouveau script qui se contente d'appeler la fonction et de placer le résultat dans le presse-papier. La création de ce lanceur est lié à la multiplication de courts scripts que j'utilise et une multiplication trop importantes des raccourcis associés.</li>
+
+<li>ajout de <code>add18XmonoImp</code> : ajoute une 181 P01 txt, 182 c et 183 nga ;</li>
+
+<li>ajout de <code>addISBNElsevier</code> : ajoute une 010 avec le début d'un IBSN type d'Elsevier ;</li>
+
+<li>ajout de <code>add214Elsevier</code> : ajoute une 214 type pour Elsevier-Masson SAS à Issy-les-Moulineaux avec un DL 2021 ;</li>
+
+<li>ajout de <code>addBibgFinChap</code> : ajoute à l'emplacement du curseur la mention de bibliographie en fin de chapitre ;</li>
+
+<li>ajout de <code>addCouvPorte</code> : ajoute une 312 pour indiquer ce que la couverture porte en plus.</li></ul>
+</li>
+</ul>
+
+<h3 id="modificationsprvues">Modifications prévues</h3>
+
+<ul>
+<li><code>getTitle</code> : permettre son utilisation autant en mode édition que présentation ;</li>
+
+<li>scripts de type <code>get</code> : vérification de l'utilisation du presse-papier et restituer le presse-papier présent avant le lancement du script s'il est réécrit ;</li>
+
+<li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code>.</li>
+
+<li>ajout de <code>addEISBN</code> : ajoute une 452 avec un <em>place holder</em> ou le titre s'il est déjà renseigné, ainsi que les trois premières parties de l'ISBN. Apparement j'ai cessé le développement en plein milieu.</li>
+</ul>
+</div>
+<div id="accessButtons">
+	<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+	<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="divLiens">
+	<p>Liens vers les autres outils&nbsp;:</p>
+	<ul id="liens">
+		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+		<li><a href="https://alban-peyrat.github.io/Scripts-WinIBW">Scripts-WinIBW</a></li>
+		<li><a href="https://alban-peyrat.github.io/Louise">Louise</a></li>
+		<li><a href="https://alban-peyrat.github.io/HUBert">HUBert</a></li>
+		<li><a href="https://alban-peyrat.github.io/CoCo-SAlma">CoCo-SAlma</a></li>
+		<li><a href="https://alban-peyrat.github.io/ConStance">ConStance</a></li>
+		<li><a href="https://alban-peyrat.github.io/ConAn">ConAn</a></li>
+	</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+</html>

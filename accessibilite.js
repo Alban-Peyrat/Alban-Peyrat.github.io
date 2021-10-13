@@ -16,43 +16,43 @@ const zooms = [
     "h4"]
   },
   {"prop":[
-    "28px",
-    "14px",
-    "14px",
-    "14px",
-    "14px",
-    "14px",
-    "14px",
-    "20px",
-    "18px",
-    "17px",
-    "16px"]
-  },
-  {"prop":[
-    "42px",
-    "21px",
-    "21px",
-    "21px",
-    "21px",
-    "21px",
-    "21px",
-    "30px",
-    "27px",
-    "26px",
-    "14px"]
-  },
-  {"prop":[
-    "56px",
-    "28px",
-    "28px",
-    "28px",
-    "28px",
-    "28px",
-    "28px",
-    "40px",
     "36px",
-    "34px",
-    "32px"]
+    "18px",
+    "18px",
+    "18px",
+    "18px",
+    "18px",
+    "18px",
+    "25px",
+    "23px",
+    "21px",
+    "20px"]
+  },
+  {"prop":[
+    "54px",
+    "27px",
+    "27px",
+    "27px",
+    "27px",
+    "27px",
+    "27px",
+    "38px",
+    "35px",
+    "32px",
+    "30px"]
+  },
+  {"prop":[
+    "72px",
+    "36px",
+    "36px",
+    "36px",
+    "36px",
+    "36px",
+    "36px",
+    "50px",
+    "46px",
+    "42px",
+    "40px"]
   }
 ];
 
@@ -129,7 +129,7 @@ document.getElementById("buttonZoom").onclick = function(){
   if (zoomIn > 3){
     zoomIn = 1;
   }
-  for (let ii=0;ii<10;ii++){
+  for (let ii=0;ii<11;ii++){
     if (ii == 0){
       zoomArray[ii].style.fontSize = zooms[zoomIn].prop[ii];
     }else{
