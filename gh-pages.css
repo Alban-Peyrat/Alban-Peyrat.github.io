@@ -25,32 +25,6 @@ header {
 	width: 800px;
 } 
 
-#horiz_menu {
-	list-style-type: none;
-	margin-left: 0;
-	padding: 0;
-	overflow: hidden;
-	text-align: center;
-}
-
-#horiz_menu li {
-	display: inline;
-} 
-
-.horiz_menu {
-	padding: 1% 2% 1% 2%;
-	width: 15%;
-	height: 100%;
-	background-color: #990000;
-	text-decoration: none;
-	display: inline-block;
-}
-
-.horiz_menu:hover{
-	background-color: #FF8A00;
-	color: #1F1F1F
-} 
-
 #contenu {
 	width: 800px;
 	margin-left:auto;
