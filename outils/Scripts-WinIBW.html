@@ -21,7 +21,7 @@
 
 <p><em><a href="https://alban-peyrat.github.io/outils//Scripts-WinIBW#liste-des-modifications">Cliquez ici pour atteindre la liste des modifications.</a></em></p>
 
-<p><em>Version du 14/10/2021. Une refonte est en cours de réflexion. Les changements apportés le 13/10/2021 ne sont pas encore écrits dans la documentation. Les scripts en revanche sont bien actualisés.</em></p>
+<p><em>Version du 14/10/2021. Une refonte est en cours de réflexion. Tous les changements apportés le 13/10/2021 ne sont pas encore écrits dans la documentation. Les scripts en revanche sont bien actualisés.</em></p>
 
 <p>Les scripts proposés visent généralement à accélérer des traitements répétitifs dans WinIBW. Certains d'entre eux, classés en tant que concepts, visent à contrôler des données sans devoir les modifier via des outils externes type tableur.</p>
 
@@ -109,11 +109,136 @@
 
 <p>Ce fichier réunit majoritairement les scripts à exécuter ou de traitement.</p>
 
+<h3 id="add18xmonoimp"><code>add18XmonoImp</code></h3>
+
+<p>Ajoute les 181-2-3 pour une monographie imprimée sans illustration.</p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
+
+<ul>
+<li><code>181 ##$P01$ctxt</code></li>
+
+<li><code>182 ##$P01$cn</code></li>
+
+<li><code>183 ##$P01$anga</code></li>
+
+<li>un retour à la ligne.</li>
+</ul>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="add214elsevier"><code>add214Elsevier</code></h3>
+
+<p>Ajoute une 214 type pour Elsevier (2021).</p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
+
+<ul>
+<li><code>214 #0$aIssy-les-Moulineaux$cElsevier Masson SAS$dDL 2021</code></li>
+
+<li>un retour à la ligne</li>
+</ul>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="addbibgfinchap"><code>addBibgFinChap</code></h3>
+
+<p>Ajoute une mention de bibliographie à la fin de chaque chapitre.</p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à l'emplacement du curseur :</p>
+
+<ul>
+<li><code>Chaque fin de chapitre comprend une bibliographie</code></li>
+</ul>
+
+<p><strong>Malfonctionnement possible : si la notice n'était pas en mode édition, le texte ne s'écrira probablement pas si la grille des données codées n'est pas affichée.</strong></p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="addcouvporte"><code>addCouvPorte</code></h3>
+
+<p>Ajoute le début d'une 312 <code>La couverture porte en plus</code>.</p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
+
+<ul>
+<li><code>312 ##$aLa couverture porte en plus : "</code></li>
+</ul>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="addisbnelsevier"><code>addISBNElsevier</code></h3>
+
+<p>Ajoute une 010 avec le début de l'ISBN d'Elsevier.</p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
+
+<ul>
+<li><code>010 ##$A978-2-294-</code></li>
+</ul>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
 <h3 id="addsujetrameau"><code>AddSujetRAMEAU</code></h3>
 
 <p>Ouvre une boîte de dialogue permettant d'insérer des UB60X à partir du PPN.</p>
 
 <p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà, puis lance une boucle qui s'exécutera jusqu'à 1000 fois. À chaque exécution, ouvre une boite de dialogue permettant de coller directement le PPN et montrant la liste des commandes supplémentaires disponibles :</p>
+
+<ul>
+<li>ajouter <code>UX</code> devant le PPN (sans espace) permet de choisir la 60X à insérer :
+
+
+<ul>
+<li>par défaut, le script ajoute une <code>606 ##</code> ;</li>
+
+<li><code>U0</code> pour insérer une <code>600 #1</code> ;</li>
+
+<li><code>U1</code> pour insérer une <code>601 02</code> ;</li>
+
+<li><code>U2</code> pour insérer une <code>602 ##</code> ;</li>
+
+<li><code>U4</code> pour insérer une <code>604 ##</code> ;</li>
+
+<li><code>U5</code> pour insérer une <code>605 ##</code> ;</li>
+
+<li><code>U7</code> pour insérer une <code>607 ##</code> ;</li>
+
+<li><code>U8</code> pour insérer une <code>608 ##</code> ;</li></ul>
+</li>
+
+<li>ajouter <code>_[IndicateurNo1][IndicateurNo2]</code> après le PPN (sans espace) permet de changer les indicateurs. <strong>Il est obligatoire d'indiquer les 2 indicateurs.</strong> Cette commande est cumulable avec l'option <code>UX</code> ;</li>
+
+<li>ajouter <code>$3</code> devant le PPN permet de rajouter ce PPN en tant que subdivision <strong>au dernier PPN entré durant cette activation du script</strong> ;</li>
+
+<li>écrire <code>ok</code> (valeur par défaut de la boite de dialogue) permet de sortir de la boucle et de terminer le script.</li>
+</ul>
+
+<p>Une fois la donnée saisie, le script supprime <code>PPN</code> suivi d'un espace, <code>(PPN)</code>, les espaces, les retours à la ligne et les retours chariot (<code>chr(10)</code> et <code>chr(13)</code>, ce qui permet notamment d'éviter des problèmes si le PPN est copié depuis une cellule Excel) et place le curseur à la fin de la notice. Dans la suite de l'explication, la donnée saisie par l'utilisateur correspondra au résultat de cette opération de suppression.</p>
+
+<p>Concrètement, si le troisième caractère en partant de la fin est un <code>_</code>, les indicateurs prennent la valeur des deux derniers caractères renseignés.
+Ensuite, si les deux premiers caractères sont <code>$3</code>, le script va réécrire le champ UNIMARC stocké en mémoire (cf ci-après) en insérant avant le neuvième dernier caractère (= avant <code>$2rameau</code> et un retour à la ligne (<code>chr(10)</code>)) la donnée saisie par l'utilisateur. En clair, il rajoute supposément <code>$3123456789</code> avant le <code>$2</code>.
+En revanche, si les deux premiers caractères ne sont pas <code>$3</code>, le script insère à l'emplacement du curseur (= fin de la notice) le champ qu'il a en mémoire (donc rien pour la première occurrence) puis va isoler comme <code>PPN</code> les 9 premiers caractères en commençant à partir du troisième caractère (supposément le PPN dans la forme <code>UX123456789</code>).
+Il regarde ensuite si les deux premiers caractères de la donnée saisie équivalent à un des <code>UX</code> précédemment cités. Si oui, il détermine la valeur du <code>X</code> de la <code>60X</code>associée. Si non, il attribue <code>6</code> au <code>X</code> et isole alors comme <code>PPN</code> les neufs premiers caractère de la donnée saisie. Ainsi, saisir <code>U9123456789</code> écrire une <code>606</code> avec comme PPN <code>U91234567</code>.
+Une fois le traitement des commandes terminé, il conserve alors en mémoire un champ :</p>
+
+<ul>
+<li><code>60</code> + la valeur du <code>X</code> + un espace + la valeur des indicateurs + <code>$3</code> + le PPN qu'il a isolé + <code>$2rameau</code> + un retour à la ligne (<code>chr(10)</code>)</li>
+</ul>
+
+<p>Lorsque la donnée saisie est égale à <code>ok</code>, il insère le champ en mémoire avant d'achever le script.</p>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
 
@@ -423,22 +548,16 @@
 
 <h1 id="listedesmodifications">Liste des modifications</h1>
 
-<ul>
-<li>le 02/08/2021
-
+<p>Le 02/08/2021 :</p>
 
 <ul>
 <li>suppression de <code>PurifUB200a</code> car peu d'intérêts à être partagé ;</li>
 
 <li>suppression de <code>CollerPPN</code> car peu d'intérêts à être partagé ;</li>
 
-<li>suppression de <code>LastCHE</code> car peu d'intérêts à être partagé.</li></ul>
-</li>
+<li>suppression de <code>LastCHE</code> car peu d'intérêts à être partagé.
+Le 23/08/2021 :</li>
 
-<li>le 23/08/2021 :
-
-
-<ul>
 <li>ajout de <code>AddSujetRAMEAU</code> pour ajouter des 60X ;</li>
 
 <li>ajout de <code>ctrlTraitementInterne</code> ;</li>
@@ -447,33 +566,21 @@
 
 <li>ajout de <code>PurifUB200a</code> pour adapter un titre à son écriture en UNIMARC ;</li>
 
-<li>scission de <code>addUB700S3</code> : la partie sur l'exemplaire a été isolée dans un nouveau script, <code>changeExAnom</code>.</li></ul>
-</li>
+<li>scission de <code>addUB700S3</code> : la partie sur l'exemplaire a été isolée dans un nouveau script, <code>changeExAnom</code>.
+Le 24/08/2021 :</li>
 
-<li>le 24/08/2021 :
-
-
-<ul>
-<li><a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW#organisation-des-scripts">répartition des scripts entre plusieurs fichiers</a> ;</li>
+<li>répartition des scripts entre plusieurs fichiers ;</li>
 
 <li>actualisation des présentations des scripts, notamment en intégrant les dernières modifications ;</li>
 
-<li>adaptation du projet pour être cohérent avec les autres outils.</li></ul>
-</li>
+<li>adaptation du projet pour être cohérent avec les autres outils.
+Le 25/08/2021 :</li>
 
-<li>le 25/08/2021 :
-
-
-<ul>
 <li>suppression de <code>ctrlTraitementInterne</code>, que j'avais dû arrêter en plein milieu du développement ;</li>
 
-<li>modification de la description de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a> et ajout de la mention de ConS<em>tance</em> ;</li></ul>
-</li>
+<li>modification de la description de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a> et ajout de la mention de <a href="https://github.com/Alban-Peyrat/ConStance">Constance</a> ;
+Le 01/09/2021 :</li>
 
-<li>le 01/09/2021 :
-
-
-<ul>
 <li>ajout de <code>appendNote</code> pour ajouter à une variable la donnée voulue ;</li>
 
 <li>ajout de <code>getDataUAChantierThese</code> pour exporter les données d'une thèse dans le cadre d'un chantier sur les thèses ;</li>
@@ -482,28 +589,22 @@
 
 <li>modification de <code>getCoteEx</code> dû à une réécriture du script. Détecte désormais l'intégralité des cotes associées au RCR et permet de sélectionner celles voulues, ou toutes ;</li>
 
-<li>probable mise à jour prochaine de <code>decompUA200enUA400</code> pour être plus efficace et utiliser <code>uCaseNames</code> ;</li></ul>
-</li>
+<li>probable mise à jour prochaine de <code>decompUA200enUA400</code> pour être plus efficace et utiliser <code>uCaseNames</code> ;
+Le 02/09/2021 :</li>
 
-<li>le 02/09/2021 :
-
-
-<ul>
 <li>modification de <code>getDataUAChantierThese</code> pour réorganiser l'inputBox, rajouter de la précision à la note sur les noms d'épouse et empêcher des valeurs illégales pour le genre ;</li>
 
-<li>modification de <code>getCoteEx</code> pour afficher le numéro de l'occurrence et de l'exemplaire en cas de cotes multiples, ainsi que de gérer la sélection individuelle de plusieurs cotes.</li></ul>
-</li>
+<li>modification de <code>getCoteEx</code> pour afficher le numéro de l'occurrence et de l'exemplaire en cas de cotes multiples, ainsi que de gérer la sélection individuelle de plusieurs cotes.
+Le 13/10/2021 :</li>
 
-<li>le 13/10/2021 :
-
-
-<ul>
 <li>sur le document et le dépôt : la liste des modifications est renvoyée au fonds avec un lien hypertexte vers celle-ci en début de page. Par ailleurs, la documentation complète viendra finalement s'ajouter dans ce document ;</li>
 
 <li>modification de <code>getTitle</code> : changement de la détection du champ 200 et de son successeur avec un chr(13) pour éviter le problème des nombres dans le titre (ex: "201 patients") ;</li>
 
-<li>modification de <code>getDataUAChantierThese</code> : mise en place d'une vraie solution pour la détection de genre (ajout d'un <code>_</code> devant les données entrées, ce qui empêche la détection du split ; ne prend désormais que le second caractère de l'occurrence au lieu de l'itégralité du texte de celle-ci). Ajout de la  possibilité de modifier les champs Nom, Prénom, et Titre dans une nouvelle boite de dialogue préremplie avec les données détectées. Quelques précisions sur le choix de restreindre cette option uniquement à ces trois champs :</li>
+<li>modification de <code>getDataUAChantierThese</code> : mise en place d'une vraie solution pour la détection de genre (ajout d'un <code>_</code> devant les données entrées, ce qui empêche la détection du split ; ne prend désormais que le second caractère de l'occurrence au lieu de l'itégralité du texte de celle-ci). Ajout de la  possibilité de modifier les champs Nom, Prénom, et Titre dans une nouvelle boite de dialogue préremplie avec les données détectées. Quelques précisions sur le choix de restreindre cette option uniquement à ces trois champs :
 
+
+<ul>
 <li>discpline requiert une correspondance exacte dans Excel, autant y utiliser la liste de données validées ;</li>
 
 <li>années de soutenance et de naissance : se modifient en 4 touches, il est peu nécessaire d'afficher l'information entrée quand réécrire l'année est directement dans Excel est généralement plus rapide ;</li>
@@ -516,10 +617,13 @@
 
 <li>notes : force la présence de toutes les notes ajoutées à l'output final ;</li>
 
-<li>Sexe : a déjà sa boîte de dialogue ;</li>
+<li>Sexe : a déjà sa boîte de dialogue ;</li></ul>
+</li>
 
-<li>refonte de <code>addUA400</code> et <code>decompUA200enUA400</code> et ajout de <code>findUA200aUA200b</code> :</li>
+<li>refonte de <code>addUA400</code> et <code>decompUA200enUA400</code> et ajout de <code>findUA200aUA200b</code> :
 
+
+<ul>
 <li><code>decompUA200enUA400</code> prend désormais comme paramètre la $a et le $b originaux au lieu de prendre l'intégralité de la 200, la détection de ces deux sous-champs se fait donc désormais dans <code>findUA200aUA200b</code>. (L'externalisation de cette partie du code est liée à des scripts non partagés que j'utilise) ;</li>
 
 <li><code>addUA400</code> ne cessera plus de fonctionner s'il n'y a ni $f, ni $c dans le cas de nom non-composé ;</li>
@@ -528,7 +632,8 @@
 
 <li><code>decompUA200enUA400</code> est maintenant bien plus lisible ;</li>
 
-<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW#modifications-prevues">(voir les modifications prévues)</a>.</li>
+<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW#modificationsprvues">(voir les modifications prévues)</a>.</li></ul>
+</li>
 
 <li>refonte des scripts de type <code>get</code> et ajout du lanceur général (<code>generalLauncher</code>) : création d'une interface pour pouvoir lancer les scripts de type <code>add</code> et <code>get</code>. L'implentation de ce lanceur a été l'occasion de modifier tous les scripts de type <code>get</code> pour qu'ils puissent être utilisables dans d'autres scripts sans devoir stocker le résultat dans le presse-papier. De fait, il n'est plus possible de leur attribuer un raccourci sans créer spécialement un nouveau script qui se contente d'appeler la fonction et de placer le résultat dans le presse-papier. La création de ce lanceur est lié à la multiplication de courts scripts que j'utilise et une multiplication trop importantes des raccourcis associés.</li>
 
@@ -540,7 +645,28 @@
 
 <li>ajout de <code>addBibgFinChap</code> : ajoute à l'emplacement du curseur la mention de bibliographie en fin de chapitre ;</li>
 
-<li>ajout de <code>addCouvPorte</code> : ajoute une 312 pour indiquer ce que la couverture porte en plus.</li></ul>
+<li>ajout de <code>addCouvPorte</code> : ajoute une 312 pour indiquer ce que la couverture porte en plus.
+Le 15/10/2021 :</li>
+
+<li>renommage des scripts ressources et concepts (parce que j'ai découvert que WinIBW peut séparer les scripts en plusieurs catégories) ;</li>
+
+<li>modification mineuresur le fonctionnement de la boucle de <code>AddSujetRAMEAU</code> ;</li>
+
+<li>ajout de la documentation complète de :
+
+
+<ul>
+<li><code>add18XmonoImp</code> ;</li>
+
+<li><code>add214Elsevier</code> ;</li>
+
+<li><code>addBibgFinChap</code> ;</li>
+
+<li><code>addCouvPorte</code> ;</li>
+
+<li><code>addISBNElsevier</code> ;</li>
+
+<li><code>AddSujetRAMEAU</code>.</li></ul>
 </li>
 </ul>
 
@@ -551,9 +677,11 @@
 
 <li>scripts de type <code>get</code> : vérification de l'utilisation du presse-papier et restituer le presse-papier présent avant le lancement du script s'il est réécrit ;</li>
 
-<li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code>.</li>
+<li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code> ;</li>
 
-<li>ajout de <code>addEISBN</code> : ajoute une 452 avec un <em>place holder</em> ou le titre s'il est déjà renseigné, ainsi que les trois premières parties de l'ISBN. Apparement j'ai cessé le développement en plein milieu.</li>
+<li>ajout de <code>addEISBN</code> : ajoute une 452 avec un <em>place holder</em> ou le titre s'il est déjà renseigné, ainsi que les trois premières parties de l'ISBN. Apparement j'ai cessé le développement en plein milieu ;</li>
+
+<li>correction du malfonctionnement probable de <code>addBibgFinChap</code>.</li>
 </ul>
 </div>
 <div id="accessButtons">
