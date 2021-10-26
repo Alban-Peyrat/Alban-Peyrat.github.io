@@ -765,12 +765,15 @@ Une fois les trois instances de celle-ci terminée, il remplace <code>De</code> 
 
 <li>actualisation des présentations des scripts, notamment en intégrant les dernières modifications ;</li>
 
-<li>adaptation du projet pour être cohérent avec les autres outils.
-Le 25/08/2021 :</li>
+<li>adaptation du projet pour être cohérent avec les autres outils.</li>
+</ul>
 
+<p>Le 25/08/2021 :</p>
+
+<ul>
 <li>suppression de <code>ctrlTraitementInterne</code>, que j'avais dû arrêter en plein milieu du développement ;</li>
 
-<li>modification de la description de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a> et ajout de la mention de <a href="https://alban-peyrat.github.io/outils/ConStance">Constance</a> ;</li>
+<li>modification de la description de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a> et ajout de la mention de <a href="https://github.com/Alban-Peyrat/ConStance">Constance</a> ;</li>
 </ul>
 
 <p>Le 01/09/2021 :</p>
@@ -833,7 +836,7 @@ Le 25/08/2021 :</li>
 
 <li><code>decompUA200enUA400</code> est maintenant bien plus lisible ;</li>
 
-<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW#modificationsprvues">(voir les modifications prévues)</a>.</li></ul>
+<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#modifications-prevues">(voir les modifications prévues)</a>.</li></ul>
 </li>
 
 <li>refonte des scripts de type <code>get</code> et ajout du lanceur général (<code>generalLauncher</code>) : création d'une interface pour pouvoir lancer les scripts de type <code>add</code> et <code>get</code>. L'implentation de ce lanceur a été l'occasion de modifier tous les scripts de type <code>get</code> pour qu'ils puissent être utilisables dans d'autres scripts sans devoir stocker le résultat dans le presse-papier. De fait, il n'est plus possible de leur attribuer un raccourci sans créer spécialement un nouveau script qui se contente d'appeler la fonction et de placer le résultat dans le presse-papier. La création de ce lanceur est lié à la multiplication de courts scripts que j'utilise et une multiplication trop importantes des raccourcis associés.</li>
@@ -874,6 +877,35 @@ Le 25/08/2021 :</li>
 </li>
 </ul>
 
+<p>Le 26/10/2021 :</p>
+
+<ul>
+<li>ajout de la documentation pour les scripts (<code>get</code>, chantiers thèse, concepts et <code>goToTag</code> exclus, qui pour une majorité nécessitent des modifications importantes) ;</li>
+
+<li>modifications mineures de <code>addUA400</code> et nettoyage du code ;</li>
+
+<li><code>findUA200aUA200b</code> : correction d'un bug qui supprimait la dernière lettre de la partie rejetée si la 200 ne comprenait pas de <code>$</code> après le <code>$b</code> ;</li>
+
+<li><code>addUB700S3</code> :
+
+
+<ul>
+<li>n'utilise plus le presse papier ;</li>
+
+<li>suppression de la partie du code spécifique au chantier thèse. Un script personnel regroupant celui-ci et la partie supprimée a été créé ;</li>
+
+<li>nettoyage du code ;</li></ul>
+</li>
+
+<li><code>generalLauncher</code> : modification de l'ID de <code>addUB700S3</code> (pour moi, cela correspond à conserver le même ID pour le même script, la nouvelle version de <code>addUB700S3</code> étant techniquement un nouveau script) ;</li>
+
+<li><code>changeExAnom</code> : récupère la notice par lui-même, n'utilise plus le presse-papier et nettoyage du code ainsi que suppression de parties inutiles ;</li>
+
+<li><code>exportVar</code> : nettoyage du code ;</li>
+
+<li><code>uCaseNames</code> : force désormais la majuscule sur la première lettre (le script était conçu pour des noms entièrement en maajuscule).</li>
+</ul>
+
 <h2 id="modificationsprvues">Modifications prévues</h2>
 
 <ul>
@@ -881,11 +913,15 @@ Le 25/08/2021 :</li>
 
 <li>scripts de type <code>get</code> : vérification de l'utilisation du presse-papier et restituer le presse-papier présent avant le lancement du script s'il est réécrit ;</li>
 
+<li><code>addUA400</code> (et associés) : gérer les autres informations ;</li>
+
 <li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code> ;</li>
 
 <li>ajout de <code>addEISBN</code> : ajoute une 452 avec un <em>place holder</em> ou le titre s'il est déjà renseigné, ainsi que les trois premières parties de l'ISBN. Apparement j'ai cessé le développement en plein milieu ;</li>
 
-<li>correction du malfonctionnement probable de <code>addBibgFinChap</code>.</li>
+<li>correction du malfonctionnement probable de <code>addBibgFinChap</code> ;</li>
+
+<li>nettoyage et correction de code et des commentaires de début de script.</li>
 </ul>
 </div>
 <div id="accessButtons">
