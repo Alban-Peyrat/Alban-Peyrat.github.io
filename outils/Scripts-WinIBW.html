@@ -242,9 +242,20 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <h3 id="addua400"><code>addUA400</code></h3>
 
-<p>Rajoute des UA400 pour les noms composés à une autorité auteur en se basant sur la UA200.</p>
+<p>Rajoute des UA400 pour les noms composés en se basant sur la UA200, sinon rajoute une UA400 copiant la UA200. <em>Ce script n'est pas universel et ne fonctionne qu'en présence d'un <code>$a</code> et d'un <code>$b</code>.</em></p>
 
 <p><em>Type de procédure : SUB</em></p>
+
+<p>Passe la notice en mode édition si elle ne l'est pas déjà, puis lance le script <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#findua200aua200b"><code>findUA200aUA200b</code></a>, pour récupérer la 200, la 200 <code>$a</code>, la 200 <code>$b</code> et la position du premier dollar (ou de la fin du champ) après le <code>$b</code>.
+Il lance ensuite le script <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#decompua200enua400"><code>decompUA200enUA400</code></a> en injectant le <code>$a</code> et le <code>$b</code> précédemment obtenu pour récupérer les 400 des noms composés.
+Il vérifie ensuite si la longueur du champ renvoyé par <code>decompUA200enUA400</code> est inférieure à 5 (= si aucune 400 n'a été générée) :</p>
+
+<ul>
+<li>si c'est le cas, il va copier la 200 précédemment obtenue en supprimant tout ce qui se trouve après la position du premier dollar après le <code>$b</code>, puis remplace dans ce qu'il reste <code>200</code> par <code>400</code> et supprime <code>$90y</code>.
+Il insère ensuite le nouveau champ à la fin de la notice et place le curseur après le huitième caractère de celui-ci (en théorie, au début du contenu du premier dollar).</li>
+
+<li>si ce n'est pas le cas, il insère le champ renvoyé à la fin de la notice.</li>
+</ul>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
 
@@ -254,21 +265,43 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <p><em>Type de procédure : SUB</em></p>
 
-<p>Contient aussi un appel du <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW#changeexanom">script supprimant des anomalies dans les exemplaires</a>.</p>
+<p>Passe la notice en mode édition si elle ne l'est pas déjà, puis recherche à l'intérieur de celle-ci un retour à la ligne (<code>chr(10)</code>) suivi de <code>700</code> (supposément, la première 700).
+Le script sélectionne ensuite les trois derniers caractères de ce champ (supposément le code fonction) puis génère :</p>
+
+<ul>
+<li><code>700 #1$3</code> + le contenu du presse-papier + <code>$4</code> + la sélection en cours.</li>
+</ul>
+
+<p>Il supprime de ce champ généré les retours à la ligne (<code>chr(10)</code>), puis supprime le champ où se trouve le curseur (ancienne 700) et insère à sa place la nouvelle 700 et un retour à la ligne.</p>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
 
 <h3 id="changeexanom"><code>changeExAnom</code></h3>
 
-<p>Remplace le $btm de la zone eXX associée au RCR par $bx ou signale la présence de plusieurs eXX associées à ce RCR.</p>
+<p>Remplace le <code>$btm</code> de la zone eXX associée au RCR par <code>$bx</code> ou signale la présence de plusieurs eXX associées à ce RCR ou non. <strong>Le mode d'affichage de la notice doit (probablement) être <code>UNM</code> pour fonctionner correctement.</strong> <em>Ce script vise un objectif assez précis, voir le contexte de développement à la fin de sa documentation.</em></p>
 
 <p><em>Type de procédure : SUB</em></p>
 
-<p><em>Paramètres</em> :</p>
+<p>Passe la notice en mode édition si elle ne l'est pas déjà, puis copie l'intégralité de la notice.
+Le script exécute ensuite <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#countoccurences"><code>CountOccurrences</code></a> pour compter le nombre de <code>chr(10)</code> suivi de <code>e</code> en tenant compte de la casse (= compte le nombre de notices d'exemplaires dans l'ILN) :</p>
 
 <ul>
-<li>notice : notice bibliographique obtenue via copie de la notice depuis le mode édition (<code>SelectAll</code> puis <code>Copy</code>)</li>
+<li>si une occurrence est détectée, exécute <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#gototag"><code>goToTag</code></a> pour se rendre sur le champ 930, puis recule de 1 caractère (bascule sur le champ précédent) et sélectionne les deux prochains caractères sur la gauche (= les deux derniers caractères du champ).
+Il compare ensuite si ces deux caractères en minuscule sont égaux à <code>tm</code>, auquel cas, ils les remplacent par <code>x</code>, récupère le numéro de champ et affiche une infobulle (numéro de champ + <code>: tm remplacé par x</code>) ;</li>
+
+<li>si plus d'une occurrence est détectée, il réexécute <code>countOccurrences</code> en comptant cette fois-ci le nombre  <code>$b</code> suivi du RCR <strong>(pour utiliser le script sur votre RCR, changez <code>330632101</code> en votre RCR)</strong> :
+
+
+<ul>
+<li>si plus d'une occurrence est trouvée, recherche <code>$btm</code> suivi d'un <code>chr(10)</code> suivi de <code>930</code> et récupère le numéro du champ. Si ce numéro commence par <code>e</code>, affiche une infobulle (numéro du champ + <code>à supprimer</code>, avec comme titre de fenêtre <code>Exemplaire fictif</code>), sinon affiche une autre infobulle (<code>Plusieurs exemplaires réels sur ce RCR. Vérification recommandée.</code>) ;</li>
+
+<li>sinon, affiche une infobulle (<code>Plusieurs exemplaires réels. Vérification recommandée.</code>).</li></ul>
+</li>
 </ul>
+
+<p><em>Contexte de développement : dans le cadre d'un chantier sur les thèses, des exemplaires pouvaient avoir en <code>$b</code> des <code>eXX</code> la mention <code>TM</code> (ou <code>M</code> supposément, dans la pratique je n'en ai pas vus / je les ai ratés) liée à l'ancien signalement dans téléthèses.
+Ainsi, certains exemplaires téléthèses ont été réutilisés sans changer la valeur du <code>$b</code>, d'autres sont seulement des exemplaires fictifs en complément de l'exemplaire réel.
+Par ailleurs, nous sommes généralement la seule biblitohèque de l'ILN possédant les thèses de ce chantier, ce qui explique les demandes de vérification du script si plusieurs exemplaires sont détectés dans l'ILN.</em></p>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
 
@@ -290,19 +323,130 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <h3 id="decompua200enua400"><code>decompUA200enUA400</code></h3>
 
-<p>Renvoie les UA400 créés à partir de la décomposition du nom composé du UA200 importé (<code>impUA200</code>).</p>
+<p>Renvoie des UA400 créés à partir de la décomposition du nom composé de l'UA200, à l'aide des <code>$a</code> et <code>$b</code> injectés.</p>
 
 <p><em>Type de procédure : FUNCTION</em></p>
 
-<p><em>Renvoi :</em></p>
-
-<p><em>Paramètres</em> :</p>
+<p><em>Paramètres :</em></p>
 
 <ul>
-<li>impUA200 : [string] PAS A JOUR</li>
+<li><code>UA200a</code> : contenu de la 200 <code>$a</code> ;</li>
+
+<li><code>UA200b</code> : contenu de la 200 <code>$b</code>.</li>
+</ul>
+
+<p>Le script est une grande boucle <code>While</code> qui boucle tant que <code>UA200a</code> contient un espace ou un tiret.
+À chaque isntance, il détecte quel est le séparateur (en comparant quelle est la plus petite position, 0 exclu, entre l'espace et le tiret).
+Il construit ensuite la nouvelle forme, en ajoutant à la fin de <code>UA200b</code> (avec un espace si le dernier caractère n'est pas <code>'</code> ou <code>-</code>) le début de <code>UA200a</code> jusqu'au séparateur, supprimant ensuite cette partie (séparateur compris) dans <code>UA200a</code>.
+Le script analyse ensuite si les caractères au début du nouveau <code>UA200a</code> sont les particules rejetées françaises (<code>de</code> suivi d'un espace ou <code>d'</code>), si c'est le cas, il les retire de <code>UA200a</code> et les rajoute à la fin de <code>UA200b</code> (sans espace si nécessaire).
+Il rajoute ensuite le champ ci-dessous à la valeur qui sera renvoyée (via <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#appendnote"><code>appendNote</code></a>) avant de passer à la prochaine instance :</p>
+
+<ul>
+<li><code>400 #1$a</code> + la valeur actuelle de <code>UA200a</code> + <code>$b</code> + la valeur actuelle de <code>UA200b</code></li>
 </ul>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_principaux.vbs">Consulter le script</a></p>
+
+<h3 id="findua200aua200b"><code>findUA200aUA200b</code></h3>
+
+<p>Renvoie la position la UA200, son <code>$a</code>, son <code>$b</code> et la position du premier dollar suivant le <code>$b</code> ou à défaut celle de la fin du champ. <strong>Doit être appelé depuis l'écran de modification pour fonctionner.</strong></p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Récupère le premier champ 200 de la notice puis initie une boucle <code>While</code> tant que <code>UA200fPos</code> est égal à zéro (sa valeur par défaut), tout en générant un compteur supplémentaire.
+À chaque instance de la boucle, en fonction de la valeur du compteur (augmente de 1 à la fin de chaque instance), la script va attribuer à <code>UA200fPos</code> la position d'un dollar (0 par défaut, ce qui veut dire que si le dollar n'est pas présent, la boucle continue) :</p>
+
+<ul>
+<li>compteur = 0 : <code>$f</code> ;</li>
+
+<li>compteur = 1 : <code>$c</code> ;</li>
+
+<li>compteur = 2 : <code>$x</code> ;</li>
+
+<li>compteur = 3 : <code>$y</code> ;</li>
+
+<li>compteur = 4 : <code>$z</code> ;</li>
+
+<li>si le compteur a une autre valeur, assigne à <code>UA200fPos</code> la longueur de la 200 <strong>+ 1</strong> (sinon <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addua400"><code>addUA400</code></a> supprimerait parfois la dernière lettre du prénom).</li>
+</ul>
+
+<p>Il isole ensuite la valeur du <code>$a</code> puis du <code>$b</code> et renvoie la 200, la <code>$a</code> isolé, le <code>$b</code> isolé et <code>UA200fPos</code> <strong>sous forme d'une seule chaîne de caractères en séparant les différentes valeurs par <code>;_;</code></strong>.</p>
+
+<p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
+
+<h3 id="generallauncher"><code>generalLauncher</code></h3>
+
+<p>Ouvre une boîte de dialogue servant à lancer les scripts (majoritairement de type <code>add</code> et <code>get</code>). </p>
+
+<p><em>Type de procédure : SUB</em></p>
+
+<p>Ouvre une boîte de dialogue contenant la liste des scripts suivants accompagnés de leur identifiant, la liste étant décomposée en plusieurs parties :</p>
+
+<ul>
+<li>notices bibliographiques :
+
+
+<ul>
+<li>14 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#add18xmonoimp"><code>add18XmonoImp</code></a> ;</li>
+
+<li>1 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addcouvporte"><code>addCouvPorte</code></a> ;</li>
+
+<li>2 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addbibgfinchap"><code>addBibgFinChap</code></a> ;</li>
+
+<li>3 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addeisbn"><code>addEISBN</code></a> ;</li>
+
+<li>4 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addsujetrameau"><code>AddSujetRAMEAU</code></a> ;</li>
+
+<li>15 : placer dans le presse-papier le renvoi de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addub700s3"><code>addUB700S3</code></a> ;</li></ul>
+</li>
+
+<li>Elsevier :
+
+
+<ul>
+<li>6 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addisbnelsevier"><code>addISBNElsevier</code></a> ;</li>
+
+<li>7 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#add214elsevier"><code>add214Elsevier</code></a> ;</li></ul>
+</li>
+
+<li>récupérer des informations :
+
+
+<ul>
+<li>8 : placer dans le presse-papier le renvoi de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#gettitle"><code>getTitle</code></a> ;</li>
+
+<li>9 : placer dans le presse-papier le renvoi de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#getcoteex"><code>getCoteEx</code></a> ;</li></ul>
+</li>
+
+<li>thèses
+
+
+<ul>
+<li>10 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#getdatauachantierthese"><code>getDataUAChantierThese</code></a> ;</li>
+
+<li>5 : exécuter <code>perso_CTaddUB700S3</code> ;</li>
+
+<li>11 : placer dans le presse-papier le renvoi de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#getub310"><code>getUB310</code></a> ;</li></ul>
+</li>
+
+<li>notices d'autorités
+
+
+<ul>
+<li>12 : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#addua400"><code>addUA400</code></a> ;</li>
+
+<li>13 : placer dans le presse-papier le renvoi de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#getua810b"><code>getUA810b</code></a> ;</li></ul>
+</li>
+
+<li>CorWin :
+
+
+<ul>
+<li>77 : lance le lanceur de <a href="https://github.com/Alban-Peyrat/CorWin">CorWin</a>.</li></ul>
+</li>
+</ul>
+
+<p><em>Contexte de développement : j'utilise des raccourcis pour la majorité de mes scripts. Or à force de créer de petits scripts, les combinaisons de raccourcis se limitent et m'obligent à retenir beaucoup de raccourcis différents. Le lenceur général permet donc de réduire ce nombre. Aussi, les nombres sont attribués dans l'ordre d'ajout et non pas dans l'ordre où ils sont listés.</em></p>
 
 <h3 id="getcoteex"><code>getCoteEx</code></h3>
 
@@ -382,6 +526,20 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <p><em>Type de procédure : SUB</em></p>
 
+<p>Transforme la liste de PPN du presse-papier en :</p>
+
+<ul>
+<li>supprimant <code>(PPN)</code> ;</li>
+
+<li>remplançant <code>chr(10)</code> par <code>OR</code> (avec espace avant et après) ;</li>
+
+<li>ajoutant au début <code>che PPN</code> suivi d'un espace ;</li>
+
+<li>supprimant les quatre derniers caractères (supposément <code>OR</code> avec un espace avant et après).</li>
+</ul>
+
+<p>Place ensuite la requête dans le presse-papier et lance la requête.</p>
+
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
 
 <h2 id="scriptsressources">Scripts ressources</h2>
@@ -390,18 +548,24 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <h3 id="appendnote"><code>appendNote</code></h3>
 
-<p>Renvoie <code>var</code> comme équivalent à <code>text</code> si <code>var</code> était vide, sinon, renvoie <code>var</code> suivi d'un saut de ligne puis de <code>text</code>.</p>
+<p>Renvoie la variable injectée avec le texte injecté, ajoutant un saut de ligne si la variable n'était pas vide.</p>
 
 <p><em>Type de procédure : FUNCTION</em></p>
-
-<p><em>Renvoi :</em></p>
 
 <p><em>Paramètres :</em></p>
 
 <ul>
-<li>var : variable à laquelle on veut ajouter du texte ;</li>
+<li><code>var</code> : variable à laquelle on veut ajouter du texte ;</li>
 
-<li>text : texte à ajouter à la variable.</li>
+<li><code>text</code> : texte à ajouter à la variable.</li>
+</ul>
+
+<p>Regarde si <code>var</code> est vide :</p>
+
+<ul>
+<li>si oui, renvoie le <code>text</code> ;</li>
+
+<li>si non, renvoie <code>var</code> + <code>chr(10)</code> + <code>text</code>.</li>
 </ul>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
@@ -412,32 +576,33 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <p><em>Type de procédure : FUNCTION</em></p>
 
-<p><em>Renvoi :</em></p>
-
 <p><em>Paramètres :</em></p>
 
 <ul>
-<li>p_strStringToCheck : A FAIRE</li>
+<li><code>p_strStringToCheck</code> : variable qui sera fouillée ;</li>
 
-<li>p_strSubString : A FAIRE</li>
+<li><code>p_strSubString</code> : texte à chercher ;</li>
 
-<li>p_boolCaseSensitive : A FAIRE</li>
+<li><code>p_boolCaseSensitive</code> : <strong>bool</strong> définit si la recherche sera sensible à la casse.</li>
 </ul>
+
+<p>Renvoie le nombre de fois où <code>p_strSubString</code> apparait dans <code>p_strStringToCheck</code> en comptant le nombre de parties lorsque l'on divise <code>p_strStringToCheck</code> en utilisant <code>p_strSubString</code> comme séparateur.
+Si <code>p_boolCaseSensitive</code> est <code>false</code>, alors le script passe dans un premier temps les deux autres variables en minuscule.</p>
 
 <p><a href="https://www.thoughtasylum.com/2009/07/30/VB-Script-Count-occurrences-in-a-text-string/">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">consulter le script</a></p>
 
 <h3 id="exportvar"><code>exportVar</code></h3>
 
-<p>Exporte <code>var</code> dans <code>export.txt</code> (même emplacement que <code>winibw.vbs</code>), réécrivant le fichier si <code>boolAppend</code> est false. Est utilisé par toutes les procédures qui exporte des données.</p>
+<p>Exporte le texte injecté dans <code>export.txt</code> (même emplacement que <code>winibw.vbs</code>). <strong>Pour l'utiliser, pensez à changer la destination du document, et le nom si vous le souhaitez.</strong></p>
 
 <p><em>Type de procédure : SUB</em></p>
 
 <p><em>Paramètres :</em></p>
 
 <ul>
-<li>var : A FAIRE</li>
+<li><code>var</code> : le texte à exporter ;</li>
 
-<li>boolAppend : A FAIRE</li>
+<li><code>boolAppend</code> : <strong>bool</strong> définit si le script doit ajouter à la fin du fichier (<code>true</code>) ou réécrire le fichier.</li>
 </ul>
 
 <p><a href="http://eddiejackson.net/wp/?p=8619">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">consulter le script</a></p>
@@ -476,14 +641,14 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 
 <h3 id="sleep"><code>Sleep</code></h3>
 
-<p>Permet de mettre en pause un script pendant t = <code>time</code> (en secondes).</p>
+<p>Permet de mettre en pause un script. <strong>Évitez l'utilisation.</strong></p>
 
 <p><em>Type de procédure : SUB</em></p>
 
 <p><em>Paramètres :</em></p>
 
 <ul>
-<li>time : [int] A FAIRE</li>
+<li><code>time</code> : <strong>int</strong> temps à attendre (en secondes).</li>
 </ul>
 
 <p><a href="https://stackoverflow.com/questions/1729075/how-to-set-delay-in-vbscript#answer-12921137">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">consulter le script</a></p>
@@ -497,26 +662,49 @@ Une fois le traitement des commandes terminé, il conserve alors en mémoire un 
 <p><em>Paramètres :</em></p>
 
 <ul>
-<li>lgpMode : [bool] A FAIRE</li>
+<li><code>lgpMode</code> : <strong>bool</strong> définit si l'on souhaite passer en mode présentation (<code>true</code>) ;</li>
 
-<li>save : [bool] A FAIRE</li>
+<li><code>save</code> : <strong>bool</strong> définit si l'on souhaite sauvegarder les modifications si l'on passe en mode présentation.</li>
+</ul>
+
+<p>Script barbare qui pour le moment essaye de savoir s'il est possible de coller une information dans la notice :</p>
+
+<ul>
+<li>si l'opération entraîne une erreur (non visible par l'utilisateur), détermine que la notice n'est pas en mode édition ;</li>
+
+<li>sinon, détermine que la notice est en mode édition.</li>
+</ul>
+
+<p>Il agit ensuite selon trois scénarios :</p>
+
+<ul>
+<li>il doit passer en mode édition et la notice n'est pas en mode édition, il lance la commande <code>mod</code> ;</li>
+
+<li>il doit passer en mode présentation et sauvegarder la notice, il simule la validation de la notice ;</li>
+
+<li>il doit passer en mode présentation et ne pas sauvegarder la notice, il simule alors une annulation puis une validation (= pour le message qui apparait en cas de tentative d'annulation alors que des modifications ont été effectuées).</li>
 </ul>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
 
 <h3 id="ucasenames"><code>uCaseNames</code></h3>
 
-<p>Renvoie <code>noms</code> après avoir mis une majuscule au début de chaque nom renseigné.</p>
+<p>Renvoie les noms injectés avec une majuscule au début de chacun d'entre eux.</p>
 
 <p><em>Type de procédure : FUNCTION</em></p>
-
-<p><em>Renvoi :</em></p>
 
 <p><em>Paramètres :</em></p>
 
 <ul>
-<li>noms : A FAIRE</li>
+<li><code>noms</code> : les noms à formatter.</li>
 </ul>
+
+<p>Passe en majuscule le premier caractère de <code>noms</code> et en minuscule le reste, avant de lancer une boucle à trois instances.
+Pour chaque instance, le script détermine un séparateur qu'il va rechercher dans <code>noms</code> (espace puis <code>-</code> puis <code>'</code>).
+Il initie alors une variable <code>jj</code> avec la valeur <code>0</code> puis lance alors une boucle <code>While</code> tant que la recherche du séparateur à l'intérieur de <code>noms</code> en commençant à la position <code>jj + 1</code> est concluante.
+Si la recherche est concluante, <code>jj</code> prend la valeur de la position du séparateur identifié, puis le script conserve tel quel tout ce qui se trouve jusqu'à <code>jj</code>, puis passe en majuscule le caractère se trouvant en <code>jj + 1</code> et conserve tout ce qui le suit tel quel.
+Une fois la boucle <code>While</code> interrompue, il passe ensuite à la prochaine instance de la première boucle.
+Une fois les trois instances de celle-ci terminée, il remplace <code>De</code> (espace avant et après) et <code>D'</code> (espace avant) par leur équivalent en minuscule, avant de renvoyer le résultat final.</p>
 
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_ressources.vbs">Consulter le script</a></p>
 
