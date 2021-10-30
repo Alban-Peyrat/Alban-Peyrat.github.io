@@ -158,6 +158,9 @@ document.getElementById("buttonNB").onclick = function(){
     divLiens.style.border = "solid 1px #000000";
     for (let jj=0;jj<code.length;jj++){
       code[jj].style.backgroundColor = "#000000";
+      if (code[jj].parentNode.tagName == "A"){
+        code[jj].style.textDecoration = "underline";
+      }
     }
     buttonNB.style.display = "none";
     NB = true;
