@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alban Peyrat - Scripts pour WinIBW</title>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
+	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+</head>
+<body>
+<header>
+	<a href="https://alban-peyrat.github.io">
+		<span id="headerPres" style="color:#FF8A00">Présentation et documentation de mes outils numériques</span>
+	</a>
+</header>
+<div id="contenu">
+	<ul id="lienGitHub">
+		<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/PEB.md">Accédez à la page GitHub des scripts de PEB pour WinIBW</a></li>
+		<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW">Accédez au dépôt GitHub des scripts de PEB pour WinIBW</a></li>
+	</ul>
+<p><strong>À noter : le nom réel des scripts est précédé de <code>AlP_PEB_</code>. Le préfixe a été ici retiré pour faciliter la lecture.</strong></p>
+
+<h1 id="installationdesscripts">Installation des scripts</h1>
+
+<p>Il existe deux manières d'installer ces scripts, les résultats sont similaires hormis le <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/PEB.md#launcher">launcher</a> qui diffère entre les deux. </p>
+
+<h2 id="entantquescriptsutilisateursvbs">En tant que scripts utilisateurs (VBS)</h2>
+
+<p><strong>Fermez WinIBW.</strong>
+Accédez au dossier de WinIBW (par exemple en faisant clic-droit puis <code>Ouvrir l'emplacement du fichier</code>), puis ouvrez le dossier <code>Profiles</code>, puis celui correspondant à votre nom d'utilisateur.
+Modifiez ensuite le fichier <code>winibw.vbs</code> avec <code>Bloc-notes</code> (par exemple), rendez-vous à la fin du fichier et collez l'intégralité du contenu du fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_PEB.vbs"><code>scripts_PEB.vbs</code></a>.
+Enregistrez et fermez le document.</p>
+
+<p>Vous pourrez retrouver les scripts dans la catégorie <code>Fonctions</code>.</p>
+
+<h2 id="entantquescriptsstandartsjs">En tant que scripts standarts (JS)</h2>
+
+<p><strong>Fermez WinIBW.</strong>
+Accédez au dossier de WinIBW (par exemple en faisant clic-droit puis <code>Ouvrir l'emplacement du fichier</code>), puis ouvrez le dossier <code>Profiles</code>, puis celui correspondant à votre nom d'utilisateur.
+Modifiez ensuite le fichier <code>user_pref.js</code> avec <code>Bloc-notes</code> (par exemple), rendez-vous à la fin du fichier et collez sur une nouvelle ligne ce texte : <code>user_pref("ibw.standardScripts.script.99", "resource:/Profiles/[NOM D'UTILISATEUR]/peyrat_peb.js");</code>.
+Modifiez le <code>[NOM D'UTILISATEUR]</code> avec le vôtre.
+Enregistrez et fermez le document.
+Collez ensuite le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/peyrat_peb.vbs"><code>peyrat_peb.js</code></a> au même emplacement que <code>user-pref.js</code>.</p>
+
+<p>Vous pourrez retrouver les scripts dans la catégorie <code>Standart Fonctions</code>.</p>
+
+<h1 id="utiliserlesscripts">Utiliser les scripts</h1>
+
+<p>Rappels :</p>
+
+<ul>
+<li>si vous avez installé les scripts en tant que scripts utilisateurs, vous les retrouverez dans la catégorie <code>Fonctions</code>, si vous les avez installés en tant que scripts standarts, vous les retrouverez dans la catégorie <code>Standart Fonctions</code> ;</li>
+
+<li>les scripts sont précédés de la mention <code>AlP_PEB_</code>.</li>
+</ul>
+
+<h2 id="viaboutons">Via boutons</h2>
+
+<p>Ouvrez le menu <code>Options</code> puis <code>Personnaliser...</code> puis <code>Commandes</code> et retrouvez le script qui vous intéresse dans la liste des commandes de la bonne catégorie.
+Effectuez ensuite un cliqué-déposé vers votre barre de menu.
+<strong>Si vous sélectionnez d'afficher du texte, vous pouvez modifier le texte du bouton via l'option <code>Texte bouton :</code>.</strong></p>
+
+<h2 id="viaraccourcis">Via raccourcis</h2>
+
+<p>Ouvrez le menu <code>Options</code> puis <code>Personnaliser...</code> puis <code>Clavier</code>.
+Retrouvez le script qui vous intéresse dans la liste des commandes de la bonne catégorie et affectez-y un raccourci.</p>
+
+<h1 id="prsentationdesscripts">Présentation des scripts</h1>
+
+<h2 id="getnumdemande"><code>getNumDemande</code></h2>
+
+<p>Renvoie dans le presse-papier le numéro de la demande PEB.</p>
+
+<p><strong>Détails :</strong> Renvoie la variable <code>P3GA*</code>.</p>
+
+<h2 id="getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></h2>
+
+<p>Renvoie dans le presse-papier le numéro de la demande PEB <strong>venant d'être effectuée</strong>.</p>
+
+<p><strong>Détails :</strong> Le script récupère le premier message affiché dans la barre des messages et renvoie les dix premiers caractères en suivant l'expression <code>no.</code> (suivi d'un espace).</p>
+
+<h2 id="getrcrdemandeur"><code>getRCRDemandeur</code></h2>
+
+<p>Renvoie dans le presse-papier du RCR demandeur.</p>
+
+<p><strong>Détails :</strong> Renvoie la variable <code>libID</code>.</p>
+
+<h2 id="launcher"><code>Launcher</code></h2>
+
+<p>Ouvre une boîte de dialogue qui permet de lancer l'exécution d'un des autres scripts de PEB que j'ai développés.</p>
+
+<p><strong>Détails :</strong> la boîte de dialogue varie selon si l'on utilise les scripts en VBS ou en JS. <strong>En JS</strong>, la boite de dialogue propose des options cliquables, qui exécuteront les scripts associés . <strong>En VBS</strong>, la boîte de dialogue demande d'entrer le numéro associé au script :</p>
+
+<ul>
+<li>0 (VBS) / <code>Get no demande PEB</code> (JS) : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/PEB.md#getnumdemande"><code>getNumDemande</code></a> ;</li>
+
+<li>1 (VBS) / <code>Get no demande PEB post-validation</code> (JS) : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/PEB.md#getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></a> ;</li>
+
+<li>3 (VBS) / <code>Get RCR demandeur</code> (JS) : exécuter <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/PEB.md#getrcrdemandeur"><code>getRCRDemandeur</code></a> ;</li>
+
+<li>4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : pas encore implenté.</li>
+</ul>
+
+<p><em>À noter : le numéro 2 sera dédié à la récupération du PPN, qui est en cours de développement.</em></p>
+  
+</div>
+<div id="accessButtons">
+	<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+	<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="divLiens">
+	<p>Liens vers les autres outils&nbsp;:</p>
+	<ul id="liens">
+		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW">Scripts-WinIBW</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+		<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+	</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+</html>

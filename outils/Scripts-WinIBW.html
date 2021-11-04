@@ -19,7 +19,9 @@
 	</ul>
 <p><strong>Rappel : pour installer les scripts dans WinIBW, référez-vous au <a href="http://documentation.abes.fr/sudoc/manuels/logiciel_winibw/scripts/index.html#CreerScriptUtilisateur">guide pour les scripts utilisateurs de l'Abes</a>.</strong></p>
 
-<p><em><a href="https://alban-peyrat.github.io/outils//Scripts-WinIBW#listedesmodifications">Cliquez ici pour atteindre la liste des modifications.</a></em></p>
+<p><em><a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB">Cliquez ici pour accéder aux scripts de PEB.</a></em></p>
+	
+<p><em><a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW#listedesmodifications">Cliquez ici pour atteindre la liste des modifications.</a></em></p>
 
 <p>Les scripts proposés visent généralement à accélérer des traitements répétitifs dans WinIBW. Certains d'entre eux, classés en tant que concepts, visent à contrôler des données sans devoir les modifier via des outils externes type tableur.</p>
 
@@ -906,14 +908,41 @@ Une fois les trois instances de celle-ci terminée, il remplace <code>De</code> 
 <li><code>uCaseNames</code> : force désormais la majuscule sur la première lettre (le script était conçu pour des noms entièrement en maajuscule).</li>
 </ul>
 
-<h2 id="modificationsprvues">Modifications prévues</h2>
+<h2 id="le04112021">Le 04/11/2021 :</h2>
+
+<ul>
+<li>la liste de modifications se trouve désormais dans un fichier à part ;</li>
+
+<li>ajout <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/PEB.md">des scripts de PEB et de leur documentation</a> ;</li>
+
+<li>ajout des scripts :
+
+
+<ul>
+<li><code>addAutFromUB</code> : génère un squelette de notice auteur à partir d'une notice bibliographique ;</li>
+
+<li><code>addUB7XX</code> : ajoute une <code>7XX</code>, avec un fonctionnement similaire à <code>addSujetRAMEAU</code> ;</li>
+
+<li><code>chantierThese_getJuryForExcel</code> : récupère des données de la thèse pour l'exporter vers Excel ;</li>
+
+<li><code>chantierThese_addJuryFromExcel</code> : ajoute à la notice bibliographique une <code>200$g</code>, une <code>314</code> et les <code>701</code> prévues par Excel ;</li>
+
+<li><code>chantierThese_addJuryAut</code>: ajoute une notice d'autorité auteur à partir de l'extraction de <code>chantierThese_getJuryforExcel</code> ;</li>
+
+<li><code>ress_getTag</code> : renvoie la valeur du/des champs/sous-champs voulus (une phase de test est prévue) ;</li></ul>
+</li>
+
+<li>correction de <code>addUA400</code> : détecte désormais correctement les particules rejetées quelle que soit la casse.</li>
+</ul>
+
+<h1 id="modificationsprvues">Modifications prévues</h1>
 
 <ul>
 <li><code>getTitle</code> : permettre son utilisation autant en mode édition que présentation ;</li>
 
 <li>scripts de type <code>get</code> : vérification de l'utilisation du presse-papier et restituer le presse-papier présent avant le lancement du script s'il est réécrit ;</li>
 
-<li><code>addUA400</code> (et associés) : gérer les autres informations ;</li>
+<li><code>addUA400</code> (et associés) : adapter à <code>getTag</code>, mettre des majuscules si nécessaire, gérer les autres informations ;</li>
 
 <li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code> ;</li>
 
@@ -921,7 +950,11 @@ Une fois les trois instances de celle-ci terminée, il remplace <code>De</code> 
 
 <li>correction du malfonctionnement probable de <code>addBibgFinChap</code> ;</li>
 
-<li>nettoyage et correction de code et des commentaires de début de script.</li>
+<li>nettoyage et correction de code et des commentaires de début de script ;</li>
+
+<li>séparation des scripts de chantier thèses ;</li>
+
+<li>PEB : récupérer le PPN et récupérer le RCR de la bibliothèque avec le statut "En attente de réponse".</li>
 </ul>
 </div>
 <div id="accessButtons">
