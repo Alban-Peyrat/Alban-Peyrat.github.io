@@ -17,7 +17,7 @@
 		<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/PEB.md">Accédez à la page GitHub des scripts de PEB pour WinIBW</a></li>
 		<li><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW">Accédez au dépôt GitHub des scripts pour WinIBW</a></li>
 	</ul>
-<p><strong>À noter : le nom réel des scripts est précédé de <code>AlP_PEB_</code>. Le préfixe a été ici retiré pour faciliter la lecture.</strong></p>
+<p><strong>À noter : le nom réel des scripts est précédé de <code>AlP_PEB</code>. Le préfixe a été ici retiré pour faciliter la lecture.</strong></p>
 
 <h1 id="installationdesscripts">Installation des scripts</h1>
 
@@ -83,6 +83,15 @@ Retrouvez le script qui vous intéresse dans la liste des commandes de la bonne 
 <p>Renvoie dans le presse-papier du RCR demandeur.</p>
 
 <p><strong>Détails :</strong> Renvoie la variable <code>libID</code>.</p>
+	
+<h2 id="getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></h2>
+
+<p>Renvoie dans le presse-papier du RCR fournisseur dont une réponse est attendue.</p>
+
+<p><strong>Détails :</strong> Divise en plusieurs parties la variable <code>P3VCA</code> (l'<code>iframe</code> contenant la liste des fournisseurs) en utilisant le retour chariot comme séparateur.
+Pour chaque fournisseur, recherche un caractère d'échappement suivi de <code>E</code> suivi d'un caractère d'échappement suivi de <code>LRT</code> et isole ce qui suit jusqu'au prochain caractère d'échappement (supposément, l'information contenue dans la colonne "Commentaire").
+Si cette donnée isolée correspond à <code>En attente de réponse</code>, il recherche alors la même expression que précédemment en remplaçant <code>LRT</code> par <code>LSS</code> (supposément le RCR de la bibliothèque) et place dans le presse-papier les 9 caractères suivant (puisque les RCR font 9 caractères).
+Le script force ensuite l'arrêt de la boucle.</p>
 
 <h2 id="launcher"><code>Launcher</code></h2>
 
@@ -95,9 +104,11 @@ Retrouvez le script qui vous intéresse dans la liste des commandes de la bonne 
 
 <li>1 (VBS) / <code>Get no demande PEB post-validation</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></a> ;</li>
 
+<li>2 (VBS) / <code>Get PPN</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getppn"><code>getPPN</code></a> ;</li>
+
 <li>3 (VBS) / <code>Get RCR demandeur</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getrcrdemandeur"><code>getRCRDemandeur</code></a> ;</li>
 
-<li>4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : pas encore implenté.</li>
+<li>4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></a>.</li>
 </ul>
 
 <p><em>À noter : le numéro 2 sera dédié à la récupération du PPN, qui est en cours de développement.</em></p>
