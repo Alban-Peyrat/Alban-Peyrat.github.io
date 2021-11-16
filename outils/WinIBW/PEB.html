@@ -21,13 +21,14 @@
 
 <h1 id="installationdesscripts">Installation des scripts</h1>
 
-<p>Il existe deux manières d'installer ces scripts, les résultats sont similaires hormis le <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#launcher">launcher</a> qui diffère entre les deux. </p>
+<p>Il existe deux manières d'installer ces scripts, les résultats sont supposément les mêmes, hormis le <a href="#launcher">launcher</a> qui diffère entre les deux.
+<strong>Toutefois</strong>, <a href="#trirecherche"><code>triRecherche</code></a> n'existe qu'en <strong><code>JS</code></strong>.</p>
 
 <h2 id="entantquescriptsutilisateursvbs">En tant que scripts utilisateurs (VBS)</h2>
 
 <p><strong>Fermez WinIBW.</strong>
 Accédez au dossier de WinIBW (par exemple en faisant clic-droit puis <code>Ouvrir l'emplacement du fichier</code>), puis ouvrez le dossier <code>Profiles</code>, puis celui correspondant à votre nom d'utilisateur.
-Modifiez ensuite le fichier <code>winibw.vbs</code> avec <code>Bloc-notes</code> (par exemple), rendez-vous à la fin du fichier et collez l'intégralité du contenu du fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts_PEB.vbs"><code>scripts_PEB.vbs</code></a>.
+Modifiez ensuite le fichier <code>winibw.vbs</code> avec <code>Bloc-notes</code> (par exemple), rendez-vous à la fin du fichier et collez l'intégralité du contenu du fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_PEB.vbs"><code>scripts_PEB.vbs</code></a>.
 Enregistrez et fermez le document.</p>
 
 <p>Vous pourrez retrouver les scripts dans la catégorie <code>Fonctions</code>.</p>
@@ -37,9 +38,11 @@ Enregistrez et fermez le document.</p>
 <p><strong>Fermez WinIBW.</strong>
 Accédez au dossier de WinIBW (par exemple en faisant clic-droit puis <code>Ouvrir l'emplacement du fichier</code>), puis ouvrez le dossier <code>Profiles</code>, puis celui correspondant à votre nom d'utilisateur.
 Modifiez ensuite le fichier <code>user_pref.js</code> avec <code>Bloc-notes</code> (par exemple), rendez-vous à la fin du fichier et collez sur une nouvelle ligne ce texte : <code>user_pref("ibw.standardScripts.script.99", "resource:/Profiles/[NOM D'UTILISATEUR]/peyrat_peb.js");</code>.
+<em>Uniquement pour <a href="#trirecherche"><code>triRecherche</code></a> : collez sur une nouvelle ligne : <code>user_pref("ibw.standardScripts.script.98", "resource:/Profiles/[NOM D'UTILISATEUR]/peyrat_js_scripts.js");</code>.</em>
 Modifiez le <code>[NOM D'UTILISATEUR]</code> avec le vôtre.
 Enregistrez et fermez le document.
-Collez ensuite le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/peyrat_peb.js"><code>peyrat_peb.js</code></a> (pour télécharger le fichier : <a href="https://raw.githubusercontent.com/Alban-Peyrat/Scripts-WinIBW/main/peyrat_peb.js">rendez-vous sur ce lien</a> puis faites un clic-droit <code>Enregistrer sous...</code> en choisissant <code>Tous les fichiers</code> comme type de document) au même emplacement que <code>user-pref.js</code>.</p>
+Collez ensuite le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/peyrat_peb.js"><code>peyrat_peb.js</code></a> (pour télécharger le fichier : <a href="https://github.com/Alban-Peyrat/WinIBW/archive/refs/heads/main.zip">téléchargez ce .zip</a>, vous retrouverez le fichier dans le dossier <code>scripts</code>) au même emplacement que <code>user-pref.js</code>.
+<em>Uniquement pour <a href="#trirecherche"><code>triRecherche</code></a> : collez également le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/peyrat_js_scripts.js"><code>peyrat_js_scripts.js</code></a>.</em></p>
 
 <p>Vous pourrez retrouver les scripts dans la catégorie <code>Standart Fonctions</code>.</p>
 
@@ -83,13 +86,13 @@ Retrouvez le script qui vous intéresse dans la liste des commandes de la bonne 
 <p>Renvoie dans le presse-papier le PPN de la demande PEB.</p>
 
 <p><strong>Détails :</strong> Renvoie la variable <code>P3VTA</code>.</p>
-	
+
 <h2 id="getrcrdemandeur"><code>getRCRDemandeur</code></h2>
 
 <p>Renvoie dans le presse-papier du RCR demandeur.</p>
 
 <p><strong>Détails :</strong> Renvoie la variable <code>libID</code>.</p>
-	
+
 <h2 id="getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></h2>
 
 <p>Renvoie dans le presse-papier du RCR fournisseur dont une réponse est attendue.</p>
@@ -106,16 +109,55 @@ Le script force ensuite l'arrêt de la boucle.</p>
 <p><strong>Détails :</strong> la boîte de dialogue varie selon si l'on utilise les scripts en VBS ou en JS. <strong>En JS</strong>, la boite de dialogue propose des options cliquables, qui exécuteront les scripts associés . <strong>En VBS</strong>, la boîte de dialogue demande d'entrer le numéro associé au script :</p>
 
 <ul>
-<li>0 (VBS) / <code>Get no demande PEB</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getnumdemande"><code>getNumDemande</code></a> ;</li>
+<li>0 (VBS) / <code>Get no demande PEB</code> (JS) : exécuter <a href="#getnumdemande"><code>getNumDemande</code></a> ;</li>
 
-<li>1 (VBS) / <code>Get no demande PEB post-validation</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></a> ;</li>
+<li>1 (VBS) / <code>Get no demande PEB post-validation</code> (JS) : exécuter <a href="#getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></a> ;</li>
 
-<li>2 (VBS) / <code>Get PPN</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getppn"><code>getPPN</code></a> ;</li>
+<li><em>exclusif JS :</em> <code>Trier recherche</code> (JS) : exécuter <a href="#trirecherche"><code>triRecherche</code></a> ;</li>
 
-<li>3 (VBS) / <code>Get RCR demandeur</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getrcrdemandeur"><code>getRCRDemandeur</code></a> ;</li>
+<li>2 (VBS) / <code>Get PPN</code> (JS) : exécuter <a href="#getppn"><code>getPPN</code></a> ;</li>
 
-<li>4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : exécuter <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB#getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></a>.</li>
+<li>3 (VBS) / <code>Get RCR demandeur</code> (JS) : exécuter <a href="#getrcrdemandeur"><code>getRCRDemandeur</code></a> ;</li>
+
+<li>4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : exécuter <a href="#getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></a>.</li>
 </ul>
+
+<h2 id="trirecherche"><code>triRecherche</code></h2>
+
+<p>Ouvre un fichier Excel permettant de trier et filtrer les résultats d'une requête.</p>
+
+<p><strong>Détails :</strong> le script va créer un fichier <code>triPEB.xls</code> (ou effacer ses données s'il existe déjà) dans le profil WinIBW de l'utilisateur (au même emplacement que les fichiers de scripts), puis y écrire les en-têtes.
+<em>Le fichier ne doit pas être ouvert avant l'exécution du script pour un bon fonctionnement de celui-ci.</em>
+Le script récupère ensuite le numéro du lot affiché, lance une requête <code>\\too s{NUMÉRO DE LOT} k</code> pour rafficher le lot et récupérer le nombre de résultats.</p>
+
+<p>Il va ensuite commencer une boucle tant que la ligne traitée est strictement inférieure au nombre de résultats.
+À chaque instance de la boucle, le script lance la requête <code>\\too s{NUMÉRO DE LOT} {LIGNE TRAITÉE + 1 } k</code> et récupère la variable <code>P3VKZ</code>, qui contient l'intégralité du segment de la liste des résultats contenant la ligne traitée + 1 <a href="./etude_fonctionement_WinIBW.md">(voir plus d'informations à ce sujet)</a>.
+Le script divise ensuite cette variable en utilisant les retours chariots comme séparateur.
+Pour chaque chaque notice identifiée, il supprime les guillemets, puis remplace les caractères accentués et autres caractères spéciaux par des lettres classiques <a href="./">(voir la fonction associée)</a>.
+Cette étape est nécessaire pour faciliter la lecture du fichier puisque ces caractères seront "corrompus" si laissés tels quels (certains caractères accentués poseront quand même problèmes).
+Il isole ensuite plusieurs informations en recherchant le caractère d'échappement suivi de <code>L</code> suivi de l'identifiant de l'information, puis en conservant tout ce qui se trouve jsuqu'au prochain caractère d'échappement suivi de <code>E</code>.
+Voici la liste des informations récupérées, dans l'ordre des colonnes sur le fichier final, avec leur identifiant dans l'affichage par défaut :</p>
+
+<ul>
+<li>PPN (<code>PP</code>) ;</li>
+
+<li>auteur (<code>V0</code>) ;</li>
+
+<li>titre (<code>V1</code>) ;</li>
+
+<li>éditeur (<code>V2</code>) ;</li>
+
+<li>édition (<code>V3</code>) ;</li>
+
+<li>année (<code>V4</code>) ;</li>
+
+<li>numéro dans le lot (<code>NR</code>, pas affiché dans Excel, correspond à la ligne traitée sus-mentionnée).</li>
+</ul>
+
+<p>Une fois ces six premières informations récupérées, il les ajoute dans une nouvelle ligne sur le fichier puis passe à la notice suivante.</p>
+
+<p>Une fois toutes les notices du segment traité, il ajoute 1 à une variable qui casse la boucle <code>While</code> si elle atteint 9999 puis passe à la prochaine instance de celle-ci.
+Une fois cette boucle achevée, le script ferme le fichier, puis l'ouvre en utilisant l'application configurée par défaut pour ce type de fichier.</p>
   
 </div>
 <div id="accessButtons">
