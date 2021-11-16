@@ -15,7 +15,17 @@
 <div id="contenu">
 <h1 id="listedesmodifications">Liste des modifications</h1>
 
-<p>Le 02/08/2021 :</p>
+<p><em>Consulter les autres pages dédiées à WinIBW :</em></p>
+
+<ul>
+<li><em><a href="./scripts.md">les scripts ;</a></em></li>
+
+<li><em><a href="./PEB.md">les scripts pour le PEB ;</a></em></li>
+
+<li><em><a href="./etude-fonctionnement.md">mes "études" sur le fonctionnement.</a></em></li>
+</ul>
+
+<h2 id="le02082021">Le 02/08/2021 :</h2>
 
 <ul>
 <li>suppression de <code>PurifUB200a</code> car peu d'intérêts à être partagé ;</li>
@@ -25,7 +35,7 @@
 <li>suppression de <code>LastCHE</code> car peu d'intérêts à être partagé.</li>
 </ul>
 
-<p>Le 23/08/2021 :</p>
+<h2 id="le23082021">Le 23/08/2021 :</h2>
 
 <ul>
 <li>ajout de <code>AddSujetRAMEAU</code> pour ajouter des 60X ;</li>
@@ -39,7 +49,7 @@
 <li>scission de <code>addUB700S3</code> : la partie sur l'exemplaire a été isolée dans un nouveau script, <code>changeExAnom</code>.</li>
 </ul>
 
-<p>Le 24/08/2021 :</p>
+<h2 id="le24082021">Le 24/08/2021 :</h2>
 
 <ul>
 <li>répartition des scripts entre plusieurs fichiers ;</li>
@@ -49,15 +59,15 @@
 <li>adaptation du projet pour être cohérent avec les autres outils.</li>
 </ul>
 
-<p>Le 25/08/2021 :</p>
+<h2 id="le25082021">Le 25/08/2021 :</h2>
 
 <ul>
 <li>suppression de <code>ctrlTraitementInterne</code>, que j'avais dû arrêter en plein milieu du développement ;</li>
 
-<li>modification de la description de <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/concepts.vbs">concepts</a> et ajout de la mention de <a href="https://github.com/Alban-Peyrat/ConStance">Constance</a> ;</li>
+<li>modification de la description de <a href="./scripts/concepts.vbs">concepts</a> et ajout de la mention de <a href="https://github.com/Alban-Peyrat/ConStance">Constance</a> ;</li>
 </ul>
 
-<p>Le 01/09/2021 :</p>
+<h2 id="le01092021">Le 01/09/2021 :</h2>
 
 <ul>
 <li>ajout de <code>appendNote</code> pour ajouter à une variable la donnée voulue ;</li>
@@ -71,7 +81,7 @@
 <li>probable mise à jour prochaine de <code>decompUA200enUA400</code> pour être plus efficace et utiliser <code>uCaseNames</code> ;</li>
 </ul>
 
-<p>Le 02/09/2021 :</p>
+<h2 id="le02092021">Le 02/09/2021 :</h2>
 
 <ul>
 <li>modification de <code>getDataUAChantierThese</code> pour réorganiser l'inputBox, rajouter de la précision à la note sur les noms d'épouse et empêcher des valeurs illégales pour le genre ;</li>
@@ -79,7 +89,7 @@
 <li>modification de <code>getCoteEx</code> pour afficher le numéro de l'occurrence et de l'exemplaire en cas de cotes multiples, ainsi que de gérer la sélection individuelle de plusieurs cotes.</li>
 </ul>
 
-<p>Le 13/10/2021 :</p>
+<h2 id="le13102021">Le 13/10/2021 :</h2>
 
 <ul>
 <li>sur le document et le dépôt : la liste des modifications est renvoyée au fonds avec un lien hypertexte vers celle-ci en début de page. Par ailleurs, la documentation complète viendra finalement s'ajouter dans ce document ;</li>
@@ -117,7 +127,7 @@
 
 <li><code>decompUA200enUA400</code> est maintenant bien plus lisible ;</li>
 
-<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW#modifications-prevues">(voir les modifications prévues)</a>.</li></ul>
+<li>attention toutefois, ce couple de scripts requièrent toujours la présence d'un $a et d'un $b pour pouvoir fonctionner <a href="./modifications.md#modifications-prvues">(voir les modifications prévues)</a>.</li></ul>
 </li>
 
 <li>refonte des scripts de type <code>get</code> et ajout du lanceur général (<code>generalLauncher</code>) : création d'une interface pour pouvoir lancer les scripts de type <code>add</code> et <code>get</code>. L'implentation de ce lanceur a été l'occasion de modifier tous les scripts de type <code>get</code> pour qu'ils puissent être utilisables dans d'autres scripts sans devoir stocker le résultat dans le presse-papier. De fait, il n'est plus possible de leur attribuer un raccourci sans créer spécialement un nouveau script qui se contente d'appeler la fonction et de placer le résultat dans le presse-papier. La création de ce lanceur est lié à la multiplication de courts scripts que j'utilise et une multiplication trop importantes des raccourcis associés.</li>
@@ -133,7 +143,7 @@
 <li>ajout de <code>addCouvPorte</code> : ajoute une 312 pour indiquer ce que la couverture porte en plus.</li>
 </ul>
 
-<p>Le 15/10/2021 :</p>
+<h2 id="le15102021">Le 15/10/2021 :</h2>
 
 <ul>
 <li>renommage des scripts ressources et concepts (parce que j'ai découvert que WinIBW peut séparer les scripts en plusieurs catégories) ;</li>
@@ -158,7 +168,7 @@
 </li>
 </ul>
 
-<p>Le 26/10/2021 :</p>
+<h2 id="le26102021">Le 26/10/2021 :</h2>
 
 <ul>
 <li>ajout de la documentation pour les scripts (<code>get</code>, chantiers thèse, concepts et <code>goToTag</code> exclus, qui pour une majorité nécessitent des modifications importantes) ;</li>
@@ -192,7 +202,7 @@
 <ul>
 <li>la liste de modifications se trouve désormais dans un fichier à part ;</li>
 
-<li>ajout <a href="https://alban-peyrat.github.io/outils/Scripts-WinIBW-PEB">des scripts de PEB et de leur documentation</a> ;</li>
+<li>ajout <a href="./PEB.md">des scripts de PEB et de leur documentation</a> ;</li>
 
 <li>ajout des scripts :
 
@@ -225,19 +235,51 @@
 
 <li>correction des préfixes des scripts PEB (problème pour les scripts utilisateurs).</li>
 </ul>
-	
+
+<h2 id="le15112021">Le 15/11/2021 :</h2>
+
+<h3 id="scriptspourlepeb">Scripts pour le PEB :</h3>
+
+<ul>
+<li>ajout de <code>PEBtriRecherche</code> ;</li>
+
+<li>mise à jour de <code>PEBLauncher</code> ;</li>
+
+<li>mise à jour de la procédure d'installation et de l'introduction.</li>
+</ul>
+
+<h3 id="scriptsenvbs">Scripts en VBS :</h3>
+
+<ul>
+<li>ajout de <code>add18XmonoImpIll</code> qui ajoute des 18X txt + sti ;</li>
+
+<li>ajout de <code>searchDoublonPossible</code> pour rechercher le PPN signalé par l'alerte doublon possible ;</li>
+
+<li>mise à jour du <code>launcher</code> avec l'ajout de nouveaux index ;</li>
+
+<li>mise à jour non définitive de <code>getTitle</code> qui utilise désormais <code>getTag</code> ;</li>
+
+<li>mise à jour de <code>ress_getTag</code> qui déselectionne désormais la notice afin d'éviter de supprimer l'intégralité de la notice si on ajoute du texte après son utilisation ;</li>
+
+<li>mise à jour de <code>addEISBN</code> qui ajoute désormais le titre s'il est présent et le début de l'ISBN.</li>
+</ul>
+
+<h3 id="scriptsenjs">Scripts en JS :</h3>
+
+<ul>
+<li>création du fichier <code>peyrat_js_scripts.js</code> ;</li>
+
+<li>ajout de <code>AlP_js_removeAccents</code>.</li>
+</ul>
+
 <h1 id="modificationsprvues">Modifications prévues</h1>
 
 <ul>
-<li><code>getTitle</code> : permettre son utilisation autant en mode édition que présentation ;</li>
-
 <li>scripts de type <code>get</code> : vérification de l'utilisation du presse-papier et restituer le presse-papier présent avant le lancement du script s'il est réécrit ;</li>
 
 <li><code>addUA400</code> (et associés) : adapter à <code>getTag</code>, mettre des majuscules si nécessaire, gérer les autres informations ;</li>
 
 <li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code> ;</li>
-
-<li>ajout de <code>addEISBN</code> : ajoute une 452 avec un <em>place holder</em> ou le titre s'il est déjà renseigné, ainsi que les trois premières parties de l'ISBN. Apparement j'ai cessé le développement en plein milieu ;</li>
 
 <li>correction du malfonctionnement probable de <code>addBibgFinChap</code> ;</li>
 
