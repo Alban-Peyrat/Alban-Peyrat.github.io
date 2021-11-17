@@ -13,11 +13,55 @@
 	</a>
 </header>
 <div id="contenu">
-<h1 id="dumas">Dumas</h1>
+<h1 id="procdure">Procédure</h1>
 
-<h2 id="slectionnerunespcialit">Sélectionner une spécialité</h2>
+<p>Dans un premier temps, copiez dans votre presse-papier les lignes de code en :</p>
 
-<p>Allumez la console du navigateur (<code>Ctrl + Maj + K</code> sur Firefox) puis copiez-collez cette ligne <code>document.getElementById("dumas_degreeSpeciality").value = 5</code> en remplaçant le nombre à la fin par le nombre correspondant à la spécialité voulue (voir liste ci-dessous pour des spécialités en médecine) :</p>
+<ul>
+<li>si vous utilisez <a href="https://github.com/Alban-Peyrat/ub-svs/raw/main/dumas/dumas_specialite.xlsx">Excel</a> :
+
+
+<ul>
+<li>choisissant la spécialité avec le menu déroulant en <code>C5</code> (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur <code>Alt + flèche du bas</code>) ;</li>
+
+<li>copiant la cellule <code>D5</code>.</li></ul>
+</li>
+
+<li>si vous utilisez <a href="https://alban-peyrat.github.io/outils/ub-svs/dumas.html">le site et que javascript (par défaut) est activé</a> :
+
+
+<ul>
+<li>parcourez la liste ci-dessous et cliquez sur la spécialité voulue.</li></ul>
+</li>
+
+<li>si vous utilisez GitHub ou le site sans javascript (ou que la méthode avec javascript a échoué) :
+
+
+<ul>
+<li>parcourez la liste et retenez le nombre associé ;</li>
+
+<li>copiez les lignes de code suivantes : <code>document.getElementById("list_domain").innerHTML += '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.mhep" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Médecine humaine et pathologie&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Médecine humaine et pathologie&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;';document.getElementById("dumas_degreeType").value = 12; document.getElementById("dumas_degreeSubject").value = 48; document.getElementById("dumas_degreeSpeciality").value = 5</code></li>
+
+<li>lorsque durant la suite de la procédure vous collerez ce code, changez le <code>5</code> final par le nombre associé à la spécialité ;</li></ul>
+</li>
+</ul>
+
+<p>La suite de la prodécure est assez simple, en 4 étapes généralement :</p>
+
+<ul>
+<li>sur l'onglet du dépôt, allumez la console de votre navigateur (si vous utilisez Firefox, appuyez simultanément sur <code>Alt + Maj + K</code>) ;</li>
+
+<li>collez le contenu de votre presse-papier et appuyez sur <code>entrée</code> ;</li>
+
+<li>si un message apparaît dans la console vous demandant d'autoriser le collage, écrivez <code>Autoriser le collage</code>.
+Il vous sera peut-être nécessaire de coller à nouveau le contenu de votre presse-papier ;</li>
+
+<li>si tout s'est bien passé, vous pouvez fermer la console (si vous utilisez Firefox, appuyez simultanément sur <code>Alt + Maj + I</code>).</li>
+</ul>
+
+<h1 id="slectionnerunespcialit">Sélectionner une spécialité</h1>
+
+<h2 id="mdecinespcialise">Médecine spécialisée</h2>
 
 <ul>
 <li>Allergologie : 383 ;</li>
@@ -110,6 +154,14 @@
 
 <li>Urologie : 928.</li>
 </ul>
+
+<h2 id="pharmacie">Pharmacie</h2>
+
+<p><em>À écrire</em></p>
+
+<h2 id="odontologie">Odontologie</h2>
+
+<p><em>À écrire</em></p>
 </div>
 <div id="accessButtons">
 	<button id="buttonZoom"><span style="font-size: 14px;">A</span>|<span style="font-size: 21px;">A</span>|A</button><br/>
