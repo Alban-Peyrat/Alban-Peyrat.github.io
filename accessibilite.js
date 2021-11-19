@@ -4,6 +4,7 @@ var NB = false;
 const zooms = [
   {"prop":[
     "headerPres",
+    "pageName",
     "p",
     "a",
     "strong",
@@ -17,6 +18,7 @@ const zooms = [
   },
   {"prop":[
     "36px",
+    "32px",
     "18px",
     "18px",
     "18px",
@@ -30,6 +32,7 @@ const zooms = [
   },
   {"prop":[
     "54px",
+    "48px",
     "27px",
     "27px",
     "27px",
@@ -43,6 +46,7 @@ const zooms = [
   },
   {"prop":[
     "72px",
+    "64px",
     "36px",
     "36px",
     "36px",
@@ -59,6 +63,7 @@ const zooms = [
 const NBText = [
   {"prop":[
     "headerPres",
+    "pageName",
     "buttonZoom",
     "p",
     "a",
@@ -74,6 +79,7 @@ const NBText = [
   },
   {"prop":[
     "#FF8A00",
+    "#FF8A00",
     "#EBE0EB",
     "#EBE0EB",
     "#EBE0EB",
@@ -88,6 +94,7 @@ const NBText = [
     "#EBE0EB"]
   },
   {"prop":[
+    "#000000",
     "#000000",
     "#000000",
     "#000000",
@@ -116,21 +123,22 @@ const buttonZoom = document.getElementById("buttonZoom");
 const buttonZoomSpan = buttonZoom.getElementsByTagName("span");
 const buttonNB = document.getElementById("buttonNB");
 const headerPres = document.getElementById("headerPres");
+const pageName = document.getElementById("pageName");
 const h1 = document.getElementsByTagName("h1");
 const h2 = document.getElementsByTagName("h2");
 const h3 = document.getElementsByTagName("h3");
 const h4 = document.getElementsByTagName("h4");
 
-const zoomArray = [headerPres, p, a, strong, em, code, li, h1, h2, h3, h4];
-const NBTextArray = [headerPres, buttonZoom, p, a, strong, em, code, li, h1, h2, h3, h4, buttonZoomSpan];
+const zoomArray = [headerPres, pageName, p, a, strong, em, code, li, h1, h2, h3, h4];
+const NBTextArray = [headerPres, pageName, buttonZoom, p, a, strong, em, code, li, h1, h2, h3, h4, buttonZoomSpan];
 
 document.getElementById("buttonZoom").onclick = function(){
   zoomIn++;
   if (zoomIn > 3){
     zoomIn = 1;
   }
-  for (let ii=0;ii<11;ii++){
-    if (ii == 0){
+  for (let ii=0;ii<12;ii++){
+    if (ii <= 1){
       zoomArray[ii].style.fontSize = zooms[zoomIn].prop[ii];
     }else{
       for (let jj=0;jj<zoomArray[ii].length;jj++){
@@ -142,9 +150,9 @@ document.getElementById("buttonZoom").onclick = function(){
 
 document.getElementById("buttonNB").onclick = function(){
   if (NB == false){
-    for (let ii=0;ii<13;ii++){
+    for (let ii=0;ii<14;ii++){
 
-      if (ii <= 1){
+      if (ii <= 2){
         NBTextArray[ii].style.color = NBText[2].prop[ii];
       }else{
         for (let jj=0;jj<NBTextArray[ii].length;jj++){
@@ -158,9 +166,6 @@ document.getElementById("buttonNB").onclick = function(){
     divLiens.style.border = "solid 1px #000000";
     for (let jj=0;jj<code.length;jj++){
       code[jj].style.backgroundColor = "#000000";
-      if (code[jj].parentNode.tagName == "A"){
-        code[jj].style.textDecoration = "underline";
-      }
     }
     buttonNB.style.display = "none";
     NB = true;
