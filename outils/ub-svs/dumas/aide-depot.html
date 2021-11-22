@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alban Peyrat - Aide pour le dépôt de thèses d'exercice dans DUMAS</title>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
+	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+</head>
+<body>
+<header>
+	<a href="https://alban-peyrat.github.io">
+		<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+	</a>
+</header>
+<div id="contenu">
+	<div id="pageName">Aide pour le dépôt de thèses d'exercice dans DUMAS</div>
+<p><em>Les champs actuellement importés sont :</em></p>
+
+<ul>
+<li><em>le type de mémoire ;</em></li>
+
+<li><em>le domaine de formation ;</em></li>
+
+<li><em>la spécialité (si requise) ;</em></li>
+
+<li><em>le domaine HAL.</em></li>
+</ul>
+<h1 id="procdure">Procédure</h1>
+
+<p>Dans un premier temps, copiez dans votre presse-papier les lignes de code :</p>
+
+<ul>
+<li>si vous utilisez <a href="https://alban-peyrat.github.io/outils/ub-svs/dumas.html">le site et que javascript (par défaut) est activé</a> :
+
+
+<ul>
+<li><code>médecine spécialisée</code> et <code>pharmacie</code> : parcourez la liste ci-dessous et cliquez sur la spécialité voulue.
+Si vous cliquez sur le code, vous le copierez avec la spécialité par défaut (<code>Sociétés et économies des mondes modernes et contemporains</code>) ;</li>
+
+<li><code>médecine générale</code> et <code>odontologie</code> : cliquez sur le code ;</li></ul>
+</li>
+
+<li>si vous utilisez <a href="https://github.com/Alban-Peyrat/ub-svs/raw/main/dumas/dumas_specialite.xlsx">Excel</a> :
+
+
+<ul>
+<li>choisissez le domaine avec le menu déroulant en <code>C3</code> (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur <code>Alt + flèche du bas</code>) ;</li>
+
+<li><code>médeciné spécialisée</code> et <code>pharmacie</code> choisissez la spécialité avec le menu déroulant en <code>C5</code> (méd spé) ou <code>C6</code> (pharma) (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur <code>Alt + flèche du bas</code>) ;</li>
+
+<li>copiez la cellule <code>D5</code>.</li></ul>
+</li>
+
+<li>si vous utilisez GitHub ou le site sans javascript (ou que la méthode avec javascript a échoué) :
+
+
+<ul>
+<li>parcourez la liste et retenez le nombre associé ;</li>
+
+<li>copiez les lignes de code situées au début de la partie dédiée ;</li>
+
+<li>lorsque vous collerez le code plus tard dans la procédure, changez le <code>5</code> final par le nombre associé à la spécialité ;</li></ul>
+</li>
+</ul>
+
+<p>La suite de la prodécure est assez simple, en 4 étapes généralement :</p>
+
+<ul>
+<li>sur l'onglet du dépôt, allumez la console de votre navigateur (si vous utilisez Firefox, appuyez simultanément sur <code>Alt + Maj + K</code>) ;</li>
+
+<li>collez le contenu de votre presse-papier et appuyez sur <code>entrée</code> ;</li>
+
+<li>si un message apparaît dans la console vous demandant d'autoriser le collage, écrivez <code>Autoriser le collage</code>.
+Il vous sera peut-être nécessaire de coller à nouveau le contenu de votre presse-papier ;</li>
+
+<li>si tout s'est bien passé, vous pouvez fermer la console (si vous utilisez Firefox, appuyez simultanément sur <code>Alt + Maj + I</code>).</li>
+</ul>
+
+<h1 id="slectionnerundomaine">Sélectionner un domaine</h1>
+
+<ul>
+<li><a href="#médecine-générale">Médecine générale</a> ;</li>
+
+<li><a href="#médecine-spécialisée">Médecine spécialisée</a> ;</li>
+
+<li><a href="#pharmacie">Pharmacie</a> ;</li>
+
+<li><a href="#odontologie">Odontologie</a>.</li>
+</ul>
+
+<h2 id="mdecinegnrale">Médecine générale</h2>
+
+<p>Le code à copier (aucun changement à effectuer puisque la spécialité est fixe) : <code>document.getElementById("list_domain").innerHTML += '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.mhep" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Médecine humaine et pathologie&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Médecine humaine et pathologie&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;';document.getElementById("dumas_degreeType").value = 12; document.getElementById("dumas_degreeSubject").value = 48; document.getElementById("dumas_degreeSpeciality").value = 150</code></p>
+
+<h2 id="mdecinespcialise">Médecine spécialisée</h2>
+
+<p>Le code à copier : <code>document.getElementById("list_domain").innerHTML += '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.mhep" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Médecine humaine et pathologie&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Médecine humaine et pathologie&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;';document.getElementById("dumas_degreeType").value = 12; document.getElementById("dumas_degreeSubject").value = 48; document.getElementById("dumas_degreeSpeciality").value = 5</code></p>
+
+<p>La liste des spécialités :</p>
+
+<ul>
+<li>Allergologie : 383 ;</li>
+
+<li>Anatomie et cytologie anatomique : 164 ;</li>
+
+<li>Anatomie et cytologie pathologiques : 196 ;</li>
+
+<li>Anesthésie réanimation : 163 ;</li>
+
+<li>Biologie médicale : 159 ;</li>
+
+<li>Biologie médicale - Virologie (Virologie n'a pas d'index je crois) : 159 ;</li>
+
+<li>Cardiologie et chirurgie vasculaire : 170 ;</li>
+
+<li>Cardiologie et maladies vasculaires : 199 ;</li>
+
+<li>Chirurgie générale  : 171 ;</li>
+
+<li>Chirurgie orale (Chirurgie maxillo-faciale) : 44 ;</li>
+
+<li>Chirurgie orthopédique et traumatologique : 206 ;</li>
+
+<li>Chirurgie thoracique et cardio-vasculaire : 208 ;</li>
+
+<li>Chirurgie urologique : 209 ;</li>
+
+<li>Chirurgie viscérale et digestive : 211 ;</li>
+
+<li>Dermatologie et vénéréologie : 172 ;</li>
+
+<li>Diabétologie endocrinologie : 203 ;</li>
+
+<li>Endocrinologie : 152 ;</li>
+
+<li>Endocrinologie et métabolisme : 165 ;</li>
+
+<li>Génétique médicale : 174 ;</li>
+
+<li>Gériatrie : 212 ;</li>
+
+<li>Gynécologie médicale : 200 ;</li>
+
+<li>Gynécologie obstétrique : 175 ;</li>
+
+<li>Hématologie : 166 ;</li>
+
+<li>Hépato-gastro-entérologie : 155 ;</li>
+
+<li>Médecine du travail : 176 ;</li>
+
+<li>Médecine d'urgence : 214 ;</li>
+
+<li>Médecine interne : 201 ;</li>
+
+<li>Médecine interne et immunologie clinique : 285 ;</li>
+
+<li>Médecine légale et expertise médicale : 27 ;</li>
+
+<li>Médecine nucléaire : 177 ;</li>
+
+<li>Médecine physique et de réadaptation : 178 ;</li>
+
+<li>Néphrologie : 179 ;</li>
+
+<li>Neurologie : 153 ;</li>
+
+<li>Oncologie : 167 ;</li>
+
+<li>Oncologie médicale : 833 ;</li>
+
+<li>Ophtalmologie : 168 ;</li>
+
+<li>Oto-rhyno-laryngologie et chirurgie cervico-faciale : 169 ;</li>
+
+<li>Pédiatrie : 181 ;</li>
+
+<li>Physique et Réadaptation : 178 ;</li>
+
+<li>Pneumologie : 183 ;</li>
+
+<li>Psychiatrie : 184 ;</li>
+
+<li>Radiodiagnostic et imagerie médicale : 185 ;</li>
+
+<li>Rhumatologie : 186 ;</li>
+
+<li>Santé publique : 543 ;</li>
+
+<li>Urologie : 928.</li>
+</ul>
+
+<h2 id="pharmacie">Pharmacie</h2>
+
+<p>Le code à copier : <code>document.getElementById("list_domain").innerHTML += '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.mhep" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Médecine humaine et pathologie&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Médecine humaine et pathologie&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;';document.getElementById("dumas_degreeType").value = 13; document.getElementById("dumas_degreeSubject").value = 48; document.getElementById("dumas_degreeSpeciality").value = 5</code></p>
+
+<p>La liste des spécialités :</p>
+
+<ul>
+<li>Sans spécialité : del ;</li>
+
+<li>Biologie médicale    : 159 ;</li>
+
+<li>Industrie    : 844 ;</li>
+
+<li>Industrie Recherche    : 790 ;</li>
+
+<li>Innovation pharmaceutique et recherche    : 592 ;</li>
+
+<li>Officine    : 788 ;</li>
+
+<li>Pharmacie hospitalière - Pharmacie industrielle et biologie médicale    : 653 ;</li>
+
+<li>Pharmacie hospitalière - Pratique et recherche    : 553 ;</li>
+
+<li>Pharmacie hospitalière bio-médicale    : 789 ;</li>
+
+<li>Pharmacie hospitalière et des collectivités    : 160 ;</li>
+
+<li>Sciences Pharmaceutiques    : 592 ;</li>
+
+<li>Toxicologie    : 774.</li>
+</ul>
+
+<h2 id="odontologie">Odontologie</h2>
+
+<p>Le code à copier (aucun changement à effectuer puisque il n'y a pas de spécialités) : <code>document.getElementById("list_domain").innerHTML += '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.mhep" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Médecine humaine et pathologie&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Médecine humaine et pathologie&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;';document.getElementById("dumas_degreeType").value = 30; document.getElementById("dumas_degreeSubject").value = 48</code></p>
+</div>
+<div id="accessButtons">
+	<button id="buttonZoom"><span style="font-size: 14px;">A</span>|<span style="font-size: 21px;">A</span>|A</button><br/>
+	<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="divLiens">
+	<p>Liens vers les autres outils&nbsp;:</p>
+	<ul id="liens">
+		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+		<li><a href="https://alban-peyrat.github.io/WinIBW">WinIBW</a></li>
+		<li><a href="https://alban-peyrat.github.io/Louise">Louise</a></li>
+		<li><a href="https://alban-peyrat.github.io/HUBert">HUBert</a></li>
+		<li><a href="https://alban-peyrat.github.io/CoCo-SAlma">CoCo-SAlma</a></li>
+		<li><a href="https://alban-peyrat.github.io/ConStance">ConStance</a></li>
+		<li><a href="https://alban-peyrat.github.io/ConAn">ConAn</a></li>
+	</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+<script src="./aideDepot_addCopyHtml.js"></script>
+</html>
