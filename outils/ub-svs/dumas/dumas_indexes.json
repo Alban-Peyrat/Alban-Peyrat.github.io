@@ -2710,16 +2710,16 @@
 {"licence":
 	[{"licenceValue": "", "licenceName": "------"},
     {"licenceValue": "http://creativecommons.org/licenses/by/", "licenceName": "CC BY - Paternité"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nc/", "licenceValue": "CC BY NC - Paternité - Pas d'utilisation commerciale"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nd/", "licenceValue": "CC BY ND - Paternité - Pas de modifications"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-sa/", "licenceValue": "CC BY SA - Paternité - Partage selon les Conditions Initiales"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nc-nd/", "licenceValue": "CC BY NC ND - Paternité - Pas d'utilisation commerciale - Pas de modification"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nc-sa/", "licenceValue": "CC BY NC SA - Paternité - Pas d'utilisation commerciale - Partage selon les Conditions Initiales"},
-    {"licenceValue": "http://creativecommons.org/choose/mark/", "licenceValue": "NC - Marque du Domaine Public"},
-    {"licenceValue": "http://creativecommons.org/publicdomain/zero/1.0/", "licenceValue": "CC0 - Transfert dans le Domaine Public"},
-    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/etalab/", "licenceValue": "ETALAB - Licence Ouverte"},
-    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/copyright/", "licenceValue": "Copyright (Tous droits réservés)"},
-    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/publicDomain/", "licenceValue": "Domaine public"}
+    {"licenceValue": "http://creativecommons.org/licenses/by-nc/", "licenceName": "CC BY NC - Paternité - Pas d'utilisation commerciale"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-nd/", "licenceName": "CC BY ND - Paternité - Pas de modifications"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-sa/", "licenceName": "CC BY SA - Paternité - Partage selon les Conditions Initiales"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-nc-nd/", "licenceName": "CC BY NC ND - Paternité - Pas d'utilisation commerciale - Pas de modification"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-nc-sa/", "licenceName": "CC BY NC SA - Paternité - Pas d'utilisation commerciale - Partage selon les Conditions Initiales"},
+    {"licenceValue": "http://creativecommons.org/choose/mark/", "licenceName": "NC - Marque du Domaine Public"},
+    {"licenceValue": "http://creativecommons.org/publicdomain/zero/1.0/", "licenceName": "CC0 - Transfert dans le Domaine Public"},
+    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/etalab/", "licenceName": "ETALAB - Licence Ouverte"},
+    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/copyright/", "licenceName": "Copyright (Tous droits réservés)"},
+    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/publicDomain/", "licenceName": "Domaine public"}
 ]},
 {"domaineHAL":
 	{
