@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
     <link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
-    </style>
 </head>
 <body>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
@@ -28,7 +27,7 @@ document.getElementById("generate").onclick = function() {
 function loadDumasJson(callback) {   
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'https://alban-peyrat.github.io/outils/ub-svs/dumas/dumas_indexes.json', true); // Replace 'my_data' with the path to your file
+    xobj.open("GET", "https://alban-peyrat.github.io/outils/ub-svs/dumas/dumas_indexes.json", true); // Replace "my_data" with the path to your file
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
         // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
@@ -48,8 +47,8 @@ function main(docId){
     var getJSON = function(url, callback) {
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = 'json';
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
 
         xhr.onload = function() {
 
@@ -170,9 +169,9 @@ function main(docId){
         notice += "230 ##$aDonnées textuelles\n";
 
 //-------------------- 3XX --------------------
-        notice += "303 ##‎$aL'impression du document génère "+doc.page_s+" f.\n";
-        notice += "_MOD_310 ##‎$aThèse sous embargo jusqu'au JOUR MOIS ANNÉE\n";
-        notice += "_MOD_320 ##‎$aBibliogr. XX réf. Annexes\n";
+        notice += "303 ##$aL'impression du document génère "+doc.page_s+" f.\n";
+        notice += "_MOD_310 ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE\n";
+        notice += "_MOD_320 ##$aBibliogr. XX réf. Annexes\n";
         notice += "328 #0$bThèse d'exercice$c"+domaine+specialiteCodeToText(doc.dumas_degreeSpeciality_s[0])+"$eBordeaux$d"+annee+"\n";
 
 //Résumés 330
@@ -183,7 +182,7 @@ function main(docId){
 //-------------------- 4XX - 5XX - 6XX --------------------
 //Titre anglais
         if(doc.title_s.length > 0){
-            notice += " 541 ##$a" + titleToUNM(doc.title_s[1])+"$zeng\n";
+            notice += "541 ##$a" + titleToUNM(doc.title_s[1])+"$zeng\n";
         }
 
 //Sujets
@@ -196,12 +195,12 @@ function main(docId){
 //-------------------- 7XX - 8XX --------------------
 //auteurs 70X $4070
         for(let ii = 0; ii < doc.authLastName_s.length; ii++){
-        notice += "700 1#$a" + doc.authLastName_s[ii]+"$b" + doc.authFirstName_s[ii]+"$4070\n";
+        notice += "700 #1$a" + doc.authLastName_s[ii]+"$b" + doc.authFirstName_s[ii]+"$4070\n";
         }
 
 //Directeur de thèse
         for(let ii = 0; ii < doc.director_s.length; ii++){
-            notice += "701 1#$a" + doc.director_s[ii]+"$4727\n";
+            notice += "701 #1$a" + doc.director_s[ii]+"$4727\n";
         }
 
         notice += "711 02$3175206562$4295\n"
