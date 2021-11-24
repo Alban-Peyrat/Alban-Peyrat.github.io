@@ -17,10 +17,6 @@
 var notice = "";
 var dumasIndexJson;
 
-function test(){
-    document.getElementById("generate").innerText = "Test OK";
-}
-    
 document.getElementById("generate").onclick = function() {
     let inputURL = document.getElementById("inputURL").value.trim();
     let docId = inputURL.substring(inputURL.length - 8);
@@ -125,6 +121,9 @@ function main(docId){
 
 
     function analyseJSON(data){
+        if(typeof data === "string"){
+            data = JSON.parse(data);
+        }
         let doc = data.response.docs[0];
 //-------------------- Données codées --------------------
         notice = "008 $aOax3\n";
