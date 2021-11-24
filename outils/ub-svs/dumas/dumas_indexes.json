@@ -1,4 +1,5 @@
-[{"dumas_degreeReference":
+{"dumasIndexes":{
+"dumas_degreeReference":
     [{"degreeReferenceCode": "empty", "degreeReferenceName": ""},
     {"degreeReferenceCode": "1", "degreeReferenceName": "Histoire et Histoire de l'art"},
     {"degreeReferenceCode": "2", "degreeReferenceName": "Philosophie"},
@@ -358,8 +359,8 @@
     {"degreeReferenceCode": "365", "degreeReferenceName": "Analyse et politique économiques (APE)"},
     {"degreeReferenceCode": "366", "degreeReferenceName": "Chimie (CH)"},
     {"degreeReferenceCode": "367", "degreeReferenceName": "Humanités et industries créatives (HIC)"}
-]},
-{"dumas_degreeType":
+],
+"dumas_degreeType":
     [{"degreeTypeCode": "1", "degreeTypeName": "Mémoire de Master 2"},
     {"degreeTypeCode": "2", "degreeTypeName": "Mémoire de Master 1"},
     {"degreeTypeCode": "3", "degreeTypeName": "Mémoire d'ingénieur"},
@@ -426,8 +427,8 @@
     {"degreeTypeCode": "74", "degreeTypeName": "Travail personnel d’étude et de recherche du diplôme d’État de paysagiste (DEP)"},
     {"degreeTypeCode": "75", "degreeTypeName": "Mémoire du Diplôme de directeur d’établissement d’éducation adaptée et spécialisée (DDEEAS)"},
     {"degreeTypeCode": "76", "degreeTypeName": "Executive Doctorate Thesis"}
-]},
-{"dumas_degreeCareer":
+],
+"dumas_degreeCareer":
 	[{"degreeCareerCode": "empty", "degreeCareerName": ""},
     {"degreeCareerCode": "1", "degreeCareerName": "Approches comparatives : littératures et arts"},
     {"degreeCareerCode": "2", "degreeCareerName": "Rhétorique, poétique et idéologies de l'Antiquité au XVIIIe siècle"},
@@ -1191,8 +1192,8 @@
     {"degreeCareerCode": "794", "degreeCareerName": "Chargé d'études sociologiques"},
     {"degreeCareerCode": "795", "degreeCareerName": "Fonctionnement et restauration des écosystèmes aquatiques continentaux (FREMAC)"},
     {"degreeCareerCode": "796", "degreeCareerName": "Géoenvironnement (GEOENV)"}
-]},
-{"dumas_degreeOption" :
+],
+"dumas_degreeOption" :
 	[{"degreeOptionCode": "empty", "degreeOptionName": ""},
     {"degreeOptionCode": "1", "degreeOptionName": "Arts, genèse des formes, contexte, réception"},
     {"degreeOptionCode": "2", "degreeOptionName": "Objet d'art, patrimoine, muséologie"},
@@ -1428,8 +1429,8 @@
     {"degreeOptionCode": "238", "degreeOptionName": "Génétique, génomique et amélioration des plantes (GGAP)"},
     {"degreeOptionCode": "239", "degreeOptionName": "Physiologie moléculaire et adaptations aux stress (PMAS)"},
     {"degreeOptionCode": "240", "degreeOptionName": "Phytochimie, qualité et valeur d'usage (PQVU)"}
-]},
-{"dumas_degreeGrade":
+],
+"dumas_degreeGrade":
     [{"degreeGradeCode": "empty", "degreeGradeName": ""},
     {"degreeGradeCode": "1", "degreeGradeName": "Honorable"},
     {"degreeGradeCode": "2", "degreeGradeName": "Très honorable"},
@@ -1442,8 +1443,8 @@
     {"degreeGradeCode": "9", "degreeGradeName": "Passable"},
     {"degreeGradeCode": "10", "degreeGradeName": "Félicitations du jury"},
     {"degreeGradeCode": "11", "degreeGradeName": "Excellent"}
-]},
-{"dumas_degreeSubject":
+],
+"dumas_degreeSubject":
 	[{"degreeSubjectCode": "empty", "degreeSubjectName": ""},
     {"degreeSubjectCode": "1", "degreeSubjectName": "Homme, sociétés, technologies"},
     {"degreeSubjectCode": "2", "degreeSubjectName": "Sciences humaines et sociales"},
@@ -1496,8 +1497,8 @@
     {"degreeSubjectCode": "63", "degreeSubjectName": "Métiers de l'enseignement, de l'éducation et de la formation"},
     {"degreeSubjectCode": "64", "degreeSubjectName": "Sciences et technologies du vivant et de l'environnement"},
     {"degreeSubjectCode": "65", "degreeSubjectName": "Sciences et techniques des activités physiques et sportives"}
-]},
-{"dumas_degreeSpeciality":
+],
+"dumas_degreeSpeciality":
 	[{"degreeSpecialityCode": "empty", "degreeSpecialityName": ""},
     {"degreeSpecialityCode": "1", "degreeSpecialityName": "Archéologie"},
     {"degreeSpecialityCode": "2", "degreeSpecialityName": "Histoire de l'art"},
@@ -2520,8 +2521,8 @@
     {"degreeSpecialityCode": "1050", "degreeSpecialityName": "Interprétation et traduction française/langue des signes française et langue des signes française/français"},
     {"degreeSpecialityCode": "1051", "degreeSpecialityName": "Recherche en traductologie"},
     {"degreeSpecialityCode": "1052", "degreeSpecialityName": "Traduction éditoriale, économique et technique"}
-]},
-{"language":
+],
+"language":
 	[{"languageCode": "en", "languageName": "anglais"},
     {"languageCode": "fr", "languageName": "français"},
     {"languageCode": "de", "languageName": "allemand"},
@@ -2706,22 +2707,22 @@
     {"languageCode": "yo", "languageName": "yoruba"},
     {"languageCode": "za", "languageName": "zhuang"},
     {"languageCode": "zu", "languageName": "zoulou"}
-]},
-{"licence":
+],
+"licence":
 	[{"licenceValue": "", "licenceName": "------"},
     {"licenceValue": "http://creativecommons.org/licenses/by/", "licenceName": "CC BY - Paternité"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nc/", "licenceName": "CC BY NC - Paternité - Pas d'utilisation commerciale"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nd/", "licenceName": "CC BY ND - Paternité - Pas de modifications"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-sa/", "licenceName": "CC BY SA - Paternité - Partage selon les Conditions Initiales"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nc-nd/", "licenceName": "CC BY NC ND - Paternité - Pas d'utilisation commerciale - Pas de modification"},
-    {"licenceValue": "http://creativecommons.org/licenses/by-nc-sa/", "licenceName": "CC BY NC SA - Paternité - Pas d'utilisation commerciale - Partage selon les Conditions Initiales"},
-    {"licenceValue": "http://creativecommons.org/choose/mark/", "licenceName": "NC - Marque du Domaine Public"},
-    {"licenceValue": "http://creativecommons.org/publicdomain/zero/1.0/", "licenceName": "CC0 - Transfert dans le Domaine Public"},
-    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/etalab/", "licenceName": "ETALAB - Licence Ouverte"},
-    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/copyright/", "licenceName": "Copyright (Tous droits réservés)"},
-    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/publicDomain/", "licenceName": "Domaine public"}
-]},
-{"domaineHAL":
+    {"licenceValue": "http://creativecommons.org/licenses/by-nc/", "licenceValue": "CC BY NC - Paternité - Pas d'utilisation commerciale"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-nd/", "licenceValue": "CC BY ND - Paternité - Pas de modifications"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-sa/", "licenceValue": "CC BY SA - Paternité - Partage selon les Conditions Initiales"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-nc-nd/", "licenceValue": "CC BY NC ND - Paternité - Pas d'utilisation commerciale - Pas de modification"},
+    {"licenceValue": "http://creativecommons.org/licenses/by-nc-sa/", "licenceValue": "CC BY NC SA - Paternité - Pas d'utilisation commerciale - Partage selon les Conditions Initiales"},
+    {"licenceValue": "http://creativecommons.org/choose/mark/", "licenceValue": "NC - Marque du Domaine Public"},
+    {"licenceValue": "http://creativecommons.org/publicdomain/zero/1.0/", "licenceValue": "CC0 - Transfert dans le Domaine Public"},
+    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/etalab/", "licenceValue": "ETALAB - Licence Ouverte"},
+    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/copyright/", "licenceValue": "Copyright (Tous droits réservés)"},
+    {"licenceValue": "http://hal.archives-ouvertes.fr/licences/publicDomain/", "licenceValue": "Domaine public"}
+],
+"domaineHAL":
 	{
 	  "chim": {
 	    "domainName": "Chimie",
@@ -4296,4 +4297,5 @@
 	    "domainCode": "qfin.tr"
 	  }
 	}
-}]
+}
+}
