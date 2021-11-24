@@ -91,8 +91,11 @@ function main(docId){
         }
 
 //Ajoute les $e
-        title = title.replaceAll(" : ", "$e");
-        title = title.replaceAll(": ", "$e");
+        //marche pas sur IE
+        //title = title.replaceAll(" : ", "$e");
+        //title = title.replaceAll(": ", "$e");
+        title = title.replace(/( : )/g, "$e");
+        title = title.replace(/(: )/g, "$e");
 
 //Return
         return title;
