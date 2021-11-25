@@ -152,7 +152,7 @@ function main(docId){
                 break;
             default:
                 domaineCode = "?";
-                domaine = ";_;ERREUR;_;";
+                domaine = ";_;ERREUR-001;_;";
         };
     }
 
@@ -171,7 +171,7 @@ function main(docId){
         if(doc.hasOwnProperty("publicationDateY_i") === true){
             annee = doc.publicationDateY_i;
         }else{
-            annee = ";_;ERREUR;_;";
+            annee = ";_;ERREUR-002;_;";
         };
         if(doc.hasOwnProperty("dumas_degreeSpeciality_s") === true){
             codeSpe = doc.dumas_degreeSpeciality_s[0];
@@ -181,7 +181,7 @@ function main(docId){
         if(doc.hasOwnProperty("dumas_degreeType_s") === true){
             codeType = doc.dumas_degreeType_s[0];
         }else{
-            codeType = ";_;ERREUR;_;";
+            codeType = ";_;ERREUR-003;_;";
         };
         specialityCodeToUNM();
         notice += "_MOD_029 ##$aFR$b"+2021+"BORD"+domaineCode+"XXX\n";
