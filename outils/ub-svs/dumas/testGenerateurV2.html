@@ -561,7 +561,9 @@ let unm200;
     unmFields.sort();
     document.getElementById("notice").innerText = "";
     for(let ii=0; ii<unmFields.length; ii++){
-        document.getElementById("notice").innerText += unmFields[ii]+"\n";
+        //document.getElementById("notice").innerText += unmFields[ii]+"\n";
+        //L'utilisation de core-js et babel semblent supprimer sur IE les \n
+        document.getElementById("notice").innerText += unmFields[ii]+"<br />";
     }
 }
 
