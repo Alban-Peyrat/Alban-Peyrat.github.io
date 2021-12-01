@@ -416,6 +416,7 @@ async function asyncMain(inputURL) {
         univHALId = ";_;ERREUR-011;_;";
     };
 
+/*
 //Code Wikidata modern Javascript
 class SPARQLQueryDispatcher {
     constructor( endpoint ) {
@@ -445,12 +446,21 @@ const sparqlQuery = `SELECT DISTINCT ?item ?itemLabel WHERE {
 const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
 queryDispatcher.query( sparqlQuery ).then( console.log );
 //Fin de code de Wikidata
-
+*/
 
     let structWikiDataId = "Q13344";
     const structWikiDataJSON = await getJSONData("https://www.wikidata.org/wiki/Special:EntityData/"+structWikiDataId+".json");
     //let ppnStruct = structWikiDataJSON.entities.Q13344.claims.P269[0].mainsnak.datavalue.value;
-    let ppnStruct = structWikiDataJSON.entities[structWikiDataId].claims.P269[0].mainsnak.datavalue.value;
+    //IE fix
+    let ppnStruct;
+    if(typeof structWikiDataJSON === "string"){
+       let structWikiDataJSONparsed = JSON.parse(structWikiDataJSON);
+       ppnStruct = structWikiDataJSONparsed.entities[structWikiDataId].claims.P269[0].mainsnak.datavalue.value;
+    }else{
+        ppnStruct = structWikiDataJSON.entities[structWikiDataId].claims.P269[0].mainsnak.datavalue.value;
+    }
+    //Fin IE fix
+    //let ppnStruct = structWikiDataJSON.entities[structWikiDataId].claims.P269[0].mainsnak.datavalue.value;
     console.log(structWikiDataJSON);
     console.log(ppnStruct)
 //Identification Université
