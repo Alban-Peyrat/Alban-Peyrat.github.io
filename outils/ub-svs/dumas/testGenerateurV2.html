@@ -293,7 +293,7 @@ function langToCoded(lang){
 
 //Prépare le NNT et la 328$c
 function specialityCodeToUNM(){
-    const degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
+    let degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
     //find marche pas sur IE aaaaaaaaah
     //let selectedSpe = degreeSpe.find(function(type){return type.degreeSpecialityCode === codeSpe});
     //Source https://dustinpfister.github.io/2021/07/19/js-array-find/
