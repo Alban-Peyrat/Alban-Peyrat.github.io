@@ -560,10 +560,11 @@ let unm200;
 //Tri et écriture
     unmFields.sort();
     document.getElementById("notice").innerText = "";
+    let br = document.createElement('<br />');
     for(let ii=0; ii<unmFields.length; ii++){
         //document.getElementById("notice").innerText += unmFields[ii]+"\n";
         //L'utilisation de core-js et babel semblent supprimer sur IE les \n
-        document.getElementById("notice").innerText += unmFields[ii]+"<br />";
+        document.getElementById("notice").innerText += unmFields[ii]+br;
     }
 }
 
