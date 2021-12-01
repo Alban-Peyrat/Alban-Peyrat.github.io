@@ -367,6 +367,10 @@ async function asyncMain(inputURL) {
 
 //Récupération des métadonnées de la thèse dans DUMAS
     const theseDumasJSON = await getJSONData("https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&wt=json&fl=language_s,uri_s,authFirstName_s,authLastName_s,director_s,authStructId_i,dumas_degreeSpeciality_s,dumas_degreeType_s,publicationDateY_i,title_s,keyword_s,abstract_s,page_s,openAccess_bool");
+    if(typeof theseDumasJSON === "string"){
+       theseDumasJSON = JSON.parse(theseDumasJSON);
+    }
+    
     let doc = theseDumasJSON.response.docs[0];
     console.log(doc);
 
