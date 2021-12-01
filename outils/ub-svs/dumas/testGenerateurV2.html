@@ -10,11 +10,12 @@ Source des données :
 - HAL (DUMAS)
 - Agence bibliographique de l'Enseignement supérieur
 - Wikidata
+- Wikidata
 
 Bibliothèque JS utilisée pour la rétrocompatibilité avec IE : babeljs
 (lien vers la doc sur le CDN : https://babeljs.io/docs/en/babel-standalone)
 -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.js"></script>
 </head>
 <body>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
@@ -56,7 +57,7 @@ loadDumasJson(function(response) {dumasIndexJson = JSON.parse(response)});
 
 function main(docId){
 
-    var URLThese = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&wt=json&fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeType_s";
+    const URLThese = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&wt=json&fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeType_s";
 
 //Accède au JSON
 //Source originale : https://zetcode.com/javascript/jsonurl/ [22/11/2021]
@@ -293,7 +294,7 @@ function langToCoded(lang){
 
 //Prépare le NNT et la 328$c
 function specialityCodeToUNM(){
-    var degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
+    const degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
     //find marche pas sur IE aaaaaaaaah
     //let selectedSpe = degreeSpe.find(function(type){return type.degreeSpecialityCode === codeSpe});
     //Source https://dustinpfister.github.io/2021/07/19/js-array-find/
@@ -335,7 +336,7 @@ async function asyncMain(inputURL) {
     console.log('==Début séquentiel==');
 
 //Initialisation var
-    var unmFields = new Array();
+    const unmFields = new Array();
 
 //Isolement du docId
     inputURL = inputURL.trim();
@@ -361,7 +362,7 @@ async function asyncMain(inputURL) {
     unmFields.push("608 ##$3027253139$2rameau");
 
 //Récupération des métadonnées de la thèse dans DUMAS
-    var theseDumasJSON = await getJSONData("https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&wt=json&fl=language_s,uri_s,authFirstName_s,authLastName_s,director_s,authStructId_i,dumas_degreeSpeciality_s,dumas_degreeType_s,publicationDateY_i,title_s,keyword_s,abstract_s,page_s,openAccess_bool");
+    const theseDumasJSON = await getJSONData("https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&wt=json&fl=language_s,uri_s,authFirstName_s,authLastName_s,director_s,authStructId_i,dumas_degreeSpeciality_s,dumas_degreeType_s,publicationDateY_i,title_s,keyword_s,abstract_s,page_s,openAccess_bool");
     let doc = theseDumasJSON.response.docs[0];
     console.log(doc);
 
@@ -409,15 +410,15 @@ class SPARQLQueryDispatcher {
     }
 
     query( sparqlQuery ) {
-        var fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
-        var headers = { 'Accept': 'application/sparql-results+json' };
+        const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+        const headers = { 'Accept': 'application/sparql-results+json' };
 
         return fetch( fullUrl, { headers } ).then( body => body.json() );
     }
 }
 
-var endpointUrl = 'https://query.wikidata.org/sparql';
-var sparqlQuery = `SELECT DISTINCT ?item ?itemLabel WHERE {
+const endpointUrl = 'https://query.wikidata.org/sparql';
+const sparqlQuery = `SELECT DISTINCT ?item ?itemLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
   {
     SELECT DISTINCT ?item WHERE {
@@ -428,13 +429,13 @@ var sparqlQuery = `SELECT DISTINCT ?item ?itemLabel WHERE {
   }
 }`;
 
-var queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
+const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
 queryDispatcher.query( sparqlQuery ).then( console.log );
 //Fin de code de Wikidata
 
 
     let structWikiDataId = "Q13344";
-    var structWikiDataJSON = await getJSONData("https://www.wikidata.org/wiki/Special:EntityData/"+structWikiDataId+".json");
+    const structWikiDataJSON = await getJSONData("https://www.wikidata.org/wiki/Special:EntityData/"+structWikiDataId+".json");
     //let ppnStruct = structWikiDataJSON.entities.Q13344.claims.P269[0].mainsnak.datavalue.value;
     let ppnStruct = structWikiDataJSON.entities[structWikiDataId].claims.P269[0].mainsnak.datavalue.value;
     console.log(structWikiDataJSON);
