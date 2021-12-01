@@ -560,12 +560,16 @@ let unm200;
 //Tri et écriture
     unmFields.sort();
     document.getElementById("notice").innerText = "";
-    let br = document.createElement("br");
+    //IE encore et toujours
+    //let br = document.createElement("br");
+    //let spanUnmFields = document.createElement("span");
+    let pUnmFields = document.createElement("p");
     for(let ii=0; ii<unmFields.length; ii++){
         //document.getElementById("notice").innerText += unmFields[ii]+"\n";
         //L'utilisation de core-js et babel semblent supprimer sur IE les \n
-        document.getElementById("notice").innerText += unmFields[ii];
-        document.getElementById("notice").appendChild(br);
+        //document.getElementById("notice").innerText += unmFields[ii];
+        pUnmFields.innertext = unmFields[ii];
+        document.getElementById("notice").appendChild(pUnmFields);
     }
 }
 
