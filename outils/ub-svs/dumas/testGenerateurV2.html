@@ -15,6 +15,7 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE : babeljs
 (lien vers la doc sur le CDN : https://babeljs.io/docs/en/babel-standalone)
 -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/@babel/plugin-transform-block-scoping"></script>
 </head>
 <body>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
@@ -293,7 +294,7 @@ function langToCoded(lang){
 
 //Prépare le NNT et la 328$c
 function specialityCodeToUNM(){
-    let degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
+    const degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
     //find marche pas sur IE aaaaaaaaah
     //let selectedSpe = degreeSpe.find(function(type){return type.degreeSpecialityCode === codeSpe});
     //Source https://dustinpfister.github.io/2021/07/19/js-array-find/
