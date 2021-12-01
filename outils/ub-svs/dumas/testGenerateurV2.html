@@ -563,11 +563,11 @@ let unm200;
     //IE encore et toujours
     //let br = document.createElement("br");
     //let spanUnmFields = document.createElement("span");
-    let pUnmFields = document.createElement("p");
     for(let ii=0; ii<unmFields.length; ii++){
         //document.getElementById("notice").innerText += unmFields[ii]+"\n";
         //L'utilisation de core-js et babel semblent supprimer sur IE les \n
         //document.getElementById("notice").innerText += unmFields[ii];
+        let pUnmFields = document.createElement("p");
         pUnmFields.innertext = unmFields[ii];
         document.getElementById("notice").appendChild(pUnmFields);
     }
