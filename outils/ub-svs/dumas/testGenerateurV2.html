@@ -9,6 +9,11 @@
     #notice p {
         margin: 0px;
     }
+    #bibJsMr {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
     </style>
 <!--
 Source des données :
@@ -24,6 +29,11 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
 </head>
 <body>
+<div id="bibJsMR">
+    <span>Support Internet Explorer assuré grâce à :</span><br/>
+    <span id"corejsMR"><a href="https://github.com/zloirock/core-js">Core-js</a></span><br/>
+    <span id"babeljsMR"><a href="https://babeljs.io/">babel (js)</a></span><br/>
+</div>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
 <button id="generate" style="color:black;" title="Générer la notice (version 2.0)">Générer la notice</button>
 <!-- <label><input id="enhanced606" type="checkbox">Chercher PPN sujet RAMEAU</input></label>
