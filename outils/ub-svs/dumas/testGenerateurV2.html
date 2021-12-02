@@ -38,19 +38,24 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 <button id="generate" style="color:black;" title="Générer la notice (version 2.0)">Générer la notice</button><br/>
 <table id="enhancedTable">
     <tr>
-        <td><input id="enhanced606no" type="radio" name="enhanced606" value=0><label for="enhanced606no">Sans PPN sujet RAMEAU</label></td>
-        <td><input id="enhancedAutno" type="radio" name="enhancedAut" value=0><label for="enhancedAutno">Sans PPN auteur</label></td>
-        <td><input id="enhancedDirno" type="radio" name="enhancedDir" value=0><label for="enhancedDirno">Sans PPN directeur de thèse</label></td>
+        <th>PPN sujet RAMEAU</th>
+        <th>PPN auteur(s)</th>
+        <th>PPN directeur(s) de thèse</th>
     </tr>
     <tr>
-        <td><input id="enhanced606ye1" type="radio" name="enhanced606" value=1><label for="enhanced606ye1">Avec PPN sujet RAMEAU (base manuelle)</label></td>
-        <td><input id="enhancedAutye1" type="radio" name="enhancedAut" value=1><label for="enhancedAutye1">Avec PPN auteur (base manuelle)</label></td>
-        <td><input id="enhancedDirye1" type="radio" name="enhancedDir" value=1><label for="enhancedDirye1">Sans PPN directeur de thèse (base manuelle)</label></td>
+        <td><input id="enhanced606no" type="radio" name="enhanced606" value=0><label for="enhanced606no">Sans</label></td>
+        <td><input id="enhancedAutno" type="radio" name="enhancedAut" value=0><label for="enhancedAutno">Sans</label></td>
+        <td><input id="enhancedDirno" type="radio" name="enhancedDir" value=0><label for="enhancedDirno">Sans</label></td>
     </tr>
     <tr>
-        <td><input id="enhanced606ye2" type="radio" name="enhanced606" value=2><label for="enhanced606ye2">Avec PPN sujet RAMEAU (complet)</label></td>
-        <td><input id="enhancedAutye2" type="radio" name="enhancedAut" value=2><label for="enhancedAutye2">Avec PPN auteur (complet)</label></td>
-        <td><input id="enhancedDirye2" type="radio" name="enhancedDir" value=2><label for="enhancedDirye2">Sans PPN directeur de thèse (complet)</label></td>
+        <td><input id="enhanced606ye1" type="radio" name="enhanced606" value=1><label for="enhanced606ye1">Avec base manuelle</label></td>
+        <td><input id="enhancedAutye1" type="radio" name="enhancedAut" value=1><label for="enhancedAutye1">Avec base manuelle</label></td>
+        <td><input id="enhancedDirye1" type="radio" name="enhancedDir" value=1><label for="enhancedDirye1">Avec base manuelle</label></td>
+    </tr>
+    <tr>
+        <td><input id="enhanced606ye2" type="radio" name="enhanced606" value=2><label for="enhanced606ye2">Avec, complet</label></td>
+        <td><input id="enhancedAutye2" type="radio" name="enhancedAut" value=2><label for="enhancedAutye2">Avec, complet</label></td>
+        <td><input id="enhancedDirye2" type="radio" name="enhancedDir" value=2><label for="enhancedDirye2">Avec, complet</label></td>
     </tr>
 </table>
 <!--
@@ -128,9 +133,9 @@ function main(docId){
             data = JSON.parse(data);
         }
         let doc = data.response.docs[0];
-        let enhanced606 = document.getElementById("enhanced606").checked;
-        let enhancedAut = document.getElementById("enhancedAut").checked;
-        let enhancedDir = document.getElementById("enhancedDir").checked;
+        let enhanced606 = 0;//document.getElementById("enhanced606").checked;
+        let enhancedAut = 0;//document.getElementById("enhancedAut").checked;
+        let enhancedDir = 0;//document.getElementById("enhancedDir").checked;
 //-------------------- Données codées --------------------
         notice = "008 $aOax3\n";
 //NNT
