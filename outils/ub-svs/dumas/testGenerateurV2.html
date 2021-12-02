@@ -79,6 +79,41 @@ document.getElementById("generate").onclick = function() {
     main(docId);
 }
 
+//Copie la notice lorsque l'on clique dessus
+//Voir l'aide au dépôt dans DUMAS
+//Code original pour choper l'event cliqué par bhv le 19 juin 2020 sur StackOverflow
+//en réponse à la question How to get the element clicked (for the whole document)? de user1145216
+//https://stackoverflow.com/questions/9012537/how-to-get-the-element-clicked-for-the-whole-documentanswer-9012576#answer-44905133
+//Consulté le 18/11/2021
+function doCopy(){
+    var range = document.createRange();
+    var selection = window.getSelection();
+    range.selectNode(document.getElementById("notice"));
+    selection.removeAllRanges();
+    selection.addRange(range);
+    try {
+        // Exécution de la commande de copie
+        var result = document.execCommand('copy');
+        if (result) {
+            // La copie a réussi
+            alert(domaine+' copiée !');
+        }
+    }
+    catch(err) {
+        // Une erreur est surevnue lors de la tentative de copie
+        alert(err);
+    }
+
+    // Fin de l'opération
+    selection = window.getSelection();
+    if (typeof selection.removeRange === 'function') {
+        selection.removeRange(range);
+    } else if (typeof selection.removeAllRanges === 'function') {
+        selection.removeAllRanges();
+    }
+}
+document.getElementById("notice").onclick = function() {doCopy()};
+
 //Charge le JSON contenant les index DUMAS
 //Source originale : https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript [23/11/2021]
 function loadDumasJson(callback) {   
@@ -389,7 +424,6 @@ async function asyncMain(inputURL) {
     let enhancedAutRadio = document.getElementsByName("enhancedAut");
     let enhancedDirRadio = document.getElementsByName("enhancedDir");
 for(let ii=0; ii < 3; ii++){
-console.log(enhanced606+"\n"+enhancedAut+"\n"+enhancedDir)
     if(enhanced606Radio[ii].checked){enhanced606 = enhanced606Radio[ii].value;}
     if(enhancedAutRadio[ii].checked){enhancedAut = enhancedAutRadio[ii].value;}
     if(enhancedDirRadio[ii].checked){enhancedDir = enhancedDirRadio[ii].value;}
