@@ -35,13 +35,29 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
     <span id"babeljsMR"><a href="https://babeljs.io/">babel (js)</a></span><br/>
 </div>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
-<button id="generate" style="color:black;" title="Générer la notice (version 2.0)">Générer la notice</button>
-<!-- <label><input id="enhanced606" type="checkbox">Chercher PPN sujet RAMEAU</input></label>
-<label><input id="enhancedAut" type="checkbox">Chercher PPN auteur(s)</input></label>
-<label><input id="enhancedDir" type="checkbox">Chercher PPN directeur(s) de thsèe</input></label> -->
+<button id="generate" style="color:black;" title="Générer la notice (version 2.0)">Générer la notice</button><br/>
+<table id="enhancedTable">
+    <tr>
+        <td><input id="enhanced606no" type="radio" name="enhanced606" value=0><label for="enhanced606no">Sans PPN sujet RAMEAU</label></td>
+        <td><input id="enhancedAutno" type="radio" name="enhancedAut" value=0><label for="enhancedAutno">Sans PPN auteur</label></td>
+        <td><input id="enhancedDirno" type="radio" name="enhancedDir" value=0><label for="enhancedDirno">Sans PPN directeur de thèse</label></td>
+    </tr>
+    <tr>
+        <td><input id="enhanced606ye1" type="radio" name="enhanced606" value=1><label for="enhanced606ye1">Avec PPN sujet RAMEAU (base manuelle)</label></td>
+        <td><input id="enhancedAutye1" type="radio" name="enhancedAut" value=1><label for="enhancedAutye1">Avec PPN auteur (base manuelle)</label></td>
+        <td><input id="enhancedDirye1" type="radio" name="enhancedDir" value=1><label for="enhancedDirye1">Sans PPN directeur de thèse (base manuelle)</label></td>
+    </tr>
+    <tr>
+        <td><input id="enhanced606ye2" type="radio" name="enhanced606" value=2><label for="enhanced606ye2">Avec PPN sujet RAMEAU (complet)</label></td>
+        <td><input id="enhancedAutye2" type="radio" name="enhancedAut" value=2><label for="enhancedAutye2">Avec PPN auteur (complet)</label></td>
+        <td><input id="enhancedDirye2" type="radio" name="enhancedDir" value=2><label for="enhancedDirye2">Sans PPN directeur de thèse (complet)</label></td>
+    </tr>
+</table>
+<!--
 <input id="enhanced606" type="checkbox"><label for="enhanced606">Chercher PPN sujet RAMEAU</label>
 <input id="enhancedAut" type="checkbox"><label for="enhancedAut">Chercher PPN auteur(s)</label>
 <input id="enhancedDir" type="checkbox"><label for="enhancedDir">Chercher PPN directeur(s) de thsèe</label>
+-->
 <div id="notice">
 </div>
 </body>
