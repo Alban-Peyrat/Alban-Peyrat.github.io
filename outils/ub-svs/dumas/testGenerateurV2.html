@@ -43,9 +43,9 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
         <th>PPN directeur(s) de thèse</th>
     </tr>
     <tr>
-        <td><input id="enhanced606no" type="radio" name="enhanced606" value=0><label for="enhanced606no">Sans</label></td>
-        <td><input id="enhancedAutno" type="radio" name="enhancedAut" value=0><label for="enhancedAutno">Sans</label></td>
-        <td><input id="enhancedDirno" type="radio" name="enhancedDir" value=0><label for="enhancedDirno">Sans</label></td>
+        <td><input id="enhanced606no" type="radio" name="enhanced606" value=0 checked><label for="enhanced606no">Sans</label></td>
+        <td><input id="enhancedAutno" type="radio" name="enhancedAut" value=0 checked><label for="enhancedAutno">Sans</label></td>
+        <td><input id="enhancedDirno" type="radio" name="enhancedDir" value=0 checked><label for="enhancedDirno">Sans</label></td>
     </tr>
     <tr>
         <td><input id="enhanced606ye1" type="radio" name="enhanced606" value=1><label for="enhanced606ye1">Avec base manuelle</label></td>
@@ -380,10 +380,16 @@ async function asyncMain(inputURL) {
     let docId = inputURL.substring(inputURL.length - 8);
 
 //Récupération des paramètres enhanced
-//A MOD c'est plus censé être ça les paramètres
-    let enhanced606 = document.getElementById("enhanced606").checked;
-    let enhancedAut = document.getElementById("enhancedAut").checked;
-    let enhancedDir = document.getElementById("enhancedDir").checked;
+//JE SUIS CENSE METTRE CA QUAND JE CLIQUE VU QUE DEPUIS WINIBW JE TRANSMETTRAI LES PARAMETRES
+    let enhanced606, enhancedAut, enhancedDir;
+    let enhanced606Radio = document.getElementsByName("enhanced606");
+    let enhancedAutRadio = document.getElementsByName("enhancedAut");
+    let enhancedDirRadio = document.getElementsByName("enhancedDir");
+for(let ii=0; ii < 3; ii++){
+    if(enhanced606Radio[ii].checked){enhanced606 = enhanced606Radio[ii].value;}
+    if(enhancedAutRadio[ii].checked){enhancedAut = enhancedAutRadio[ii].value;}
+    if(enhancedDirRadio[ii].checked){enhancedDir = enhancedDirRadio[ii].value;}
+}
 
 //Création des champs fixes
     unmFields.push("008 $aOax3");
