@@ -17,13 +17,15 @@
     #enhancedTable {
         margin-bottom: 30px;
     }
+    #erreurs {
+        display: none;
+    }
     </style>
 <!--
 Source des données :
 - HAL (DUMAS)
 - Agence bibliographique de l'Enseignement supérieur
 - Wikidata
-
 Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 - Core-js (auteur original : Denis "zloirock" Pushkarev) (dépôt GitHub : https://github.com/zloirock/core-js)
 - Babel (js) (lien vers la docuùentation sur le CDN : https://babeljs.io/docs/en/babel-standalone)
@@ -34,8 +36,8 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 <body>
 <div id="bibJsMR">
     <span>Support Internet Explorer assuré grâce à :</span><br/>
-    <span id"corejsMR"><a href="https://github.com/zloirock/core-js">Core-js</a></span><br/>
-    <span id"babeljsMR"><a href="https://babeljs.io/">babel (js)</a></span><br/>
+    <span id="corejsMR"><a href="https://github.com/zloirock/core-js">Core-js</a></span><br/>
+    <span id="babeljsMR"><a href="https://babeljs.io/">babel (js)</a></span><br/>
 </div>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
 <button id="generate" style="color:black;" title="Générer la notice (version 2.0)">Générer la notice</button><br/>
@@ -68,8 +70,12 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 -->
 <div id="notice">
 </div>
+<div id="erreurs">
+</div>
 </body>
+<!-- Uncomment quand je passe en prod / test sur IE -->
 <script type="text/babel">
+<!-- <script> -->
 
 document.getElementById("generate").onclick = function() {
 //l'idée c'est que cette opération se fasse dans generate
@@ -77,6 +83,18 @@ document.getElementById("generate").onclick = function() {
     let inputURL = document.getElementById("inputURL").value.trim();
     let docId = inputURL.substring(inputURL.length - 8);
     main(docId);
+}
+
+//Chargement du JSON contenant les inforamtions sur les erreurs
+async function loadErreurs(){
+    let errJSON = await getJSONData("https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur_erreur_liste.json");
+    //IE fix
+    if(typeof errJSON === "string"){
+        errList = JSON.parse(errJSON);
+    }else{
+        errList = errJSON;
+    }
+    //Fin IE fix
 }
 
 //Copie la notice lorsque l'on clique dessus
@@ -325,6 +343,12 @@ function getJSONData (urlJSON) {
   });
 };
 
+//---------------------Ajoute une erreur---------------------
+function addErr(errNb){
+    errNb = errNb.replace(/(;_;)/g, "");
+    errArray.push(errNb+" : "+errList.generateurErreurs[errNb])
+}
+
 //--------------------Transormation de données vers l'UNM--------------------
 function titleToUNM(title){
 //Ajoute le @
@@ -403,6 +427,7 @@ function specialityCodeToUNM(){
         default:
             domaineCode = "?";
             domaine = ";_;ERREUR-001;_;";
+            addErr(domaine);
     };
 }
 
@@ -412,6 +437,7 @@ async function asyncMain(inputURL) {
 
 //Initialisation var
     const unmFields = new Array();
+    errArray.lentgh = 0;
 
 //Isolement du docId
     inputURL = inputURL.trim();
@@ -439,7 +465,9 @@ for(let ii=0; ii < 3; ii++){
     unmFields.push("182 ##$P01$cc");
     unmFields.push("183 ##$P01$aceb");
     unmFields.push("230 ##$aDonnées textuelles");
+    unmFields.push("304 ##$aTitre provenant de l'écran-titre");
     unmFields.push("320 MOD ##$aBibliogr. XX réf. Annexes");
+    unmFields.push("337 ##$aConfiguration requise : un logiciel capable de lire un fichier au format : application/pdf")
     unmFields.push("608 ##$3027253139$2rameau");
 
 //Récupération des métadonnées de la thèse dans DUMAS
@@ -462,6 +490,7 @@ for(let ii=0; ii < 3; ii++){
         annee = doc.publicationDateY_i;
     }else{
         annee = ";_;ERREUR-002;_;";
+        addErr(annee);
     };
 
     unmFields.push("100 0#$a" + annee);
@@ -477,6 +506,7 @@ for(let ii=0; ii < 3; ii++){
         codeType = doc.dumas_degreeType_s[0];
     }else{
         codeType = ";_;ERREUR-003;_;";
+        addErr(codeType);
     };
     specialityCodeToUNM();
 
@@ -491,6 +521,7 @@ for(let ii=0; ii < 3; ii++){
         univHALId = doc.authStructId_i[0];
     }else{
         univHALId = ";_;ERREUR-011;_;";
+        addErr(univHALId);
     };
 
 /*
@@ -499,15 +530,12 @@ class SPARQLQueryDispatcher {
     constructor( endpoint ) {
         this.endpoint = endpoint;
     }
-
     query( sparqlQuery ) {
         const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
         const headers = { 'Accept': 'application/sparql-results+json' };
-
         return fetch( fullUrl, { headers } ).then( body => body.json() );
     }
 }
-
 const endpointUrl = 'https://query.wikidata.org/sparql';
 const sparqlQuery = `SELECT DISTINCT ?item ?itemLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -519,7 +547,6 @@ const sparqlQuery = `SELECT DISTINCT ?item ?itemLabel WHERE {
     LIMIT 100
   }
 }`;
-
 const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
 queryDispatcher.query( sparqlQuery ).then( console.log );
 //Fin de code de Wikidata
@@ -557,6 +584,7 @@ queryDispatcher.query( sparqlQuery ).then( console.log );
         }
     }else{
         unmFields.push("330 ##$a;_;ERREUR-005;_;");
+        addErr("ERREUR-005");
     };
 
 //----------Langue
@@ -571,6 +599,7 @@ queryDispatcher.query( sparqlQuery ).then( console.log );
         }
     }else{
         langue = ";_;ERREUR-004;_;";
+        addErr(langue);
     };
     if(doc.abstract_s.length > 1){
         unmFields.push("101 0#$a"+langue+"$c"+langue+"$d"+langue+"$d"+langue2+"$g"+langue);
@@ -583,6 +612,7 @@ queryDispatcher.query( sparqlQuery ).then( console.log );
         unmFields.push("303 ##$aL'impression du document génère "+doc.page_s+" f.");
     }else{
         unmFields.push("303 ##$aL'impression du document génère ;_;ERREUR-006;_; f.");
+        addErr("ERREUR-006");
     };
 
 //----------Embargo
@@ -592,6 +622,7 @@ queryDispatcher.query( sparqlQuery ).then( console.log );
         }
     }else{
         unmFields.push("310 MOD ##$aThèse sous embargo jusqu'au ;_;ERREUR-007;_;");
+        addErr("ERREUR-007");
     };
 
 //----------URI
@@ -599,6 +630,7 @@ queryDispatcher.query( sparqlQuery ).then( console.log );
         unmFields.push("856 4#$qPDF$u"+doc.uri_s+"$2Accès au texte intégral");
     }else{
         unmFields.push("856 4#$qPDF$u;_;ERREUR-008;_;$2Accès au texte intégral");
+        addErr("ERREUR-008");
     };
 
 //----------Mots-clefs
@@ -609,10 +641,11 @@ queryDispatcher.query( sparqlQuery ).then( console.log );
         }
     }else{
         unmFields.push("610 DEL 0#$a;_;ERREUR-009;_;");
+        addErr("ERREUR-009");
     };
 
 //----------Titres et mentions de responsabilité
-let unm200;
+    let unm200;
     if(doc.hasOwnProperty("title_s") === true){
         unm200 = "200 VER 1#$a" + titleToUNM(doc.title_s[0]);
 //----------------Deuxième titre (ou plus, mais tous avec la langue n°2)
@@ -621,34 +654,78 @@ let unm200;
         }
     }else{
         unm200 = "200 VER 1#$a;_;ERREUR-010;_;"
+        addErr("ERREUR-010");
     };
 
 //---------------Auteurs
-
+    if(doc.hasOwnProperty("authLastName_s") === true){
+        unm200 += "$f";
+        for(let ii=0; ii<doc.authLastName_s.length; ii++){
+            if(ii > 0){
+                if(ii != doc.authLastName_s.length-1){
+                    unm200 += ", ";
+                }else{
+                    unm200 += " et ";
+                }
+                unmFields.push("701 #1$a" + doc.authLastName_s[ii]+"$b" + doc.authFirstName_s[ii]+"$4070");
+            }else{
+                unmFields.push("700 #1$a" + doc.authLastName_s[ii]+"$b" + doc.authFirstName_s[ii]+"$4070")
+            }
+            unm200 += doc.authFirstName_s[ii]+" "+doc.authLastName_s[ii];
+        }
+    }else{
+        unm200 += "$f;_;ERREUR-012;_;";
+        addErr("ERREUR-012");
+    };
 
 //---------------Directeurs de thèse
-
-
-
-
-
-
+    if(doc.hasOwnProperty("director_s") === true){
+        unm200 += "$gsous la direction de ";
+        for(let ii=0; ii<doc.director_s.length; ii++){
+            let dirNom = doc.director_s[ii].substring(doc.director_s[ii].indexOf(" ")+1);
+            let dirPrenom = doc.director_s[ii].substring(0, doc.director_s[ii].indexOf(" "));
+            if(ii > 0){
+                if(ii != doc.director_s.length-1){
+                    unm200 += ", ";
+                }else{
+                    unm200 += " et ";
+                }
+            }
+            unm200 += doc.director_s[ii];
+            unmFields.push("701 #1$a" + dirNom+"$b" + dirPrenom + "$4727");
+        }
+    }else{
+        unm200 += "$f;_;ERREUR-014;_;";
+        addErr("ERREUR-014");
+    };
+//Push de la 200
+    unmFields.push(unm200);
 
 //Tri et écriture
     unmFields.sort();
     document.getElementById("notice").innerText = "";
     //IE encore et toujours
-    //let br = document.createElement("br");
-    //let spanUnmFields = document.createElement("span");
     for(let ii=0; ii<unmFields.length; ii++){
-        //document.getElementById("notice").innerText += unmFields[ii]+"\n";
         //L'utilisation de core-js et babel semblent supprimer sur IE les \n
-        //document.getElementById("notice").innerText += unmFields[ii];
         let pUnmFields = document.createElement("p");
         pUnmFields.innerText = unmFields[ii];
         document.getElementById("notice").appendChild(pUnmFields);
     }
+//Les erreurs
+    for(let ii=0; ii<errArray.length; ii++){
+        //L'utilisation de core-js et babel semblent supprimer sur IE les \n
+        let pErrArray = document.createElement("p");
+        pErrArray.innerText = errArray[ii];
+        document.getElementById("erreurs").appendChild(pErrArray);
+    }
+    if(errArray.lentgh > 0){
+        alert(document.getElementById("erreurs").innerText)
+    }
 }
+
+var errList;
+const errArray = new Array();
+loadErreurs();
 
 //A SUP
 //Lance le script quand je charge la page (accelere le dvpment)
