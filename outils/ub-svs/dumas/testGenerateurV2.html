@@ -31,7 +31,8 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 - Babel (js) (lien vers la docuùentation sur le CDN : https://babeljs.io/docs/en/babel-standalone)
 -->
 <script src="https://unpkg.com/core-js-bundle@3.19.2"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+<!--<script src="https://unpkg.com/@babel/standalone/babel.js"></script>-->
+<script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js"></script>
 </head>
 <body>
 <div id="bibJsMR">
@@ -74,8 +75,8 @@ Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 </div>
 </body>
 <!-- Uncomment quand je passe en prod / test sur IE -->
-<script type="text/babel">
-<!-- <script> -->
+<!-- <script type="text/babel"> -->
+<script>
 
 document.getElementById("generate").onclick = function() {
 //l'idée c'est que cette opération se fasse dans generate
