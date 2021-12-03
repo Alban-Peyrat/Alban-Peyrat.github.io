@@ -18,7 +18,9 @@
     <li><a href="./generateur-notice.html">Générateur notice bibliographique d'un thèse d'exercice déposée sur DUMAS</a></li>
   </ul>
 
-<p><em>Je travaille encore sur le projet</em></p>
+<p>Preuve de concept : catalogage semi-automatisé d'un document DUMAS dans le Sudoc</p>
+
+<p><em>Je travaille encore sur le projet. Fonctionnement à jour de la version 2.0, mais pas la documentation sur le fonctionnement</em></p>
 
 <h1 id="rcuprerlesdonnes">Récupérer les données</h1>
 
@@ -57,7 +59,9 @@
 
 <li>les résumés renseignés (<code>abstract_s</code>) ;</li>
 
-<li>le nombre de page (<code>page_s</code>).</li></ul>
+<li>le nombre de page (<code>page_s</code>) ;</li>
+
+<li>le document est en Open Access (<code>openAccess_bool</code>).</li></ul>
 </li>
 </ul>
 
@@ -117,7 +121,7 @@ Voilà les champs créés par le générateur :</p>
 <ul>
 <li>008 : <code>008 $aOax3</code></li>
 
-<li>029 : <code>_MOD_029 ##$aFR$b</code> + l'année + <code>BORD</code> + <code>M</code>, <code>3</code>, <code>P</code> ou <code>O</code> selon le type de mémoire et la spécialité + <code>XXX</code> à modifier manuellement en le numéro de la thèse</li>
+<li>029 : <code>029 MOD ##$aFR$b</code> + l'année + <code>BORD</code> + <code>M</code>, <code>3</code>, <code>P</code> ou <code>O</code> selon le type de mémoire et la spécialité + <code>XXX</code> à modifier manuellement en le numéro de la thèse</li>
 
 <li>100 : <code>100 0#$a</code> + l'année</li>
 
@@ -137,7 +141,7 @@ Voilà les champs créés par le générateur :</p>
 
 <li>183 : <code>183 ##$P01$aceb</code></li>
 
-<li>200 : <code>_VER_200 1#$a</code> + le 1er titre renvoyé avec les <code>:</code> (espaces avant et après, espaces parès) remplacés en <code>$e</code> et le <code>@</code> placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + <code>$f</code> + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + <code>$gsous la direction de</code> + le premier directeur de thèse renvoyé</li>
+<li>200 : <code>200 VER 1#$a</code> + le 1er titre renvoyé avec les <code>:</code> (espaces avant et après, espaces parès) remplacés en <code>$e</code> et le <code>@</code> placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + <code>$f</code> + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + <code>$gsous la direction de</code> + le premier directeur de thèse renvoyé</li>
 
 <li>214 : <code>214 #1$a</code> + l'année</li>
 
@@ -145,17 +149,21 @@ Voilà les champs créés par le générateur :</p>
 
 <li>303 : <code>303 ##$aL'impression du document génère</code> + le nombre de page entouré d'espace + <code>f.</code></li>
 
-<li>310 : <code>_MOD_310 ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE</code> à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)</li>
+<li>304 : <code>304 ##$aTitre provenant de l'écran-titre</code></li>
 
-<li>320 : <code>_MOD_320 ##$aBibliogr. XX réf. Annexes</code> à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas</li>
+<li>310 : <code>310 MOD ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE</code> à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)</li>
+
+<li>320 : <code>320 MOD ##$aBibliogr. XX réf. Annexes</code> à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas</li>
 
 <li>328 : <code>328 #0$bThèse d'exercice$c</code> + domaine + spécialité si indiquée + <code>$eBordeaux$d</code> + l'année</li>
 
 <li>330 : <code>330 ##$a</code> + résumé (pour chaque résumé entré)</li>
 
+<li>337 : <code>337 ##$aConfiguration requise : un logiciel capable de lire un fichier au format : application/pdf</code></li>
+
 <li>541 : <code>541 ##$a</code> + le 2e titre renvoyé (même changements que celui en 200) + <code>$zeng</code></li>
 
-<li>610 : <code>_DEL_610 0#$a</code> + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606</li>
+<li>610 : <code>610 DEL 0#$a</code> + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606</li>
 
 <li>608 : <code>608 ##$3027253139$2rameau</code></li>
 
@@ -171,6 +179,9 @@ Attention, écrit une <strong>700</strong> même s'il y a plusieurs auteurs</li>
 
 <h1 id="importercesdonnesdanswinibw">Importer ces données dans WinIBW</h1>
 
+<p><strong>À l'heure actuelle, il est nécessaire d'utiliser son navigateur puis de copier la notice en cliquant dessus et la coller dans WinIBW.</strong>
+Il est ensuite conseillé de lancer le script <code>delEspaceB4Tag</code> (code disponible ci-dessous).</p>
+
 <p>À l'heure actuelle, je passe par <a href="https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html">le générateur en javascript que j'avais déjà créé</a> pour importer les données dans WinIBW.
 En effet, à l'aide <a href="https://github.com/abes-esr/winibw-scripts/blob/master/user-scripts/idref/IdRef.vbs">du code source du script utilisateur IdRef développé par l'Abes</a>, j'ai réussi à me connecter à mon générateur et lancer les scripts internes à celui-ci.</p>
 
@@ -185,6 +196,20 @@ En effet, à l'aide <a href="https://github.com/abes-esr/winibw-scripts/blob/mas
 </ul>
 
 <h1 id="codeduscriptwinibw">Code du script WinIBW</h1>
+
+<p><strong>Le code ne fonctionne pas sur Internet Explorer pour le moment, il est donc impossible de directement importer la notice dans WinIBW.</strong>
+Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :</p>
+
+<pre><code>sub delEspaceB4Tag()
+  dim notice
+  application.activeWindow.title.selectAll
+  notice = application.activeWindow.title.selection
+  While(InStr(notice, chr(10) &amp; " ") &gt; 0)
+    notice = replace(notice, chr(10) &amp; " ", chr(10))
+  Wend
+  application.activeWindow.title.insertText notice
+End Sub
+</code></pre>
 
 <p><em>Version du 25/11/2021, non définitive</em></p>
 
@@ -358,6 +383,13 @@ SELECT DISTINCT ?item WHERE {
 LIMIT 100
 }
 }</code></li>
+
+<li>URI Wikidata associée à l'Université de Bordeaux (en JSON) : <code>https://www.wikidata.org/wiki/Special:EntityData/Q13344.json</code>.
+Accès au PPN IdRef à partir de là : <code>entities.Q13344.claims.P269[0].mainsnak.datavalue.value</code></li>
+
+<li>Chercher s'il existe des autorités pour la personne Jean-Claude Moissinac : <code>https://www.idref.fr/Sru/Solr?q=nom_s:moissinac%20AND%20prenom_s:jean-claude%20AND%20recordtype_z:a&amp;wt=json&amp;fl=ppn_z,nom_s,prenom_s,affcourt_z</code> ;</li>
+
+<li>Chercher s'il existe des autorités pour le sujet Urgences en pédiatrie : <code>https://www.idref.fr/Sru/Solr?q=subjectheading_t:(urgence*%20AND%20pediatr*)%20AND%20recordtype_z:r&amp;wt=json&amp;fl=ppn_z,subjectheading_s</code> ;</li>
 </ul>
 
 <h1 id="listedeserreurs">Liste des erreurs</h1>
@@ -371,6 +403,28 @@ Peut être causée par une mauvais entrée des données dans DUMAS ou une rééc
 <li><code>002</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>publicationDateY_i</code> ;</li>
 
 <li><code>003</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>dumas_degreeType_s</code> ;</li>
+
+<li><code>004</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>language_s</code> ;</li>
+
+<li><code>005</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>abstract_s</code> ;</li>
+
+<li><code>006</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>page_s</code> ;</li>
+
+<li><code>007</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>openAccess_bool</code> ;</li>
+
+<li><code>008</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>uri_s</code> ;</li>
+
+<li><code>009</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>keyword_s</code> ;</li>
+
+<li><code>010</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>title_s</code> ;</li>
+
+<li><code>011</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>authStructId_i</code> ;</li>
+
+<li><code>012</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>authLastName_s</code> ;</li>
+
+<li><code>013</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>authFirstName_s</code> associé au numéro <code>authLastName_s</code> en cours de traitement ;</li>
+
+<li><code>014</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>director_s</code> ;</li>
 </ul>
 
 <h2 id="erreursinvisiblescommencentpar">Erreurs invisibles (commencent par #)</h2>
@@ -378,7 +432,6 @@ Peut être causée par une mauvais entrée des données dans DUMAS ou une rééc
 <ul>
 <li><code>#99</code> : <em>en implémentation</em></li>
 </ul>
-</div>
 <div id="accessButtons">
 	<button id="buttonZoom"><span style="font-size: 14px;">A</span>|<span style="font-size: 21px;">A</span>|A</button><br/>
 	<button id="buttonNB">Noir et Blanc</button>
