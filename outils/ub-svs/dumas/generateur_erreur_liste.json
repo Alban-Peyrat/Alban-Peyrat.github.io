@@ -10,5 +10,8 @@
     "ERREUR-009": "le résultat renvoyé par l'API ne contient pas la propriété keyword_s",
     "ERREUR-010": "le résultat renvoyé par l'API ne contient pas la propriété title_s",
     "ERREUR-011": "le résultat renvoyé par l'API ne contient pas la propriété authStructId_i",
+    "ERREUR-012": "le résultat renvoyé par l'API ne contient pas la propriété authLastName_s",
+    "ERREUR-013": "le résultat renvoyé par l'API ne contient pas la propriété authFirstName_s associé au numéro authLastName_s en cours de traitement",
+    "ERREUR-014": "le résultat renvoyé par l'API ne contient pas la propriété director_s",
     "ERREUR-#99": "en implémentation"}
 }
