@@ -29,16 +29,18 @@ Source des données :
 Bibliothèque JS utilisée pour la rétrocompatibilité avec IE :
 - Core-js (auteur original : Denis "zloirock" Pushkarev) (dépôt GitHub : https://github.com/zloirock/core-js)
 - Babel (js) (lien vers la docuùentation sur le CDN : https://babeljs.io/docs/en/babel-standalone)
+- Polyfill service du Financial Times (lien vers la documentation : https://polyfill.io/v3/)
 -->
 <script src="https://unpkg.com/core-js-bundle@3.19.2"></script>
 <!--<script src="https://unpkg.com/@babel/standalone/babel.js"></script>-->
-<script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js"></script>
+<script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=es7%2Ces6%2Ces5"></script>
 </head>
 <body>
 <div id="bibJsMR">
     <span>Support Internet Explorer assuré grâce à :</span><br/>
     <span id="corejsMR"><a href="https://github.com/zloirock/core-js">Core-js</a></span><br/>
     <span id="babeljsMR"><a href="https://babeljs.io/">babel (js)</a></span><br/>
+    <span id="polyfillMR"><a href="https://polyfill.io/v3/">Polyfill</a></span><br/>
 </div>
 <input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
 <button id="generate" style="color:black;" title="Générer la notice (version 2.0)">Générer la notice</button><br/>
