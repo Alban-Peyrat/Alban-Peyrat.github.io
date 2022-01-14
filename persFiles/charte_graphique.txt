@@ -1,4 +1,4 @@
-Text: Calibri, #EBE0EB
-Alt_text_color: #FF8A00
-body_BG-color: #1F1F1F
-others_BG-color: #990000
+Text: Verdana, #EBE0EB
+Alt_text_color: #9FDEFF
+body_BG-color: #121212
+others_BG-color: #660000
