@@ -1,17 +1,17 @@
 * {
-	font-family: Calibri, sans-serif;
+	font-family: Verdana, Calibri, sans-serif;
 	color: #EBE0EB;
 	font-size: 18px;
 } 
 
 body {
 	margin: 1% 2% 1% 2%;
-	background-color: #1F1F1F;
+	background-color: #121212;
 }
 
 header span{
 	font-size: 36px;
-	color:#FF8A00;
+	color:#9FDEFF;
 }
 
 header a {
@@ -34,7 +34,7 @@ header {
 
 #pageName {
 	font-size: 32px;
-	color:#FF8A00;
+	color:#9FDEFF;
 	text-align: center;
 }
 
@@ -44,24 +44,24 @@ header {
 
 h1 {
 	font-size: 25px;
-	color: #FF8A00;
+	color: #9FDEFF;
 	text-indent: 6em;
 }
 
 h2 {
 	font-size: 23px;
-	color: #FF8A00;
+	color: #9FDEFF;
 }
 
 h3 {
 	font-size: 21px;
-	color: #FF8A00;
+	color: #9FDEFF;
 	text-indent: 3em;
 }
 
 h4 {
 	font-size: 20px;
-	color: #FF8A00;
+	color: #9FDEFF;
 	text-indent: 5em;
 }
 
@@ -77,8 +77,8 @@ button {font-size: 36px;
 }
 
 #buttonZoom {
-	background-color: #1F1F1F1F;
-	border: solid 1px #990000;
+	background-color: #121212;
+	border: solid 1px #660000;
 }
 
 #buttonNB {
@@ -97,7 +97,7 @@ button {font-size: 36px;
 	width: 800px;
 	margin-left:auto;
 	margin-right:auto;
-	background-color: #990000;
+	background-color: #660000;
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
@@ -107,7 +107,7 @@ button {font-size: 36px;
 }
 
 code {
-	background-color: #990000;
+	background-color: #660000;
 	padding-left:0.5%;
 	padding-right:0.5%;
 	border-radius: 3px;
