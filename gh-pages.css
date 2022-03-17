@@ -109,6 +109,7 @@ button {font-size: 36px;
 code {
 	font-family: Calibri;
 	font-style: italic;
+	font-size: inherit;
 	background-color: #660000;
 	padding-left:0.5%;
 	padding-right:0.5%;
