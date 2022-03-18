@@ -1,187 +1,136 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	<title>Alban Peyrat - CoCo-SAlma : contrôle des correspondances des cotes Sudoc-Alma</title>
-	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
-	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+<title>Alban Peyrat : CoCo-SAlma - Contrôle des correspondances des cotes Sudoc-Alma</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
 </head>
 <body>
 <header>
-	<a href="https://alban-peyrat.github.io">
-		<span id="headerPres">Présentation et documentation de mes outils numériques</span>
-	</a>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
 </header>
 <div id="contenu">
-	<div id="pageName">CoCo-SAlma : contrôle des correspondances des cotes Sudoc-Alma</div>
-	<ul id="lienGitHub">
-		<li><a href="https://github.com/Alban-Peyrat/CoCo-SAlma/raw/main/CoCo-SAlma2.xlsm">Téléchargez CoCo-SAlma (version 2)</a></li>
-		<li>Téléchargez le PowerPoint <a href="https://github.com/Alban-Peyrat/CoCo-SAlma/raw/main/Utiliser_CoCo-SAlma2.pptx"><code>Utiliser CoCo-SAlma2</code> au format pptx</a> ou <a href="https://github.com/Alban-Peyrat/CoCo-SAlma/raw/main/Utiliser_CoCo-SAlma2.pdf">au format pdf</a></li>
-		<li><a href="https://alban-peyrat.github.io/|||||mettre_le_vrai_lien|||||">Téléchargez le dossier "Ressources"</a></li>
-		<li><a href="https://github.com/Alban-Peyrat/CoCo-SAlma">Accédez au dépôt GitHub de CoCo-SAlma</a></li>
-	</ul>
-	<p>Coco-Salma est un outil visant spécifiquement à contrôler la correspondance des cotes pour un PPN entre les données d'exemplaire du Sudoc en utilisant <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a> et les holdings d'Alma. N'étant personnellement pas fan de posséder un document dans plusieurs localisations, elle signale également la présence de plusieurs cotes.</p>
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<ul>
+<li><a href="#initialisation">Initialisation</a><ol>
+<li><a href="#ajouter-une-bibliotheque">Ajouter une bibliothèque</a></li>
+</ol>
+</li>
+<li><a href="#renseigner-la-liste-des-ppn">Renseigner la liste des PPN</a><ol>
+<li><a href="#a-partir-dune-liste-de-ppn-dalma">À partir d'une liste de PPN d'Alma</a></li>
+<li><a href="#a-partir-dune-liste-de-ppn-deja-etablie">À partir d'une liste de PPN déjà établie</a></li>
+</ol>
+</li>
+<li><a href="#generer-la-liste-pour-lexport-et-importer-les-donnees">Générer la liste pour l'export et importer les données</a><ol>
+<li><a href="#cas-n-1-vous-avez-importe-la-liste-de-ppn-originale-depuis-alma">Cas n° 1 : vous avez importé la liste de PPN originale depuis Alma</a></li>
+<li><a href="#cas-n-2-votre-liste-de-ppn-originale-ne-vient-pas-dalma">Cas n° 2 : votre liste de PPN originale ne vient pas d'Alma</a></li>
+</ol>
+</li>
+<li><a href="#lancement-de-lanalyse">Lancement de l'analyse</a></li>
+<li><a href="#fonctionnement">Fonctionnement</a></li>
+<li><a href="#resultats">Résultats</a><ol>
+<li><a href="#quelques-precisions-sur-les-resultats">Quelques précisions sur les résultats</a></li>
+</ol>
+</li>
+<li><a href="#nettoyer-une-fois-acheve">Nettoyer une fois achevé</a></li>
+</ul></details>
+<div id="pageName">CoCo-SAlma - Contrôle des correspondances des cotes Sudoc-Alma</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/CoCo-SAlma">Accédez au dépôt GitHub de CoCo-SAlma</a></li>
+</ul>
+<div id="main">
+<div class="toc">
 
+</div>
+<p>Coco-Salma est un outil visant spécifiquement à contrôler la correspondance des cotes pour un PPN entre les données d'exemplaire du Sudoc en utilisant <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a> et les holdings d'Alma. N'étant personnellement pas fan de posséder un document dans plusieurs localisations, elle signale également la présence de plusieurs cotes.</p>
 <p><strong>Évitez d'avoir d'autres fichiers Excel ouverts pendant l'analyse (dans le cas où une erreur de programmation pourrait faire intéragir Constance avec des fichiers non prévus).</strong></p>
-
 <p><em>Version du 14/10/2021. En cours de réécriture.</em></p>
-
 <h1 id="initialisation">Initialisation</h1>
-
 <p>Enregistrez le document <code>CoCo-SAlma2.xlsm</code> (Coco-Salma dans le reste du document) dans un dossier de travail. <strong>Attention, Coco-SAlma créera un dossier à l'emplacement où vous sauvegarderez ce fichier.</strong></p>
-
-<p>Allumez Coco-Salma, remettez à zéro les données grâce bouton dans la feuille <code>Introduction</code> puis rendez-vous dans la feuille <code>Données</code> :</p>
-
-<ul>
-<li>choisissez un nom pour le fonds en <code>G2</code> (le dossier créé portera le nom <code>CoCo-SAlma_NomDuFonds</code>) ;</li>
-
-<li>entrez en <code>I2</code> le RCR de votre bibliothèque (manuellement ou en appuyant sur Alt + flèche du bas pour afficher une liste déroulante), ce qui remplira automatiquement le nom de la bibliothèque.</li>
-</ul>
-
-<h2 id="ajouterunebibliothque">Ajouter une bibliothèque</h2>
-
+<p>Allumez Coco-Salma, remettez à zéro les données grâce bouton dans la feuille <code>Introduction</code> puis rendez-vous dans la feuille <code>Données</code> :
+* choisissez un nom pour le fonds en <code>G2</code> (le dossier créé portera le nom <code>CoCo-SAlma_NomDuFonds</code>) ;
+* entrez en <code>I2</code> le RCR de votre bibliothèque (manuellement ou en appuyant sur Alt + flèche du bas pour afficher une liste déroulante), ce qui remplira automatiquement le nom de la bibliothèque.</p>
+<h2 id="ajouter-une-bibliotheque">Ajouter une bibliothèque</h2>
 <p>La liste des bibliothèques se trouvent sur la feuille <code>Introduction</code> en colonnes <code>S:T</code>. Pour le nom de la bibliothèque dans Alma, il doit correspondre exactement à son intitulé dans Alma. La liste déroulante des RCR se mettra automatiquement à jour après un ajout (jusqu'à 297 bibliothèques. Au-delà, il faudra modifier la formule).</p>
-
 <p>À noter : la sélection de bibliothèque se fait via le RCR mais une modification pour se faire via l'intitulé de la bibliothèque est tout à fait possible avec peu de changements.</p>
-
-<h1 id="renseignerlalistedesppn">Renseigner la liste des PPN</h1>
-
-<h2 id="partirdunelistedeppndalma">À partir d'une liste de PPN d'Alma</h2>
-
+<h1 id="renseigner-la-liste-des-ppn">Renseigner la liste des PPN</h1>
+<h2 id="a-partir-dune-liste-de-ppn-dalma">À partir d'une liste de PPN d'Alma</h2>
 <p>Exportez d'Alma une liste de Titres physiques, renommez-la <code>export_alma.xlsx</code> et placez-la dans le même dossier que Coco-Salma. Dans Coco-Salma, purifiez la liste de PPN via le bouton de la feuille <code>Introduction</code>. <strong>Veillez à ne pas ouvrir <code>export_alma.xlsx</code> avant de lancer la purification.</strong></p>
-
-<h2 id="partirdunelistedeppndjtablie">À partir d'une liste de PPN déjà établie</h2>
-
+<h2 id="a-partir-dune-liste-de-ppn-deja-etablie">À partir d'une liste de PPN déjà établie</h2>
 <p>Collez votre liste de PPN dans la <code>Liste de PPN originale</code>. Coco-Salma prend en compte les 9 derniers caractères de la cellule, si votre liste se présente sous la forme <code>PPN 123456789</code> ou <code>(PPN)123456789</code> ce n'est pas la peine de la retoucher, ni de rajouter des 0 en début de PPN, elle les ajoutera automatiquement.</p>
-
-<h1 id="gnrerlalistepourlexportetimporterlesdonnes">Générer la liste pour l'export et importer les données</h1>
-
-<p>Une fois la liste de PPN renseignée, générez la liste des PPN pour l'export via le bouton de la feuille <code>Introduction</code>. Cette étape créera le dossier, qui contiendra deux fichiers :</p>
-
-<ul>
-<li><code>Fichier_ppal.xlsm</code>, qui est la version de travail de Coco-Salma pour le traitement de ce fonds ;</li>
-
-<li><code>import_alma.xlsx</code>, qui est le document à utiliser pour exporter la liste des cotes d'Alma.</li>
-</ul>
-
+<h1 id="generer-la-liste-pour-lexport-et-importer-les-donnees">Générer la liste pour l'export et importer les données</h1>
+<p>Une fois la liste de PPN renseignée, générez la liste des PPN pour l'export via le bouton de la feuille <code>Introduction</code>. Cette étape créera le dossier, qui contiendra deux fichiers :
+* <code>Fichier_ppal.xlsm</code>, qui est la version de travail de Coco-Salma pour le traitement de ce fonds ;
+* <code>import_alma.xlsx</code>, qui est le document à utiliser pour exporter la liste des cotes d'Alma.</p>
 <p>Note : plus la liste est longue, plus cela peut prendre du temps.</p>
-
-<h2 id="casn1vousavezimportlalistedeppnoriginaledepuisalma">Cas n° 1 : vous avez importé la liste de PPN originale depuis Alma</h2>
-
+<h2 id="cas-n-1-vous-avez-importe-la-liste-de-ppn-originale-depuis-alma">Cas n° 1 : vous avez importé la liste de PPN originale depuis Alma</h2>
 <p>Dans ce cas, déplacez le fichier <code>export_alma.xlsx</code> dans le dossier <code>CoCo-SAlma_NomDuFonds</code>. Vous pouvez également supprimer le fichier <code>import_alma.xlsx</code>.</p>
-
-<h2 id="casn2votrelistedeppnoriginalenevientpasdalma">Cas n° 2 : votre liste de PPN originale ne vient pas d'Alma</h2>
-
-<p>Dans ce cas, il va falloir générer l'export. Connectez-vous à Alma, puis rendez-vous dans <code>Admin</code> puis <code>Gérer les jeux</code>. Sélectionnez <code>Ajouter un jeu</code> puis <code>exemplarisé</code>. Remplissez alors le formulaire en :</p>
-
-<ul>
-<li>nommant le jeu ;</li>
-
-<li>ajoutant un description si vous le souhaitez ;</li>
-
-<li>choisissant <code>Titres physiques</code> comme type de contenu ;</li>
-
-<li>sélectionnant <code>Privé</code> ;</li>
-
-<li>sélectionnant <code>À partir d'un fichier</code>.</li>
-</ul>
-
+<h2 id="cas-n-2-votre-liste-de-ppn-originale-ne-vient-pas-dalma">Cas n° 2 : votre liste de PPN originale ne vient pas d'Alma</h2>
+<p>Dans ce cas, il va falloir générer l'export. Connectez-vous à Alma, puis rendez-vous dans <code>Admin</code> puis <code>Gérer les jeux</code>. Sélectionnez <code>Ajouter un jeu</code> puis <code>exemplarisé</code>. Remplissez alors le formulaire en :
+* nommant le jeu ;
+* ajoutant un description si vous le souhaitez ;
+* choisissant <code>Titres physiques</code> comme type de contenu ;
+* sélectionnant <code>Privé</code> ;
+* sélectionnant <code>À partir d'un fichier</code>.</p>
 <p>Cliquez ensuite sur l'icône de dossier et sélectionner le fichier <code>import_alma.xlsx</code>. Finissez cette étape en cliquant sur <code>Enregistrer</code>.</p>
-
 <p>Attendez ensuite que le jeu soit importé, puis faites un clic droit sur son nom et sélectionnez <code>Membres</code>. Exportez enfin la liste de résultats avec <code>Excel (tous les champs)</code>, puis enregistrez le fichier sous le nom <code>export_alma.xlsx</code> et placez-le dans le dossier <code>CoCo-SAlma_NomDuFonds</code>.</p>
-
-<h1 id="lancementdelanalyse">Lancement de l'analyse</h1>
-
-<p>À ce stade, votre dossier doit contenir trois (parfois deux pour le cas n° 1) fichiers :</p>
-
-<ul>
-<li><code>export_alma.xlsx</code> ;</li>
-
-<li><code>Fichier_ppal.xlsm</code> ;</li>
-
-<li><code>import_alma.xlsx</code> (si vous ne l'avez pas supprimé. À ce stade, il ne sera plus utilisé).</li>
-</ul>
-
+<h1 id="lancement-de-lanalyse">Lancement de l'analyse</h1>
+<p>À ce stade, votre dossier doit contenir trois (parfois deux pour le cas n° 1) fichiers :
+* <code>export_alma.xlsx</code> ;
+* <code>Fichier_ppal.xlsm</code> ;
+* <code>import_alma.xlsx</code> (si vous ne l'avez pas supprimé. À ce stade, il ne sera plus utilisé).</p>
 <p>Si vous possédez bien les deux premiers, lancez l'analyse via le bouton de la feuille <code>Introduction</code>.</p>
-
 <p>Celle-ci peut prendre du temps selon la taille de la liste (par exemple, 18:17 pour 5507 titres). Durant l'analyse, évitez de toucher aux fichiers du dossier <code>CoCo-SAlma_NomDuFonds</code>, au cas où.</p>
-
 <p>Une fois qu'elle est terminée, une pop-up vous indiquera que l'analyse est terminée, vous indiquant par ailleurs le temps de traitement.</p>
-
 <h1 id="fonctionnement">Fonctionnement</h1>
-
 <p><em>En cours d'écriture</em></p>
-
-<h1 id="rsultats">Résultats</h1>
-
+<h1 id="resultats">Résultats</h1>
 <p>À ce stade vous pouvez si vous le souhaitez exporter les résultats dans un autre classeur (clic droit sur la feuille <code>Résultats</code>, <code>Déplacer ou copier</code>, <code>Nouveau classeur</code>, cocher <code>Créer une copie</code>, <code>OK</code>).</p>
-
-<p>Vous pouvez également filtrer les données pour en faciliter la lecture. Par ailleurs, un code couleur est utilisé pour la liste des résultats :</p>
-
-<ul>
-<li>colonne <code>Correspondance ?</code> :
-
-
-<ul>
-<li>bleu : un problème a été détecté dans Alma (prioritaire sur le Sudoc) ;</li>
-
-<li>rouge : un problème a été détecté dans le Sudoc ;</li>
-
-<li>orange/jaune : un problème a été détecté, sans plus de précision.</li></ul>
-</li>
-
-<li>colonne <code>Cotes</code> (Alma et Sudoc) :
-
-
-<ul>
-<li>rouge : absence de cote dans ce logiciel ;</li>
-
-<li>vert : plusieurs cotes détectées.</li></ul>
-</li>
-</ul>
-
-<h2 id="quelquesprcisionssurlesrsultats">Quelques précisions sur les résultats</h2>
-
+<p>Vous pouvez également filtrer les données pour en faciliter la lecture. Par ailleurs, un code couleur est utilisé pour la liste des résultats :
+* colonne <code>Correspondance ?</code> :
+  * bleu : un problème a été détecté dans Alma (prioritaire sur le Sudoc) ;
+  * rouge : un problème a été détecté dans le Sudoc ;
+  * orange/jaune : un problème a été détecté, sans plus de précision.
+* colonne <code>Cotes</code> (Alma et Sudoc) :
+  * rouge : absence de cote dans ce logiciel ;
+  * vert : plusieurs cotes détectées.</p>
+<h2 id="quelques-precisions-sur-les-resultats">Quelques précisions sur les résultats</h2>
 <ul>
 <li>Si plusieurs cotes sont détectées dans le Sudoc ou dans Alma pour votre RCR / bibliothèque, <code>Correspondance ?</code> affichera <code>Double localisation</code> et les cotes dans les colonnes en question seront séparées par la chaîne de caractères <code>;_;</code>.</li>
-
 <li>S'il n'y a pas correspondance ou que le PPN dans le Sudoc n'a pas son équivalent dans Alma (ou inversement), <code>Correspondance ?</code> affichera <code>Non</code> et sera coloré en orange (ou bleu ou rouge si l’erreur est précisée).</li>
-
 <li>Par ailleurs, il peut y avoir de bonnes correspondances tout de même signalées si plusieurs localisations sont utilisées.</li>
-
 <li>Attention, il est possible que certaines cotes soient des "faux positifs", il n'y aura pas de problème mais la manière de comparer aura échoué (ex : il y a un espace de trop, une minuscule à la place d’une majuscule, etc.).</li>
-
-<li>Enfin, Coco-Salma désigne comme <code>PPN incorrect</code> toute entrée pour laquelle elle n’a pas pu récupérer le PPN via <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a>. Cela ne veut pas dire que le PPN est forcément incorrect. Si vous constatez un nombre anormal de PPN incorrects, relancez une analyse sur cette liste et/ou sur la liste des résultats <code>Pas de cote Sudoc</code> pour lesquels aucun PPN n’est associé dans la colonne Sudoc. (Plus d’informations à ce sujet dans <a href="https://alban-peyrat.github.io/CoCo-SAlma#fonctionnement">la partie sur le fonctionnement</a>)</li>
+<li>Enfin, Coco-Salma désigne comme <code>PPN incorrect</code> toute entrée pour laquelle elle n’a pas pu récupérer le PPN via <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a>. Cela ne veut pas dire que le PPN est forcément incorrect. Si vous constatez un nombre anormal de PPN incorrects, relancez une analyse sur cette liste et/ou sur la liste des résultats <code>Pas de cote Sudoc</code> pour lesquels aucun PPN n’est associé dans la colonne Sudoc. (Plus d’informations à ce sujet dans <a href="https://alban-peyrat.github.io/outils/CoCo-SAlma#fonctionnement">la partie sur le fonctionnement</a>)</li>
 </ul>
-
-<h1 id="nettoyerunefoisachev">Nettoyer une fois achevé</h1>
-
-<p>Une fois le traitement fini ou la feuille de résultats exportée :</p>
-
-<ul>
-<li>supprimez si vous le souhaitez les fichiers inutiles (<code>export_alma.xlsx</code>, <code>import_alma.xlsx</code> ou tout le dossier <code>Coco-Salma_NomDuFonds</code> si vous avez exporté les résultats) ;</li>
-
-<li>supprimez le jeu dans Alma si vous l’avez créé et que vous ne comptez pas le réutiliser.</li>
-</ul>
-</div>
+<h1 id="nettoyer-une-fois-acheve">Nettoyer une fois achevé</h1>
+<p>Une fois le traitement fini ou la feuille de résultats exportée :
+* supprimez si vous le souhaitez les fichiers inutiles (<code>export_alma.xlsx</code>, <code>import_alma.xlsx</code> ou tout le dossier <code>Coco-Salma_NomDuFonds</code> si vous avez exporté les résultats) ;
+*   supprimez le jeu dans Alma si vous l’avez créé et que vous ne comptez pas le réutiliser.</p></div>
 <div id="accessButtons">
-	<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
-	<button id="buttonNB">Noir et Blanc</button>
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
 </div>
 <div id="divLiens">
-	<p>Liens vers les autres outils&nbsp;:</p>
-	<ul id="liens">
-		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
-	</ul>
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+</ul>
 </div>
-</body>
+</div></body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
-<script src="https://alban-peyrat.github.io/tableMatieres.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>

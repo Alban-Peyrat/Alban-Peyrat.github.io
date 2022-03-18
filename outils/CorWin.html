@@ -1,82 +1,83 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	<title>Alban Peyrat - CorWin : contrôle WinIBW</title>
-	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
-	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+<title>Alban Peyrat : CorWin - Contrôle WinIBW</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
 </head>
 <body>
 <header>
-	<a href="https://alban-peyrat.github.io">
-		<span id="headerPres">Présentation et documentation de mes outils numériques</span>
-	</a>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
 </header>
 <div id="contenu">
-	<div id="pageName">CorWin : contrôle WinIBW</div>
-	<ul id="lienGitHub">
-		<li><a href="https://github.com/Alban-Peyrat/CorWin/raw/main/CorWin.xlsm">Téléchargez CorWin</a></li>
-		<li><a href="https://github.com/Alban-Peyrat/CorWin/blob/main/Scripts_WinIBW_CorWin.vbs">Récupérez les scripts utilisateurs pour WinIBW de CorWin</a></li>
-		<li><a href="https://github.com/Alban-Peyrat/CorWin">Accédez au dépôt GitHub de CorWin</a></li>
-	</ul>
-	<p>Corwin est un outil visant à contrôler des données du Sudoc en passant par WinIBW. Corwin impliquant un plus grand nombre d'actions de la part de l'utilisateur que <a href="https://alban-peyrat.github.io/outils/ConStance">Constance</a>, il n'est pour l'instant utilisé que pour des contrôles impossibles pour celle-ci.</p>
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<ul>
+<li><a href="#avant-toute-utilisation">Avant toute utilisation</a></li>
+<li><a href="#initialisation">Initialisation</a><ol>
+<li><a href="#a-partir-dune-liste-de-ppn-dalma">À partir d'une liste de PPN d'Alma</a></li>
+<li><a href="#a-partir-dune-liste-de-ppn-deja-etablie">À partir d'une liste de PPN déjà établie</a></li>
+</ol>
+</li>
+<li><a href="#export-de-winibw">Export de WinIBW</a></li>
+<li><a href="#lancement-de-lanalyse-dans-corwin">Lancement de l'analyse dans Corwin</a></li>
+<li><a href="#les-analyses">Les analyses</a><ol>
+<li><a href="#cw1-verification-du-format-de-lua103">CW1 : vérification du format de l'UA103</a></li>
+</ol>
+</li>
+</ul></details>
+<div id="pageName">CorWin - Contrôle WinIBW</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/CorWin">Accédez au dépôt GitHub de CorWin</a></li>
+</ul>
+<div id="main">
+<div class="toc">
 
-<p><strong>Évitez d'avoir d'autres fichiers Excel ouverts pendant l'analyse (dans le cas où une erreur de programmation pourrait faire intéragir Corwin avec des fichiers non prévus).</strong></p>
-
-<p><em>Version du 14/10/2021.</em></p>
-
-<h1 id="avanttouteutilisation">Avant toute utilisation</h1>
-
-<p>Avant d'utiliser Corwin, il vous sera nécessaire d'importer <a href="https://github.com/Alban-Peyrat/CorWin/blob/main/Scripts_WinIBW_CorWin.vbs">les scripts utilisateurs pour WinIBW de Corwin</a> dans votre WinIBW <em><a href="http://documentation.abes.fr/sudoc/manuels/logiciel_winibw/scripts/index.html#CreerScriptUtilisateur">(consultez l'aide de l'Abes pour importer des scripts utilisateurs dans WinIBW si nécessaire)</a></em>.</p>
-
-<h1 id="initialisation">Initialisation</h1>
-
-<h2 id="partirdunelistedeppndalma">À partir d'une liste de PPN d'Alma</h2>
-
-<p>Exportez d'Alma une liste de Titres physiques, renommez-la <code>export_Alma_CorWin.xlsx</code> et placez-la dans le même dossier que <code>CorWin.xlsm</code> (Corwin dans le reste de la documentation).</p>
-
-<p>Allumez Corwin, choisissez la feuille <code>Introduction</code> et remettez à zéro les données. Importez ensuite les données d'Alma. Sélectionnez en <code>H2</code> le contrôle à effectuer (en appuyant sur Alt + flèche du bas, une liste déroulante s'affichera).</p>
-
-<h2 id="partirdunelistedeppndjtablie">À partir d'une liste de PPN déjà établie</h2>
-
-<p>Allumez Corwin, choisissez la feuille <code>Introduction</code> et remettez à zéro les données. Collez votre liste de PPN dans la colonne associée. Sélectionnez en <code>H2</code> le contrôle à effectuer (en appuyant sur Alt + flèche du bas, une liste déroulante s'affichera).</p>
-
-<p>Notes : Corwin lance la requête <code>che PPN</code> suivi d'un espace puis du contenu de la cellule, veillez à écrire les PPN sous la forme <code>123456789</code> (ou <code>PPN 123456789</code> qui fonctionne aussi).</p>
-
-<h1 id="exportdewinibw">Export de WinIBW</h1>
-
-<p>Pour exporter les données de WinIBW, commencez par vous y connecter, puis copiez la liste de PPN depuis Corwin via le bouton dédié dans <code>Introduction</code>. <strong>Il est obligatoire de passer par ce bouton car ce dernier génère au début de la liste de PPN l'emplacement de Corwin, sans lequel WinIBW ne saura pas où écrire les données.</strong> (L'emplacement de Corwin sera remplacé à la fin de l'analyse de Corwin par <code>Ø</code>.) Une fois la liste dans le presse-papier, lancez le script WinIBW du traitement que vous souhaitez, soit en l'appelant directement, soit en passant par le lanceur de Corwin.</p>
-
-<p>Pendant le traitement, laissez WinIBW travailler. Une fois le traitement terminé, WinIBW affichera un pop-up vous invitant à lancer l'analyse depuis Corwin.</p>
-
-<h1 id="lancementdelanalysedanscorwin">Lancement de l'analyse dans Corwin</h1>
-
-<p>Une fois le traitement dans WinIBW terminé, vous pouvez lancer l'analyse de Corwin via le bouton dédié dans la feuille <code>Introduction</code>.</p>
-
-<h1 id="lesanalyses">Les analyses</h1>
-
-<h2 id="cw1vrificationduformatdelua103">CW1 : vérification du format de l'UA103</h2>
-
-<p>Vérifie que les dates en 103 $a et 103 $b soient au bon format</p>
 </div>
+<p>Corwin est un outil visant à contrôler des données du Sudoc en passant par WinIBW. Corwin impliquant un plus grand nombre d'actions de la part de l'utilisateur que <a href="https://alban-peyrat.github.io/outils/ConStance">Constance</a>, il n'est pour l'instant utilisé que pour des contrôles impossibles pour celle-ci.</p>
+<p><strong>Évitez d'avoir d'autres fichiers Excel ouverts pendant l'analyse (dans le cas où une erreur de programmation pourrait faire intéragir Corwin avec des fichiers non prévus).</strong></p>
+<p><em>Version du 14/10/2021.</em></p>
+<h1 id="avant-toute-utilisation">Avant toute utilisation</h1>
+<p>Avant d'utiliser Corwin, il vous sera nécessaire d'importer <a href="https://github.com/Alban-Peyrat/CorWin/blob/main/Scripts_WinIBW_CorWin.vbs">les scripts utilisateurs pour WinIBW de Corwin</a> dans votre WinIBW <em><a href="http://documentation.abes.fr/sudoc/manuels/logiciel_winibw/scripts/index.html#CreerScriptUtilisateur">(consultez l'aide de l'Abes pour importer des scripts utilisateurs dans WinIBW si nécessaire)</a></em>.</p>
+<h1 id="initialisation">Initialisation</h1>
+<h2 id="a-partir-dune-liste-de-ppn-dalma">À partir d'une liste de PPN d'Alma</h2>
+<p>Exportez d'Alma une liste de Titres physiques, renommez-la <code>export_Alma_CorWin.xlsx</code> et placez-la dans le même dossier que <code>CorWin.xlsm</code> (Corwin dans le reste de la documentation).</p>
+<p>Allumez Corwin, choisissez la feuille <code>Introduction</code> et remettez à zéro les données. Importez ensuite les données d'Alma. Sélectionnez en <code>H2</code> le contrôle à effectuer (en appuyant sur Alt + flèche du bas, une liste déroulante s'affichera).</p>
+<h2 id="a-partir-dune-liste-de-ppn-deja-etablie">À partir d'une liste de PPN déjà établie</h2>
+<p>Allumez Corwin, choisissez la feuille <code>Introduction</code> et remettez à zéro les données. Collez votre liste de PPN dans la colonne associée. Sélectionnez en <code>H2</code> le contrôle à effectuer (en appuyant sur Alt + flèche du bas, une liste déroulante s'affichera).</p>
+<p>Notes : Corwin lance la requête <code>che PPN</code> suivi d'un espace puis du contenu de la cellule, veillez à écrire les PPN sous la forme <code>123456789</code> (ou <code>PPN 123456789</code> qui fonctionne aussi).</p>
+<h1 id="export-de-winibw">Export de WinIBW</h1>
+<p>Pour exporter les données de WinIBW, commencez par vous y connecter, puis copiez la liste de PPN depuis Corwin via le bouton dédié dans <code>Introduction</code>. <strong>Il est obligatoire de passer par ce bouton car ce dernier génère au début de la liste de PPN l'emplacement de Corwin, sans lequel WinIBW ne saura pas où écrire les données.</strong> (L'emplacement de Corwin sera remplacé à la fin de l'analyse de Corwin par <code>Ø</code>.) Une fois la liste dans le presse-papier, lancez le script WinIBW du traitement que vous souhaitez, soit en l'appelant directement, soit en passant par le lanceur de Corwin.</p>
+<p>Pendant le traitement, laissez WinIBW travailler. Une fois le traitement terminé, WinIBW affichera un pop-up vous invitant à lancer l'analyse depuis Corwin.</p>
+<h1 id="lancement-de-lanalyse-dans-corwin">Lancement de l'analyse dans Corwin</h1>
+<p>Une fois le traitement dans WinIBW terminé, vous pouvez lancer l'analyse de Corwin via le bouton dédié dans la feuille <code>Introduction</code>.</p>
+<h1 id="les-analyses">Les analyses</h1>
+<h2 id="cw1-verification-du-format-de-lua103">CW1 : vérification du format de l'UA103</h2>
+<p>Vérifie que les dates en 103 $a et 103 $b soient au bon format</p></div>
 <div id="accessButtons">
-	<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
-	<button id="buttonNB">Noir et Blanc</button>
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
 </div>
 <div id="divLiens">
-	<p>Liens vers les autres outils&nbsp;:</p>
-	<ul id="liens">
-		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
-	</ul>
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+</ul>
 </div>
-</body>
+</div></body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
-<script src="https://alban-peyrat.github.io/tableMatieres.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>
