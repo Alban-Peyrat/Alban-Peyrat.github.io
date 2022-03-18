@@ -1,165 +1,117 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	<title>Alban Peyrat - ConAn : contrôle Alma</title>
-	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
-	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+<title>Alban Peyrat : ConAn - Contrôle Alma</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
 </head>
 <body>
 <header>
-	<a href="https://alban-peyrat.github.io">
-		<span id="headerPres">Présentation et documentation de mes outils numériques</span>
-	</a>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
 </header>
 <div id="contenu">
-	<div id="pageName">ConAn : contrôle Alma</div>
-	<ul id="lienGitHub">
-		<li><a href="https://github.com/Alban-Peyrat/ConAn/raw/main/ConAn.xlsm">Téléchargez ConAn</a></li>
-		<li><a href="https://github.com/Alban-Peyrat/ConAn">Accédez au dépôt GitHub de ConAn</a></li>
-	</ul>
-<p>ConAn est un outil visant originellement à contrôler des données provenant d'Alma. En pratique, il permet également de donner certaines statistiques ou informations sur le fonds renseigné.</p>
-
-<p><strong>Évitez d'avoir d'autres fichiers Excel ouverts pendant l'analyse (dans le cas où une erreur de programmation pourrait faire intéragir ConAn avec des fichiers non prévus).</strong></p>
-
-<h1 id="initialisation">Initialisation</h1>
-
-<p>Exportez d'Alma une liste de Titres physiques, renommez-la <code>export_Alma_ConAn.xlsx</code> et placez-la dans le même dossier que <code>ConAn.xlsm</code> (ConAn dans le reste de la documentation).</p>
-
-<p>Allumez ConAn, choisissez la feuille <code>Introduction</code> et remettez à zéro les données. Sélectionnez la bibliothèque en <code>H4</code> (en appuyant sur Alt + flèche du bas, une liste déroulante s'affichera) puis le contrôle à effectuer en <code>H2</code> (même manipulation pour voir la liste).</p>
-
-<p>Lancez ensuite l'analyse.</p>
-
-<h2 id="ajouterunebibliothque">Ajouter une bibliothèque</h2>
-
-<p>La liste des bibliothèques se trouvent en colonne <code>P</code> (masquée par défaut). La liste déroulante se mettra automatiquement à jour après un ajout (jusqu'à 99 bibliothèques. Au-delà, il faudra modifier la formule).</p>
-
-<h1 id="lesanalyses">Les analyses</h1>
-
-<h2 id="ca1analysecoteholding">CA1 : analyse cote / holding</h2>
-
-<p>Pas encore implémentée, elle servira à comparer si la cote d'un document correspond à la holding associée, utilisant un fonctionnement similaire (mais plus simple) que <a href="https://github.com/Alban-Peyrat/Louise">Louise</a>. Le développement est pour l'instant uniquement prévu pour la BUSVS.</p>
-
-<h2 id="ca2statistiquesdgeenprenantencomptelesexemplaires">CA2 : statistiques d'âge en prenant en compte les exemplaires</h2>
-
-<p>Calcule l'âge moyen et l'âge médian d'un fonds en fonction du nombre d'exemplaires (entre 1900 et 2030). C'est une version améliorée de <a href="https://github.com/Alban-Peyrat/ConStance#cs4-non-pref--statistiques-d%C3%A2ge-champs-210-214">l'analyse CS4 de ConStance</a> qui ne prend pas compte les exemplaires.</p>
-
-<p>Pour chaque titre dans la liste, ConAn prélève le PPN, l'année la plus récente présente dans la colonne <code>Créateur / Éditeur</code> et le nombre d'exemplaires.</p>
-
-<p>Pour isoler l'année, ConAn :</p>
-
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
 <ul>
-<li>supprime tout ce qui se trouve avant la première parenthèse (supposément la partie consacrée au créateur) ;</li>
-
-<li>divise en plusieurs parties ce qu'il reste, en utilisant le point-virgule comme séparateur (les différentes 210/214 semblent être séparées par des points-virgules dans l'export Alma) ;</li>
-
-<li>pour chacune de ces parties, il cherche la position de la dernière virgule. Si celle-ci existe et se trouve avant les derniers 4 caractères (empêche des erreurs de catalogage de nuire à l'analyse), il conserve tout ce qui se trouve derrière la virgule, sinon il conserve l'intégralité de la partie ;</li>
-
-<li>supprime alors les espaces, <code>DL</code>, <code>C</code>, <code>cop</code>, <code>P</code>, parenthèses ainsi que les caractères suivants : <code>. , - ?</code> ; </li>
-
-<li>puis regarde si ce qu'il reste peut être considérer comme un nombre ;</li>
-
-<li>si ce n'est pas le cas, ConAn passe un par un les caractères restants en ne conservant que les chiffres. Au fur et à mesure de ce processus, à chaque fois qu'il a en mémoire 8 caractères, il les divise en deux paquets de 4 chiffres et compare lequel des deux est le plus grande sous forme de nombre (ce qui vise à éviter les erreurs de dépassement de capacité et à ne conserver que l'année la plus grande). Si au terme de l'analyse manuelle, aucun nombre ne reste, il attribue alors 0 à la valeur de l'année ;</li>
-
-<li>ConAn regarde ensuite si l'année qu'il a conservée se trouve entre 1900 et 2030 (exclus). Si ce n'est pas le cas, il regarde si les quatre derniers chiffres sont situés dans cet intervalle. Si ce n'est toujours pas le cas, il regarde si les quatre premiers chiffres sont situés dans l'intervalle. Si aucun cas ne correspond, il attribue alors la valeur 0 à l'année. Cette partie permet d'exclure des nombres qui seraient trop extrêmes et donc probablement des erreurs dans l'isolation de la cote ;</li>
-
-<li>enfin, il vérifie s'il a déjà une année en mémoire pour ce PPN, si ce n'est pas le cas, il conserve celle-ci, sinon, il compare les deux et conserve la plus récente ;</li>
-
-<li>effectue ensuite la même analyse sur toutes les autres parties ;</li>
-
-<li>si à la fin il n'a pas d'année ou que celle-ci équivaut à 0, il ne renvoie aucune année dans la page de résultat.</li>
+<li><a href="#initialisation">Initialisation</a><ol>
+<li><a href="#ajouter-une-bibliotheque">Ajouter une bibliothèque</a></li>
+</ol>
+</li>
+<li><a href="#les-analyses">Les analyses</a><ol>
+<li><a href="#ca1-analyse-cote-holding">CA1 : analyse cote / holding</a></li>
+<li><a href="#ca2-statistiques-dage-en-prenant-en-compte-les-exemplaires">CA2 : statistiques d'âge en prenant en compte les exemplaires</a></li>
+<li><a href="#ca3-detection-de-multiples-editions-dun-meme-titre">CA3 : détection de multiples éditions d'un même titre</a></li>
+</ol>
+</li>
+</ul></details>
+<div id="pageName">ConAn - Contrôle Alma</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/ConAn">Accédez au dépôt GitHub de ConAn</a></li>
 </ul>
+<div id="main">
+<div class="toc">
 
-<p>Pour calculer le nombre d'exemplaires, ConAn :</p>
-
-<ul>
-<li>divise la colonne de disponibilité en plusieurs parties, chacune correspondant à une holding ;</li>
-
-<li>localise ensuite, pour chaque holding correspondant à la bibliothèque sélectionnée et qui n'est pas une holding associée, le terme <code>exemplaire</code> (s'il n'est pas présent, il passe à la prochaine holding, ce implique que les exemplaires ayant une mention de tomaison dans l'exemplaire sont exclus) ;</li>
-
-<li>localise alors la première parenthèse et ne conserve que ce qui se trouve entre celle-ci et le terme <code>exemplaire</code>. Il répète cette opération tant que l'écart entre ces deux points est supérieur à 7. En effet lorsque que l'écart est inférieur à 7, nous avons forcément l'information sur les exemplaires dans ce qui reste (fonctionne jusqu'à 999 exemplaires) ;</li>
-
-<li>supprime ensuite espaces et lettres <code>e</code>, ce qui laisse supposément uniquement un nombre, mais, dans le cas où le reste ne serait pas un nombre, il passe un par un les caractères pour conserver uniquement les chiffres ;</li>
-
-<li>additionne ensuite ce nombre au total d'exemplaires pour ce PPN (0 par défaut) et passe à la holding suivante.</li>
-</ul>
-
-<p>Une fois tous les PPN traités, il calcule la moyenne et la médiane en prenant en compte le nombre d'exemplaires. Concernant la page de résultat, les PPN sont triés par année, ceux n'ayant pas d'année associée sont triés au fonds et colorés de rouge. Il comptabilise également le nombre de titres exclus et le nombre d'exemplaires exclus.</p>
-
-<h2 id="ca3dtectiondemultiplesditionsdunmmetitre">CA3 : détection de multiples éditions d'un même titre</h2>
-
-<p><em>Pas entièrement à jour, notamment prend en compte les 979 en début d'ISBN 13</em></p>
-
-<p><em>A pour alternative <a href="https://github.com/Alban-Peyrat/ConStance#cs6--d%C3%A9tection-de-multiples-%C3%A9ditions-dun-m%C3%AAme-titre">CS6 de ConStance</a>. Chacun des deux à ses avantages et ses inconvénients, la détection initiale via clef de titre est différente.</em></p>
-
-<p>Détermine les titres qui ont possiblement deux éditions dans la même liste.</p>
-
-<p>Pour chaque titre dans la liste, ConAn prélève le PPN et les colonnes du titre, de l'édition, de l'ISBN 13 et de l'ISBN 10.</p>
-
-<p>Il va ensuite générer une clef pour chaque titre :</p>
-
-<ul>
-<li>il ne conserve de la donnée originelle que la partie du titre se trouvant avant <code>/</code> (espaces avant et après), soit très généralement le titre propre (sauf si la dite chaîne de caractère se trouve dans le titre propre) ;</li>
-
-<li>il supprime ensuite <code>[Texte imprimé]</code>, les articles définis et indéfinis, les parenthèses, crochets et la liste de caractères suivants : <code>, : ; . '</code> et remplace les tirets par des espaces ;</li>
-
-<li>il divise alors son nouveau titre en autant de mots qu'il détecte (en utilisant les espaces comme séparateurs) ;</li>
-
-<li>pour le premier mot, il conserve les 4 premiers caractères, puis les deux premiers caractères des trois mots suivants (s'ils existent), séparant les chaînes de caractères par des <em>underscores</em> (<code>_</code>) ;</li>
-
-<li>la clef est ensuite passée en majuscule (elle conserve les accents).</li>
-</ul>
-
-<p>Ensuite, pour chaque PPN dont la colonne d'édition n'est pas vide, il compare pour l'intégralité des autres entrées de la liste si la clef est parfaitement égale à la sienne. Si c'est le cas, il conserve dans un tableau le PPN, l'ISBN 13 et l'ISBN 10 de cette entrée.</p>
-
-<p>Une fois l'intégralité de la liste parcourue pour ce PPN, si ce tableau n'est pas vide, il génère une clef d'ISBN pour ce PPN :</p>
-
-<ul>
-<li>si l'ISBN 13 n'est pas vide et qu'il est sous sa forme avec des tirets, il en conserve les trois premières parties (c'est-à-dire le pays producteurs ou distributeur (<em>bookland</em> pour les livres, soit 978 ou 979), le domaine ISBN et le numéro d'éditeur) ;</li>
-
-<li>s'il n'a pas pu récupérer via l'ISBN 13 la clef et que l'ISBN 10 n'est pas vide et qu'il est sous sa forme avec des tirets, il ajout <code>978-</code> (première partie de l'ISBN 13) aux deux premières parties de l'ISBN 10 ;</li>
-
-<li>sinon, la clef est une chaîne de caractères vide.</li>
-</ul>
-
-<p>Une fois sa propre clef générée, pour chacune des entrées de son tableau (=des PPN potentiellement doublons d'édition), il génère la clef ISBN de celles-ci et la compare à celle du PPN originale, trois cas sont alors possibles :</p>
-
-<ul>
-<li><code>corr. ISBN</code> : les clefs ISBN correspondent, la ligne du PPN original se colore en rouge ;</li>
-
-<li><code>imp. ISBN</code> : une des deux clefs ISBN au moins est vide, ConAn n'a donc pas pu les comparer, la ligne se colore en orange/jaune ;</li>
-
-<li><code>NO corr. ISBN</code> : les clefs ISBN ne correspondent pas, la ligne se colore en bleu.</li>
-</ul>
-
-<p>ConAn indique enfin dans une dernière colonne le résultat de son analyse :</p>
-
-<ul>
-<li>soit <code>Aucune détection automatique</code>, colorée de vert ;</li>
-
-<li>soit <code>Double éd. possible</code> suivi de tous les PPN détectés avec, pour chacun d'entre eux, le résultat de la correspondance ISBN (la couleur de la ligne suit l'ordre de priorité susmentionné).</li>
-</ul>
-
-<p>Note : c'est une détection automatique qui présente des limites, la liste des résultats peut ne pas détecter certains cas tout comme elle peut détecter des faux positifs (la comparaison ISBN cherche à diminuer ces faux-positifs).</p>
 </div>
+<p>ConAn est un outil visant originellement à contrôler des données provenant d'Alma. En pratique, il permet également de donner certaines statistiques ou informations sur le fonds renseigné.</p>
+<p><strong>Évitez d'avoir d'autres fichiers Excel ouverts pendant l'analyse (dans le cas où une erreur de programmation pourrait faire intéragir ConAn avec des fichiers non prévus).</strong></p>
+<h1 id="initialisation">Initialisation</h1>
+<p>Exportez d'Alma une liste de Titres physiques, renommez-la <code>export_Alma_ConAn.xlsx</code> et placez-la dans le même dossier que <code>ConAn.xlsm</code> (ConAn dans le reste de la documentation).</p>
+<p>Allumez ConAn, choisissez la feuille <code>Introduction</code> et remettez à zéro les données. Sélectionnez la bibliothèque en <code>H4</code> (en appuyant sur Alt + flèche du bas, une liste déroulante s'affichera) puis le contrôle à effectuer en <code>H2</code> (même manipulation pour voir la liste).</p>
+<p>Lancez ensuite l'analyse.</p>
+<h2 id="ajouter-une-bibliotheque">Ajouter une bibliothèque</h2>
+<p>La liste des bibliothèques se trouvent en colonne <code>P</code> (masquée par défaut). La liste déroulante se mettra automatiquement à jour après un ajout (jusqu'à 99 bibliothèques. Au-delà, il faudra modifier la formule).</p>
+<h1 id="les-analyses">Les analyses</h1>
+<h2 id="ca1-analyse-cote-holding">CA1 : analyse cote / holding</h2>
+<p>Pas encore implémentée, elle servira à comparer si la cote d'un document correspond à la holding associée, utilisant un fonctionnement similaire (mais plus simple) que <a href="https://alban-peyrat.github.io/outils/Louise">Louise</a>. Le développement est pour l'instant uniquement prévu pour la BUSVS.</p>
+<h2 id="ca2-statistiques-dage-en-prenant-en-compte-les-exemplaires">CA2 : statistiques d'âge en prenant en compte les exemplaires</h2>
+<p>Calcule l'âge moyen et l'âge médian d'un fonds en fonction du nombre d'exemplaires (entre 1900 et 2030). C'est une version améliorée de <a href="https://alban-peyrat.github.io/outils/ConStance#cs4-non-pref--statistiques-dage-champs-210-214">l'analyse CS4 de ConStance</a> qui ne prend pas compte les exemplaires.</p>
+<p>Pour chaque titre dans la liste, ConAn prélève le PPN, l'année la plus récente présente dans la colonne <code>Créateur / Éditeur</code> et le nombre d'exemplaires.</p>
+<p>Pour isoler l'année, ConAn :
+* supprime tout ce qui se trouve avant la première parenthèse (supposément la partie consacrée au créateur) ;
+* divise en plusieurs parties ce qu'il reste, en utilisant le point-virgule comme séparateur (les différentes 210/214 semblent être séparées par des points-virgules dans l'export Alma) ;
+* pour chacune de ces parties, il cherche la position de la dernière virgule. Si celle-ci existe et se trouve avant les derniers 4 caractères (empêche des erreurs de catalogage de nuire à l'analyse), il conserve tout ce qui se trouve derrière la virgule, sinon il conserve l'intégralité de la partie ;
+* supprime alors les espaces, <code>DL</code>, <code>C</code>, <code>cop</code>, <code>P</code>, parenthèses ainsi que les caractères suivants : <code>. , - ?</code> ; 
+* puis regarde si ce qu'il reste peut être considérer comme un nombre ;
+* si ce n'est pas le cas, ConAn passe un par un les caractères restants en ne conservant que les chiffres. Au fur et à mesure de ce processus, à chaque fois qu'il a en mémoire 8 caractères, il les divise en deux paquets de 4 chiffres et compare lequel des deux est le plus grande sous forme de nombre (ce qui vise à éviter les erreurs de dépassement de capacité et à ne conserver que l'année la plus grande). Si au terme de l'analyse manuelle, aucun nombre ne reste, il attribue alors 0 à la valeur de l'année ;
+* ConAn regarde ensuite si l'année qu'il a conservée se trouve entre 1900 et 2030 (exclus). Si ce n'est pas le cas, il regarde si les quatre derniers chiffres sont situés dans cet intervalle. Si ce n'est toujours pas le cas, il regarde si les quatre premiers chiffres sont situés dans l'intervalle. Si aucun cas ne correspond, il attribue alors la valeur 0 à l'année. Cette partie permet d'exclure des nombres qui seraient trop extrêmes et donc probablement des erreurs dans l'isolation de la cote ;
+* enfin, il vérifie s'il a déjà une année en mémoire pour ce PPN, si ce n'est pas le cas, il conserve celle-ci, sinon, il compare les deux et conserve la plus récente ;
+* effectue ensuite la même analyse sur toutes les autres parties ;
+* si à la fin il n'a pas d'année ou que celle-ci équivaut à 0, il ne renvoie aucune année dans la page de résultat.</p>
+<p>Pour calculer le nombre d'exemplaires, ConAn :
+* divise la colonne de disponibilité en plusieurs parties, chacune correspondant à une holding ;
+* localise ensuite, pour chaque holding correspondant à la bibliothèque sélectionnée et qui n'est pas une holding associée, le terme <code>exemplaire</code> (s'il n'est pas présent, il passe à la prochaine holding, ce implique que les exemplaires ayant une mention de tomaison dans l'exemplaire sont exclus) ;
+* localise alors la première parenthèse et ne conserve que ce qui se trouve entre celle-ci et le terme <code>exemplaire</code>. Il répète cette opération tant que l'écart entre ces deux points est supérieur à 7. En effet lorsque que l'écart est inférieur à 7, nous avons forcément l'information sur les exemplaires dans ce qui reste (fonctionne jusqu'à 999 exemplaires) ;
+* supprime ensuite espaces et lettres <code>e</code>, ce qui laisse supposément uniquement un nombre, mais, dans le cas où le reste ne serait pas un nombre, il passe un par un les caractères pour conserver uniquement les chiffres ;
+* additionne ensuite ce nombre au total d'exemplaires pour ce PPN (0 par défaut) et passe à la holding suivante.</p>
+<p>Une fois tous les PPN traités, il calcule la moyenne et la médiane en prenant en compte le nombre d'exemplaires. Concernant la page de résultat, les PPN sont triés par année, ceux n'ayant pas d'année associée sont triés au fonds et colorés de rouge. Il comptabilise également le nombre de titres exclus et le nombre d'exemplaires exclus.</p>
+<h2 id="ca3-detection-de-multiples-editions-dun-meme-titre">CA3 : détection de multiples éditions d'un même titre</h2>
+<p><em>Pas entièrement à jour, notamment prend en compte les 979 en début d'ISBN 13</em></p>
+<p><em>A pour alternative <a href="https://alban-peyrat.github.io/outils/ConStance#cs6--detection-de-multiples-editions-dun-meme-titre">CS6 de ConStance</a>. Chacun des deux à ses avantages et ses inconvénients, la détection initiale via clef de titre est différente.</em></p>
+<p>Détermine les titres qui ont possiblement deux éditions dans la même liste.</p>
+<p>Pour chaque titre dans la liste, ConAn prélève le PPN et les colonnes du titre, de l'édition, de l'ISBN 13 et de l'ISBN 10.</p>
+<p>Il va ensuite générer une clef pour chaque titre :
+* il ne conserve de la donnée originelle que la partie du titre se trouvant avant <code>/</code> (espaces avant et après), soit très généralement le titre propre (sauf si la dite chaîne de caractère se trouve dans le titre propre) ;
+* il supprime ensuite <code>[Texte imprimé]</code>, les articles définis et indéfinis, les parenthèses, crochets et la liste de caractères suivants : <code>, : ; . '</code> et remplace les tirets par des espaces ;
+* il divise alors son nouveau titre en autant de mots qu'il détecte (en utilisant les espaces comme séparateurs) ;
+* pour le premier mot, il conserve les 4 premiers caractères, puis les deux premiers caractères des trois mots suivants (s'ils existent), séparant les chaînes de caractères par des <em>underscores</em> (<code>_</code>) ;
+* la clef est ensuite passée en majuscule (elle conserve les accents).</p>
+<p>Ensuite, pour chaque PPN dont la colonne d'édition n'est pas vide, il compare pour l'intégralité des autres entrées de la liste si la clef est parfaitement égale à la sienne. Si c'est le cas, il conserve dans un tableau le PPN, l'ISBN 13 et l'ISBN 10 de cette entrée.</p>
+<p>Une fois l'intégralité de la liste parcourue pour ce PPN, si ce tableau n'est pas vide, il génère une clef d'ISBN pour ce PPN :
+* si l'ISBN 13 n'est pas vide et qu'il est sous sa forme avec des tirets, il en conserve les trois premières parties (c'est-à-dire le pays producteurs ou distributeur (<em>bookland</em> pour les livres, soit 978 ou 979), le domaine ISBN et le numéro d'éditeur) ;
+* s'il n'a pas pu récupérer via l'ISBN 13 la clef et que l'ISBN 10 n'est pas vide et qu'il est sous sa forme avec des tirets, il ajout <code>978-</code> (première partie de l'ISBN 13) aux deux premières parties de l'ISBN 10 ;
+* sinon, la clef est une chaîne de caractères vide.</p>
+<p>Une fois sa propre clef générée, pour chacune des entrées de son tableau (=des PPN potentiellement doublons d'édition), il génère la clef ISBN de celles-ci et la compare à celle du PPN originale, trois cas sont alors possibles :
+* <code>corr. ISBN</code> : les clefs ISBN correspondent, la ligne du PPN original se colore en rouge ;
+* <code>imp. ISBN</code> : une des deux clefs ISBN au moins est vide, ConAn n'a donc pas pu les comparer, la ligne se colore en orange/jaune ;
+* <code>NO corr. ISBN</code> : les clefs ISBN ne correspondent pas, la ligne se colore en bleu.</p>
+<p>ConAn indique enfin dans une dernière colonne le résultat de son analyse :
+* soit <code>Aucune détection automatique</code>, colorée de vert ;
+* soit <code>Double éd. possible</code> suivi de tous les PPN détectés avec, pour chacun d'entre eux, le résultat de la correspondance ISBN (la couleur de la ligne suit l'ordre de priorité susmentionné).</p>
+<p>Note : c'est une détection automatique qui présente des limites, la liste des résultats peut ne pas détecter certains cas tout comme elle peut détecter des faux positifs (la comparaison ISBN cherche à diminuer ces faux-positifs).</p></div>
 <div id="accessButtons">
-	<button id="buttonZoom"><span style="font-size: 14px;">A</span>|<span style="font-size: 21px;">A</span>|A</button><br/>
-	<button id="buttonNB">Noir et Blanc</button>
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
 </div>
 <div id="divLiens">
-	<p>Liens vers les autres outils&nbsp;:</p>
-	<ul id="liens">
-		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
-		<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
-	</ul>
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+</ul>
 </div>
-</body>
+</div></body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
-<script src="https://alban-peyrat.github.io/tableMatieres.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>
