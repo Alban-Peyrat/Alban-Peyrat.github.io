@@ -70,9 +70,13 @@ Collez ensuite le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIB
 <em>Uniquement pour <a href="#trirecherche"><code>triRecherche</code></a> : collez également le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/peyrat_js_scripts.js"><code>peyrat_js_scripts.js</code></a>.</em></p>
 <p>Vous pourrez retrouver les scripts dans la catégorie <code>Standart Fonctions</code>.</p>
 <h1 id="utiliser-les-scripts">Utiliser les scripts</h1>
-<p>Rappels :
-* si vous avez installé les scripts en tant que scripts utilisateurs, vous les retrouverez dans la catégorie <code>Fonctions</code>, si vous les avez installés en tant que scripts standarts, vous les retrouverez dans la catégorie <code>Standart Fonctions</code> ;
-* les scripts sont précédés de la mention <code>AlP_PEB</code>.</p>
+<p>Rappels :</p>
+<ul>
+<li>si vous avez installé les scripts en tant que scripts utilisateurs, vous les retrouverez dans la catégorie <code>Fonctions</code>, si vous les avez installés en tant que scripts standarts, vous les retrouverez dans la catégorie <code>Standart Fonctions</code> ;</li>
+</ul>
+<ul>
+<li>les scripts sont précédés de la mention <code>AlP_PEB</code>.</li>
+</ul>
 <h2 id="via-boutons">Via boutons</h2>
 <p>Ouvrez le menu <code>Options</code> puis <code>Personnaliser...</code> puis <code>Commandes</code> et retrouvez le script qui vous intéresse dans la liste des commandes de la bonne catégorie.
 Effectuez ensuite un cliqué-déposé vers votre barre de menu.
@@ -120,19 +124,33 @@ Ainsi, si vous collez le résultat dans Excel, la 3e ligne sera toujours le titr
 <em>Le fichier ne doit pas être ouvert avant l'exécution du script pour un bon fonctionnement de celui-ci.</em>
 Le script récupère ensuite le numéro du lot affiché, lance une requête <code>\\too s{NUMÉRO DE LOT} k</code> pour rafficher le lot et récupérer le nombre de résultats.</p>
 <p>Il va ensuite commencer une boucle tant que la ligne traitée est strictement inférieure au nombre de résultats.
-À chaque instance de la boucle, le script lance la requête <code>\\too s{NUMÉRO DE LOT} {LIGNE TRAITÉE + 1 } k</code> et récupère la variable <code>P3VKZ</code>, qui contient l'intégralité du segment de la liste des résultats contenant la ligne traitée + 1 <a href="./etude_fonctionement_WinIBW.md">(voir plus d'informations à ce sujet)</a>.
+À chaque instance de la boucle, le script lance la requête <code>\\too s{NUMÉRO DE LOT} {LIGNE TRAITÉE + 1 } k</code> et récupère la variable <code>P3VKZ</code>, qui contient l'intégralité du segment de la liste des résultats contenant la ligne traitée + 1 <a href="./etude_fonctionement_WinIBW.html">(voir plus d'informations à ce sujet)</a>.
 Le script divise ensuite cette variable en utilisant les retours chariots comme séparateur.
 Pour chaque chaque notice identifiée, il supprime les guillemets, puis remplace les caractères accentués et autres caractères spéciaux par des lettres classiques <a href="./">(voir la fonction associée)</a>.
 Cette étape est nécessaire pour faciliter la lecture du fichier puisque ces caractères seront "corrompus" si laissés tels quels (certains caractères accentués poseront quand même problèmes).
 Il isole ensuite plusieurs informations en recherchant le caractère d'échappement suivi de <code>L</code> suivi de l'identifiant de l'information, puis en conservant tout ce qui se trouve jsuqu'au prochain caractère d'échappement suivi de <code>E</code>.
-Voici la liste des informations récupérées, dans l'ordre des colonnes sur le fichier final, avec leur identifiant dans l'affichage par défaut :
-* PPN (<code>PP</code>) ;
-* auteur (<code>V0</code>) ;
-* titre (<code>V1</code>) ;
-* éditeur (<code>V2</code>) ;
-* édition (<code>V3</code>) ;
-* année (<code>V4</code>) ;
-* numéro dans le lot (<code>NR</code>, pas affiché dans Excel, correspond à la ligne traitée sus-mentionnée).</p>
+Voici la liste des informations récupérées, dans l'ordre des colonnes sur le fichier final, avec leur identifiant dans l'affichage par défaut :</p>
+<ul>
+<li>PPN (<code>PP</code>) ;</li>
+</ul>
+<ul>
+<li>auteur (<code>V0</code>) ;</li>
+</ul>
+<ul>
+<li>titre (<code>V1</code>) ;</li>
+</ul>
+<ul>
+<li>éditeur (<code>V2</code>) ;</li>
+</ul>
+<ul>
+<li>édition (<code>V3</code>) ;</li>
+</ul>
+<ul>
+<li>année (<code>V4</code>) ;</li>
+</ul>
+<ul>
+<li>numéro dans le lot (<code>NR</code>, pas affiché dans Excel, correspond à la ligne traitée sus-mentionnée).</li>
+</ul>
 <p>Une fois ces six premières informations récupérées, il les ajoute dans une nouvelle ligne sur le fichier puis passe à la notice suivante.</p>
 <p>Une fois toutes les notices du segment traité, il ajoute 1 à une variable qui casse la boucle <code>While</code> si elle atteint 9999 puis passe à la prochaine instance de celle-ci.
 Une fois cette boucle achevée, le script ferme le fichier, puis l'ouvre en utilisant l'application configurée par défaut pour ce type de fichier.</p></div>

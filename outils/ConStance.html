@@ -64,9 +64,13 @@
 <p>Dans sa réponse finale, ConStance divise ses commentaires entre les dates de naissance, les dates de décès et le résultat final de l'analyse. Sont signalés en rouge les PPN qui ont des problèmes de correspondance, et plus spécifiquement en bleu les cellules des notes type format incorrect ou absence de telle ou telle date.</p>
 <h2 id="cs2-presence-dun-lien-en-700">CS2 : présence d'un lien en 700</h2>
 <p>Vérifie s'il y a un lien en 700.</p>
-<p>Pour chaque PPN présent dans la liste, ConStance récupère et écrit le premier dollar de la 700. Voici les résultats possibles :
-* <code>OK</code> en vert : le premier dollar est un 3 ;
-* <code>Problème</code> en rouge : le premier dollar n'est pas un 3 (soit il n'y a pas de 700, soit c'est un autre dollar).</p>
+<p>Pour chaque PPN présent dans la liste, ConStance récupère et écrit le premier dollar de la 700. Voici les résultats possibles :</p>
+<ul>
+<li><code>OK</code> en vert : le premier dollar est un 3 ;</li>
+</ul>
+<ul>
+<li><code>Problème</code> en rouge : le premier dollar n'est pas un 3 (soit il n'y a pas de 700, soit c'est un autre dollar).</li>
+</ul>
 <h2 id="cs3-presence-dun-lien-en-7xx">CS3 : présence d'un lien en 7XX</h2>
 <p>Le fonctionnement est le même que CS2, sauf qu'à la place d'interroger uniquement la 700, ConStance interroge l'intégralité des 7XX. Le PPN est signalé en rouge si au moins un des champs ne contient pas un lien. Pour l'affichage des données, chaque 7XX se voit attribué un numéro d'occurrence (commençant à 0), c'est ce numéro qui est ensuite reporté dans la colonne des résultats pour identifier tous les champs posant problème.</p>
 <h2 id="cs4-non-pref-statistiques-dage-champs-210-214">CS4 [non pref.] : statistiques d'âge (champs 210-214)</h2>
@@ -83,17 +87,27 @@
 <p>Détermine les titres qui ont possiblement deux éditions dans la même liste.</p>
 <p><em>L'explication détaillée arrivera une fois ma réflexion plus éclairée.</em> En quelques mots, ConStance récupère le titre, la mention d'édition et les PPN présents en 7XX de chaque PPN de notices bibliographiques, puis génère des clefs de titre en excluant notamment les déteminants définis et indéfinis. Elle compare ensuite pour chaque PPN contenant une mention d'édition la clef qu'elle lui a attribué à l'intégralité des autres clefs de la liste et défini un score de correspondance transformé en pourcentage : au-delà de 80%, elle juge possible que les titres soient corespondants. Lorsqu'elle compare les mots, elle ne compare pas s'ils sont parfaitement égaux mais si les 4 premières et les 4 dernières lettres correspondent, ce qui fait varier le score (pour prendre en compte de légers changements de terminologie). Par ailleurs, si l'intégralité du titre le plus court correspond à 100 % au début du titre le plus long, elle considère également que les titres sont correspondants. Ensuite, pour tous ces titres correspondants, elle calcule deux taux de correspondances des PPN de mentions de responsabilités, un excluant les collectivités et l'autre en les prenant en compte.</p>
 <p>Mal fonctionnement possible : la mise en couleur du jaune et du bleu, avec le jaune qui apparaît trop souvent.</p>
-<p>Sur la colonne de résultats :
-* un même PPN peut apparaître plusieurs fois : cela est lié à la prise en compte du champ 451, le comportement est normal ;
-* trois pourcentages s'affichent :
-  * le premier concerne le pourcentage de correspondance du titre. Il est forcément supérieur à 80 sauf si la correspondance du titre le plus court est parfaite avec le début du plus long ;
-  * le deuxième correspond au taux de correspondance des mentions de responsabilités, en excluant les champs 710 et plus ;
-  * le troisième est le taux de correspondance de l'intégralité des mentions de responsabilités. Il est forcément supérieur ou égal au deuxième.
-* le code couleur, sachant que cet ordre de priorité est utilisé :
-  * vert : aucune détection automatique ;
-  * rouge : correspondance de titres et au moins une mention de responsabilité commune ;
-  * orange / jaune : correspondance de titres, pas de mention de responsabilité champ inférieur à 710 commune mais au moins une mention de responsabilité commune ;
-  * bleu : correspondance de titres, mais pas de correspondance de mentions de responsabilité.</p>
+<p>Sur la colonne de résultats :</p>
+<ul>
+<li>un même PPN peut apparaître plusieurs fois : cela est lié à la prise en compte du champ 451, le comportement est normal ;</li>
+</ul>
+<ul>
+<li>trois pourcentages s'affichent :<ul>
+<li>le premier concerne le pourcentage de correspondance du titre. Il est forcément supérieur à 80 sauf si la correspondance du titre le plus court est parfaite avec le début du plus long ;</li>
+<li>le deuxième correspond au taux de correspondance des mentions de responsabilités, en excluant les champs 710 et plus ;</li>
+<li>le troisième est le taux de correspondance de l'intégralité des mentions de responsabilités. Il est forcément supérieur ou égal au deuxième.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>le code couleur, sachant que cet ordre de priorité est utilisé :<ul>
+<li>vert : aucune détection automatique ;</li>
+<li>rouge : correspondance de titres et au moins une mention de responsabilité commune ;</li>
+<li>orange / jaune : correspondance de titres, pas de mention de responsabilité champ inférieur à 710 commune mais au moins une mention de responsabilité commune ;</li>
+<li>bleu : correspondance de titres, mais pas de correspondance de mentions de responsabilité.</li>
+</ul>
+</li>
+</ul>
 <p>Recommandation : ne pas filtrer mais parcourir la liste et vérifier les noms adjacents.</p>
 <h2 id="cs7-statistiques-dage-version-double-dates">CS7 : statistiques d'âge (version double dates)</h2>
 <p>Calcule l'âge moyen et l'âge médian d'une liste de PPN.</p>
