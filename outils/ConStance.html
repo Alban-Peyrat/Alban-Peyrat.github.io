@@ -39,8 +39,7 @@
 <ul id="lienGitHub">
 <li><a href="https://github.com/Alban-Peyrat/ConStance">Accédez au dépôt GitHub de ConStance</a></li>
 </ul>
-<div id="main">
-<div class="toc">
+<div id="main"><div class="toc">
 
 </div>
 <p>ConStance est un outil visant originellement à contrôler des données du Sudoc / IdRef en utilisant <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a>. En pratique, elle permet également de donner certaines statistiques ou informations sur le fonds renseigné.</p>
@@ -67,8 +66,6 @@
 <p>Pour chaque PPN présent dans la liste, ConStance récupère et écrit le premier dollar de la 700. Voici les résultats possibles :</p>
 <ul>
 <li><code>OK</code> en vert : le premier dollar est un 3 ;</li>
-</ul>
-<ul>
 <li><code>Problème</code> en rouge : le premier dollar n'est pas un 3 (soit il n'y a pas de 700, soit c'est un autre dollar).</li>
 </ul>
 <h2 id="cs3-presence-dun-lien-en-7xx">CS3 : présence d'un lien en 7XX</h2>
@@ -90,16 +87,12 @@
 <p>Sur la colonne de résultats :</p>
 <ul>
 <li>un même PPN peut apparaître plusieurs fois : cela est lié à la prise en compte du champ 451, le comportement est normal ;</li>
-</ul>
-<ul>
 <li>trois pourcentages s'affichent :<ul>
 <li>le premier concerne le pourcentage de correspondance du titre. Il est forcément supérieur à 80 sauf si la correspondance du titre le plus court est parfaite avec le début du plus long ;</li>
 <li>le deuxième correspond au taux de correspondance des mentions de responsabilités, en excluant les champs 710 et plus ;</li>
 <li>le troisième est le taux de correspondance de l'intégralité des mentions de responsabilités. Il est forcément supérieur ou égal au deuxième.</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>le code couleur, sachant que cet ordre de priorité est utilisé :<ul>
 <li>vert : aucune détection automatique ;</li>
 <li>rouge : correspondance de titres et au moins une mention de responsabilité commune ;</li>
@@ -112,6 +105,7 @@
 <h2 id="cs7-statistiques-dage-version-double-dates">CS7 : statistiques d'âge (version double dates)</h2>
 <p>Calcule l'âge moyen et l'âge médian d'une liste de PPN.</p>
 <p>Fusion de CS4 et CS5 : CS7 récupère à la fois l'année via la 100 et via la 21X puis calcule l'âge moyen et l'âge médian en fonction des deux méthodes. Le champ 100 est prioritaire, les résultats sont triés en fonction de celui-ci, la ligne est colorée de rouge si celui-ci est vide. Si la date en 21X est vide, seule la cellule correspondante est colorée. Les deux résultats sont affichés, ainsi que le nombre de titres exclus pour chacun d'entre eux.</p></div>
+</div>
 <div id="accessButtons">
 <button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
 <button id="buttonNB">Noir et Blanc</button>
@@ -129,7 +123,7 @@
 <li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
 </ul>
 </div>
-</div></body>
+</body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
 <!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>

@@ -45,8 +45,7 @@
 <ul id="lienGitHub">
 <li><a href="https://github.com/Alban-Peyrat/WinIBW">Accédez au dépôt GitHub de WinIBW</a></li>
 </ul>
-<div id="main">
-<div class="toc">
+<div id="main"><div class="toc">
 
 </div>
 <p><strong>À noter : le nom réel des scripts est précédé de <code>AlP_PEB</code>. Le préfixe a été ici retiré pour faciliter la lecture.</strong></p>
@@ -73,8 +72,6 @@ Collez ensuite le fichier <a href="https://github.com/Alban-Peyrat/Scripts-WinIB
 <p>Rappels :</p>
 <ul>
 <li>si vous avez installé les scripts en tant que scripts utilisateurs, vous les retrouverez dans la catégorie <code>Fonctions</code>, si vous les avez installés en tant que scripts standarts, vous les retrouverez dans la catégorie <code>Standart Fonctions</code> ;</li>
-</ul>
-<ul>
 <li>les scripts sont précédés de la mention <code>AlP_PEB</code>.</li>
 </ul>
 <h2 id="via-boutons">Via boutons</h2>
@@ -110,14 +107,16 @@ Ainsi, si vous collez le résultat dans Excel, la 3e ligne sera toujours le titr
 <p><strong>Détails :</strong> Renvoie les variables <code>P3VTC</code>, <code>P3VTD</code>, <code>P3VAB</code>, <code>P3VAA</code>, séparées par des retours à la ligne (<code>vblf</code> (VBS) / <code>\n</code> (JS)).</p>
 <h2 id="launcher"><code>Launcher</code></h2>
 <p>Ouvre une boîte de dialogue qui permet de lancer l'exécution d'un des autres scripts de PEB que j'ai développés.</p>
-<p><strong>Détails :</strong> la boîte de dialogue varie selon si l'on utilise les scripts en VBS ou en JS. <strong>En JS</strong>, la boite de dialogue propose des options cliquables, qui exécuteront les scripts associés . <strong>En VBS</strong>, la boîte de dialogue demande d'entrer le numéro associé au script :
-  * 0 (VBS) / <code>Get no demande PEB</code> (JS) : exécuter <a href="#getnumdemande"><code>getNumDemande</code></a> ;
-  * 1 (VBS) / <code>Get no demande PEB post-validation</code> (JS) : exécuter <a href="#getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></a> ;
-  * <em>exclusif JS :</em> <code>Trier recherche</code> (JS) : exécuter <a href="#trirecherche"><code>triRecherche</code></a> ;
-  * 2 (VBS) / <code>Get PPN</code> (JS) : exécuter <a href="#getppn"><code>getPPN</code></a> ;
-  * 3 (VBS) / <code>Get RCR demandeur</code> (JS) : exécuter <a href="#getrcrdemandeur"><code>getRCRDemandeur</code></a> ;
-  * 4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : exécuter <a href="#getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></a> ;
-  * 5 (VBS) / <code>Get titre et auteur document</code> (JS) : exécuter <a href="#getTitleAuth"><code>getTitleAuth</code></a>.</p>
+<p><strong>Détails :</strong> la boîte de dialogue varie selon si l'on utilise les scripts en VBS ou en JS. <strong>En JS</strong>, la boite de dialogue propose des options cliquables, qui exécuteront les scripts associés . <strong>En VBS</strong>, la boîte de dialogue demande d'entrer le numéro associé au script :</p>
+<ul>
+<li>0 (VBS) / <code>Get no demande PEB</code> (JS) : exécuter <a href="#getnumdemande"><code>getNumDemande</code></a> ;</li>
+<li>1 (VBS) / <code>Get no demande PEB post-validation</code> (JS) : exécuter <a href="#getnumdemandepostvalidation"><code>getNumDemandePostValidation</code></a> ;</li>
+<li><em>exclusif JS :</em> <code>Trier recherche</code> (JS) : exécuter <a href="#trirecherche"><code>triRecherche</code></a> ;</li>
+<li>2 (VBS) / <code>Get PPN</code> (JS) : exécuter <a href="#getppn"><code>getPPN</code></a> ;</li>
+<li>3 (VBS) / <code>Get RCR demandeur</code> (JS) : exécuter <a href="#getrcrdemandeur"><code>getRCRDemandeur</code></a> ;</li>
+<li>4 (VBS) / <code>Get RCR fournisseur en attente</code> (JS) : exécuter <a href="#getrcrfournisseuronhold"><code>getRCRFournisseurOnHold</code></a> ;</li>
+<li>5 (VBS) / <code>Get titre et auteur document</code> (JS) : exécuter <a href="#getTitleAuth"><code>getTitleAuth</code></a>.</li>
+</ul>
 <h2 id="trirecherche"><code>triRecherche</code></h2>
 <p>Ouvre un fichier Excel permettant de trier et filtrer les résultats d'une requête.</p>
 <p><strong>Détails :</strong> le script va créer un fichier <code>triPEB.xls</code> (ou effacer ses données s'il existe déjà) dans le profil WinIBW de l'utilisateur (au même emplacement que les fichiers de scripts), puis y écrire les en-têtes.
@@ -132,28 +131,17 @@ Il isole ensuite plusieurs informations en recherchant le caractère d'échappem
 Voici la liste des informations récupérées, dans l'ordre des colonnes sur le fichier final, avec leur identifiant dans l'affichage par défaut :</p>
 <ul>
 <li>PPN (<code>PP</code>) ;</li>
-</ul>
-<ul>
 <li>auteur (<code>V0</code>) ;</li>
-</ul>
-<ul>
 <li>titre (<code>V1</code>) ;</li>
-</ul>
-<ul>
 <li>éditeur (<code>V2</code>) ;</li>
-</ul>
-<ul>
 <li>édition (<code>V3</code>) ;</li>
-</ul>
-<ul>
 <li>année (<code>V4</code>) ;</li>
-</ul>
-<ul>
 <li>numéro dans le lot (<code>NR</code>, pas affiché dans Excel, correspond à la ligne traitée sus-mentionnée).</li>
 </ul>
 <p>Une fois ces six premières informations récupérées, il les ajoute dans une nouvelle ligne sur le fichier puis passe à la notice suivante.</p>
 <p>Une fois toutes les notices du segment traité, il ajoute 1 à une variable qui casse la boucle <code>While</code> si elle atteint 9999 puis passe à la prochaine instance de celle-ci.
 Une fois cette boucle achevée, le script ferme le fichier, puis l'ouvre en utilisant l'application configurée par défaut pour ce type de fichier.</p></div>
+</div>
 <div id="accessButtons">
 <button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
 <button id="buttonNB">Noir et Blanc</button>
@@ -171,7 +159,7 @@ Une fois cette boucle achevée, le script ferme le fichier, puis l'ouvre en util
 <li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
 </ul>
 </div>
-</div></body>
+</body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
 <!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>

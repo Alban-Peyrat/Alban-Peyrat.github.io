@@ -45,8 +45,7 @@
 <ul id="lienGitHub">
 <li><a href="https://github.com/Alban-Peyrat/CoCo-SAlma">Accédez au dépôt GitHub de CoCo-SAlma</a></li>
 </ul>
-<div id="main">
-<div class="toc">
+<div id="main"><div class="toc">
 
 </div>
 <p>Coco-Salma est un outil visant spécifiquement à contrôler la correspondance des cotes pour un PPN entre les données d'exemplaire du Sudoc en utilisant <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a> et les holdings d'Alma. N'étant personnellement pas fan de posséder un document dans plusieurs localisations, elle signale également la présence de plusieurs cotes.</p>
@@ -57,8 +56,6 @@
 <p>Allumez Coco-Salma, remettez à zéro les données grâce bouton dans la feuille <code>Introduction</code> puis rendez-vous dans la feuille <code>Données</code> :</p>
 <ul>
 <li>choisissez un nom pour le fonds en <code>G2</code> (le dossier créé portera le nom <code>CoCo-SAlma_NomDuFonds</code>) ;</li>
-</ul>
-<ul>
 <li>entrez en <code>I2</code> le RCR de votre bibliothèque (manuellement ou en appuyant sur Alt + flèche du bas pour afficher une liste déroulante), ce qui remplira automatiquement le nom de la bibliothèque.</li>
 </ul>
 <h2 id="ajouter-une-bibliotheque">Ajouter une bibliothèque</h2>
@@ -73,8 +70,6 @@
 <p>Une fois la liste de PPN renseignée, générez la liste des PPN pour l'export via le bouton de la feuille <code>Introduction</code>. Cette étape créera le dossier, qui contiendra deux fichiers :</p>
 <ul>
 <li><code>Fichier_ppal.xlsm</code>, qui est la version de travail de Coco-Salma pour le traitement de ce fonds ;</li>
-</ul>
-<ul>
 <li><code>import_alma.xlsx</code>, qui est le document à utiliser pour exporter la liste des cotes d'Alma.</li>
 </ul>
 <p>Note : plus la liste est longue, plus cela peut prendre du temps.</p>
@@ -84,17 +79,9 @@
 <p>Dans ce cas, il va falloir générer l'export. Connectez-vous à Alma, puis rendez-vous dans <code>Admin</code> puis <code>Gérer les jeux</code>. Sélectionnez <code>Ajouter un jeu</code> puis <code>exemplarisé</code>. Remplissez alors le formulaire en :</p>
 <ul>
 <li>nommant le jeu ;</li>
-</ul>
-<ul>
 <li>ajoutant un description si vous le souhaitez ;</li>
-</ul>
-<ul>
 <li>choisissant <code>Titres physiques</code> comme type de contenu ;</li>
-</ul>
-<ul>
 <li>sélectionnant <code>Privé</code> ;</li>
-</ul>
-<ul>
 <li>sélectionnant <code>À partir d'un fichier</code>.</li>
 </ul>
 <p>Cliquez ensuite sur l'icône de dossier et sélectionner le fichier <code>import_alma.xlsx</code>. Finissez cette étape en cliquant sur <code>Enregistrer</code>.</p>
@@ -103,11 +90,7 @@
 <p>À ce stade, votre dossier doit contenir trois (parfois deux pour le cas n° 1) fichiers :</p>
 <ul>
 <li><code>export_alma.xlsx</code> ;</li>
-</ul>
-<ul>
 <li><code>Fichier_ppal.xlsm</code> ;</li>
-</ul>
-<ul>
 <li><code>import_alma.xlsx</code> (si vous ne l'avez pas supprimé. À ce stade, il ne sera plus utilisé).</li>
 </ul>
 <p>Si vous possédez bien les deux premiers, lancez l'analyse via le bouton de la feuille <code>Introduction</code>.</p>
@@ -125,8 +108,6 @@
 <li>orange/jaune : un problème a été détecté, sans plus de précision.</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>colonne <code>Cotes</code> (Alma et Sudoc) :<ul>
 <li>rouge : absence de cote dans ce logiciel ;</li>
 <li>vert : plusieurs cotes détectées.</li>
@@ -136,27 +117,18 @@
 <h2 id="quelques-precisions-sur-les-resultats">Quelques précisions sur les résultats</h2>
 <ul>
 <li>Si plusieurs cotes sont détectées dans le Sudoc ou dans Alma pour votre RCR / bibliothèque, <code>Correspondance ?</code> affichera <code>Double localisation</code> et les cotes dans les colonnes en question seront séparées par la chaîne de caractères <code>;_;</code>.</li>
-</ul>
-<ul>
 <li>S'il n'y a pas correspondance ou que le PPN dans le Sudoc n'a pas son équivalent dans Alma (ou inversement), <code>Correspondance ?</code> affichera <code>Non</code> et sera coloré en orange (ou bleu ou rouge si l’erreur est précisée).</li>
-</ul>
-<ul>
 <li>Par ailleurs, il peut y avoir de bonnes correspondances tout de même signalées si plusieurs localisations sont utilisées.</li>
-</ul>
-<ul>
 <li>Attention, il est possible que certaines cotes soient des "faux positifs", il n'y aura pas de problème mais la manière de comparer aura échoué (ex : il y a un espace de trop, une minuscule à la place d’une majuscule, etc.).</li>
-</ul>
-<ul>
 <li>Enfin, Coco-Salma désigne comme <code>PPN incorrect</code> toute entrée pour laquelle elle n’a pas pu récupérer le PPN via <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a>. Cela ne veut pas dire que le PPN est forcément incorrect. Si vous constatez un nombre anormal de PPN incorrects, relancez une analyse sur cette liste et/ou sur la liste des résultats <code>Pas de cote Sudoc</code> pour lesquels aucun PPN n’est associé dans la colonne Sudoc. (Plus d’informations à ce sujet dans <a href="https://alban-peyrat.github.io/outils/CoCo-SAlma#fonctionnement">la partie sur le fonctionnement</a>)</li>
 </ul>
 <h1 id="nettoyer-une-fois-acheve">Nettoyer une fois achevé</h1>
 <p>Une fois le traitement fini ou la feuille de résultats exportée :</p>
 <ul>
 <li>supprimez si vous le souhaitez les fichiers inutiles (<code>export_alma.xlsx</code>, <code>import_alma.xlsx</code> ou tout le dossier <code>Coco-Salma_NomDuFonds</code> si vous avez exporté les résultats) ;</li>
-</ul>
-<ul>
 <li>supprimez le jeu dans Alma si vous l’avez créé et que vous ne comptez pas le réutiliser.</li>
 </ul></div>
+</div>
 <div id="accessButtons">
 <button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
 <button id="buttonNB">Noir et Blanc</button>
@@ -174,7 +146,7 @@
 <li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
 </ul>
 </div>
-</div></body>
+</body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
 <!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>

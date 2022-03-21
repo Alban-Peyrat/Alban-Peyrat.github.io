@@ -75,19 +75,14 @@
 <ul id="lienGitHub">
 <li><a href="https://github.com/Alban-Peyrat/WinIBW">Accédez au dépôt GitHub de WinIBW</a></li>
 </ul>
-<div id="main">
-<div class="toc">
+<div id="main"><div class="toc">
 
 </div>
 <p><strong>Rappel : pour installer les scripts dans WinIBW, référez-vous au <a href="http://documentation.abes.fr/sudoc/manuels/logiciel_winibw/scripts/index.html#CreerScriptUtilisateur">guide pour les scripts utilisateurs de l'Abes</a>.</strong></p>
 <p><em>Consulter les autres pages dédiées à WinIBW :</em></p>
 <ul>
 <li><em><a href="./PEB.html">les scripts pour le PEB ;</a></em></li>
-</ul>
-<ul>
 <li><em><a href="./modifications.html">la liste des modifications ;</a></em></li>
-</ul>
-<ul>
 <li><em><a href="./etude-fonctionnement.html">mes "études" sur le fonctionnement.</a></em></li>
 </ul>
 <p>Les scripts proposés visent généralement à accélérer des traitements répétitifs dans WinIBW. Certains d'entre eux, classés en tant que concepts, visent à contrôler des données sans devoir les modifier via des outils externes type tableur.</p>
@@ -105,11 +100,7 @@
 <li><code>B</code> pour les notices bibliographiques ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>champ : le champ sous forme de nombre ;</li>
-</ul>
-<ul>
 <li>sous-champ :<ul>
 <li>lettre minuscule ;</li>
 <li><code>S</code> + le chiffre.</li>
@@ -119,16 +110,12 @@
 <p>Exemples :</p>
 <ul>
 <li><code>UB200a</code> : dans une notice bibliographique, le sous-champ <code>a</code> de la zone 200 ;</li>
-</ul>
-<ul>
 <li><code>UA700S4</code> : dans une notice d'autorité auteur, le sous-champ <code>4</code> de la zone 700.</li>
 </ul>
 <h1 id="les-informations-a-modifier-selon-son-environnement-de-travail">Les informations à modifier selon son environnement de travail</h1>
 <p>Certaines informations propres à ma bibliothèque sont à remplacer :</p>
 <ul>
 <li>le RCR de ma bibliothèque (330632101) ;</li>
-</ul>
-<ul>
 <li>le chemin d'accès au profil WinIBW (C:\/oclcpica/WinIBW30/Profiles).</li>
 </ul>
 <h1 id="la-validation-automatique">La validation automatique</h1>
@@ -158,14 +145,8 @@
 <p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
 <ul>
 <li><code>181 ##$P01$ctxt</code></li>
-</ul>
-<ul>
 <li><code>182 ##$P01$cn</code></li>
-</ul>
-<ul>
 <li><code>183 ##$P01$anga</code></li>
-</ul>
-<ul>
 <li>un retour à la ligne.</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_principaux.vbs">Consulter le script</a></p>
@@ -175,17 +156,9 @@
 <p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
 <ul>
 <li><code>181 ##$P01$ctxt</code></li>
-</ul>
-<ul>
 <li><code>181 ##$P01$csti</code></li>
-</ul>
-<ul>
 <li><code>182 ##$P01$P02$cn</code></li>
-</ul>
-<ul>
 <li><code>183 ##$P01$P02$anga</code></li>
-</ul>
-<ul>
 <li>un retour à la ligne.</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_principaux.vbs">Consulter le script</a></p>
@@ -195,8 +168,6 @@
 <p>Passe la notice en mode édition si elle ne l'est pas déjà puis insère à la fin de celle-ci :</p>
 <ul>
 <li><code>214 #0$aIssy-les-Moulineaux$cElsevier Masson SAS$dDL 2021</code></li>
-</ul>
-<ul>
 <li>un retour à la ligne</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_principaux.vbs">Consulter le script</a></p>
@@ -241,14 +212,8 @@
 <li><code>U8</code> pour insérer une <code>608 ##</code> ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>ajouter <code>_[IndicateurNo1][IndicateurNo2]</code> après le PPN (sans espace) permet de changer les indicateurs. <strong>Il est obligatoire d'indiquer les 2 indicateurs.</strong> Cette commande est cumulable avec l'option <code>UX</code> ;</li>
-</ul>
-<ul>
 <li>ajouter <code>$3</code> devant le PPN permet de rajouter ce PPN en tant que subdivision <strong>au dernier PPN entré durant cette activation du script</strong> ;</li>
-</ul>
-<ul>
 <li>écrire <code>ok</code> (valeur par défaut de la boite de dialogue) permet de sortir de la boucle et de terminer le script.</li>
 </ul>
 <p>Une fois la donnée saisie, le script supprime <code>PPN</code> suivi d'un espace, <code>(PPN)</code>, les espaces, les retours à la ligne et les retours chariot (<code>chr(10)</code> et <code>chr(13)</code>, ce qui permet notamment d'éviter des problèmes si le PPN est copié depuis une cellule Excel) et place le curseur à la fin de la notice. Dans la suite de l'explication, la donnée saisie par l'utilisateur correspondra au résultat de cette opération de suppression.</p>
@@ -271,8 +236,6 @@ Il vérifie ensuite si la longueur du champ renvoyé par <code>decompUA200enUA40
 <ul>
 <li>si c'est le cas, il va copier la 200 précédemment obtenue en supprimant tout ce qui se trouve après la position du premier dollar après le <code>$b</code>, puis remplace dans ce qu'il reste <code>200</code> par <code>400</code> et supprime <code>$90y</code>.
 Il insère ensuite le nouveau champ à la fin de la notice et place le curseur après le huitième caractère de celui-ci (en théorie, au début du contenu du premier dollar).</li>
-</ul>
-<ul>
 <li>si ce n'est pas le cas, il insère le champ renvoyé à la fin de la notice.</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_principaux.vbs">Consulter le script</a></p>
@@ -294,8 +257,6 @@ Le script exécute ensuite <a href="#countoccurences"><code>CountOccurrences</co
 <ul>
 <li>si une occurrence est détectée, exécute <a href="#gototag"><code>goToTag</code></a> pour se rendre sur le champ 930, puis recule de 1 caractère (bascule sur le champ précédent) et sélectionne les deux prochains caractères sur la gauche (= les deux derniers caractères du champ).
 Il compare ensuite si ces deux caractères en minuscule sont égaux à <code>tm</code>, auquel cas, ils les remplacent par <code>x</code>, récupère le numéro de champ et affiche une infobulle (numéro de champ + <code>: tm remplacé par x</code>) ;</li>
-</ul>
-<ul>
 <li>si plus d'une occurrence est détectée, il réexécute <code>countOccurrences</code> en comptant cette fois-ci le nombre  <code>$b</code> suivi du RCR <strong>(pour utiliser le script sur votre RCR, changez <code>330632101</code> en votre RCR)</strong> :<ul>
 <li>si plus d'une occurrence est trouvée, recherche <code>$btm</code> suivi d'un <code>chr(10)</code> suivi de <code>930</code> et récupère le numéro du champ. Si ce numéro commence par <code>e</code>, affiche une infobulle (numéro du champ + <code>à supprimer</code>, avec comme titre de fenêtre <code>Exemplaire fictif</code>), sinon affiche une autre infobulle (<code>Plusieurs exemplaires réels sur ce RCR. Vérification recommandée.</code>) ;</li>
 <li>sinon, affiche une infobulle (<code>Plusieurs exemplaires réels. Vérification recommandée.</code>).</li>
@@ -320,8 +281,6 @@ Par ailleurs, nous sommes généralement la seule biblitohèque de l'ILN posséd
 <p><em>Paramètres :</em></p>
 <ul>
 <li><code>UA200a</code> : contenu de la 200 <code>$a</code> ;</li>
-</ul>
-<ul>
 <li><code>UA200b</code> : contenu de la 200 <code>$b</code>.</li>
 </ul>
 <p>Le script est une grande boucle <code>While</code> qui boucle tant que <code>UA200a</code> contient un espace ou un tiret.
@@ -340,20 +299,10 @@ Il rajoute ensuite le champ ci-dessous à la valeur qui sera renvoyée (via <a h
 À chaque instance de la boucle, en fonction de la valeur du compteur (augmente de 1 à la fin de chaque instance), la script va attribuer à <code>UA200fPos</code> la position d'un dollar (0 par défaut, ce qui veut dire que si le dollar n'est pas présent, la boucle continue) :</p>
 <ul>
 <li>compteur = 0 : <code>$f</code> ;</li>
-</ul>
-<ul>
 <li>compteur = 1 : <code>$c</code> ;</li>
-</ul>
-<ul>
 <li>compteur = 2 : <code>$x</code> ;</li>
-</ul>
-<ul>
 <li>compteur = 3 : <code>$y</code> ;</li>
-</ul>
-<ul>
 <li>compteur = 4 : <code>$z</code> ;</li>
-</ul>
-<ul>
 <li>si le compteur a une autre valeur, assigne à <code>UA200fPos</code> la longueur de la 200 <strong>+ 1</strong> (sinon <a href="#addua400"><code>addUA400</code></a> supprimerait parfois la dernière lettre du prénom).</li>
 </ul>
 <p>Il isole ensuite la valeur du <code>$a</code> puis du <code>$b</code> et renvoie la 200, la <code>$a</code> isolé, le <code>$b</code> isolé et <code>UA200fPos</code> <strong>sous forme d'une seule chaîne de caractères en séparant les différentes valeurs par <code>;_;</code></strong>.</p>
@@ -372,37 +321,27 @@ Il rajoute ensuite le champ ci-dessous à la valeur qui sera renvoyée (via <a h
 <li>15 : placer dans le presse-papier le renvoi de <a href="#addub700s3"><code>addUB700S3</code></a> ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>Elsevier :<ul>
 <li>6 : exécuter <a href="#addisbnelsevier"><code>addISBNElsevier</code></a> ;</li>
 <li>7 : exécuter <a href="#add214elsevier"><code>add214Elsevier</code></a> ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>récupérer des informations :<ul>
 <li>8 : placer dans le presse-papier le renvoi de <a href="#gettitle"><code>getTitle</code></a> ;</li>
 <li>9 : placer dans le presse-papier le renvoi de <a href="#getcoteex"><code>getCoteEx</code></a> ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>thèses<ul>
 <li>10 : exécuter <a href="#getdatauachantierthese"><code>getDataUAChantierThese</code></a> ;</li>
 <li>5 : exécuter <code>perso_CTaddUB700S3</code> ;</li>
 <li>11 : placer dans le presse-papier le renvoi de <a href="#getub310"><code>getUB310</code></a> ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>notices d'autorités<ul>
 <li>12 : exécuter <a href="#addua400"><code>addUA400</code></a> ;</li>
 <li>13 : placer dans le presse-papier le renvoi de <a href="#getua810b"><code>getUA810b</code></a> ;</li>
 </ul>
 </li>
-</ul>
-<ul>
 <li>CorWin :<ul>
 <li>77 : lance le lanceur de <a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a>.</li>
 </ul>
@@ -443,8 +382,6 @@ Il rajoute ensuite le champ ci-dessous à la valeur qui sera renvoyée (via <a h
 <p><em>Paramètres :</em></p>
 <ul>
 <li>UB200 : PAS A JOUR</li>
-</ul>
-<ul>
 <li>isUB541 : PAS A JOUR</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_principaux.vbs">Consulter le script</a></p>
@@ -460,14 +397,8 @@ Si l'expression n'est pas trouvée, renvoie un message d'erreur.</p>
 <p>Transforme la liste de PPN du presse-papier en :</p>
 <ul>
 <li>supprimant <code>(PPN)</code> ;</li>
-</ul>
-<ul>
 <li>remplançant <code>chr(10)</code> par <code>OR</code> (avec espace avant et après) ;</li>
-</ul>
-<ul>
 <li>ajoutant au début <code>che PPN</code> suivi d'un espace ;</li>
-</ul>
-<ul>
 <li>supprimant les quatre derniers caractères (supposément <code>OR</code> avec un espace avant et après).</li>
 </ul>
 <p>Place ensuite la requête dans le presse-papier et lance la requête.</p>
@@ -480,15 +411,11 @@ Si l'expression n'est pas trouvée, renvoie un message d'erreur.</p>
 <p><em>Paramètres :</em></p>
 <ul>
 <li><code>var</code> : variable à laquelle on veut ajouter du texte ;</li>
-</ul>
-<ul>
 <li><code>text</code> : texte à ajouter à la variable.</li>
 </ul>
 <p>Regarde si <code>var</code> est vide :</p>
 <ul>
 <li>si oui, renvoie le <code>text</code> ;</li>
-</ul>
-<ul>
 <li>si non, renvoie <code>var</code> + <code>chr(10)</code> + <code>text</code>.</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_ressources.vbs">Consulter le script</a></p>
@@ -498,11 +425,7 @@ Si l'expression n'est pas trouvée, renvoie un message d'erreur.</p>
 <p><em>Paramètres :</em></p>
 <ul>
 <li><code>p_strStringToCheck</code> : variable qui sera fouillée ;</li>
-</ul>
-<ul>
 <li><code>p_strSubString</code> : texte à chercher ;</li>
-</ul>
-<ul>
 <li><code>p_boolCaseSensitive</code> : <strong>bool</strong> définit si la recherche sera sensible à la casse.</li>
 </ul>
 <p>Renvoie le nombre de fois où <code>p_strSubString</code> apparait dans <code>p_strStringToCheck</code> en comptant le nombre de parties lorsque l'on divise <code>p_strStringToCheck</code> en utilisant <code>p_strSubString</code> comme séparateur.
@@ -514,8 +437,6 @@ Si <code>p_boolCaseSensitive</code> est <code>false</code>, alors le script pass
 <p><em>Paramètres :</em></p>
 <ul>
 <li><code>var</code> : le texte à exporter ;</li>
-</ul>
-<ul>
 <li><code>boolAppend</code> : <strong>bool</strong> définit si le script doit ajouter à la fin du fichier (<code>true</code>) ou réécrire le fichier.</li>
 </ul>
 <p><a href="http://eddiejackson.net/wp/?p=8619">Consulter la source originale</a>, <a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_ressources.vbs">consulter le script</a></p>
@@ -526,17 +447,9 @@ Si <code>p_boolCaseSensitive</code> est <code>false</code>, alors le script pass
 <p><em>Paramètres :</em></p>
 <ul>
 <li>tag : [string] A FAIRE</li>
-</ul>
-<ul>
 <li>subTag : [string, "none" pour empty] A FAIRE</li>
-</ul>
-<ul>
 <li>toEndOfField : [bool] A FAIRE</li>
-</ul>
-<ul>
 <li>toFirst : [bool] A FAIRE</li>
-</ul>
-<ul>
 <li>toLast : [bool] A FAIRE</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_ressources.vbs">Consulter le script</a></p>
@@ -558,25 +471,17 @@ Si <code>p_boolCaseSensitive</code> est <code>false</code>, alors le script pass
 <p><em>Paramètres :</em></p>
 <ul>
 <li><code>lgpMode</code> : <strong>bool</strong> définit si l'on souhaite passer en mode présentation (<code>true</code>) ;</li>
-</ul>
-<ul>
 <li><code>save</code> : <strong>bool</strong> définit si l'on souhaite sauvegarder les modifications si l'on passe en mode présentation.</li>
 </ul>
 <p>Script barbare qui pour le moment essaye de savoir s'il est possible de coller une information dans la notice :</p>
 <ul>
 <li>si l'opération entraîne une erreur (non visible par l'utilisateur), détermine que la notice n'est pas en mode édition ;</li>
-</ul>
-<ul>
 <li>sinon, détermine que la notice est en mode édition.</li>
 </ul>
 <p>Il agit ensuite selon trois scénarios :</p>
 <ul>
 <li>il doit passer en mode édition et la notice n'est pas en mode édition, il lance la commande <code>mod</code> ;</li>
-</ul>
-<ul>
 <li>il doit passer en mode présentation et sauvegarder la notice, il simule la validation de la notice ;</li>
-</ul>
-<ul>
 <li>il doit passer en mode présentation et ne pas sauvegarder la notice, il simule alors une annulation puis une validation (= pour le message qui apparait en cas de tentative d'annulation alors que des modifications ont été effectuées).</li>
 </ul>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/scripts_ressources.vbs">Consulter le script</a></p>
@@ -606,6 +511,7 @@ Une fois les trois instances de celle-ci terminée, il remplace <code>De</code> 
 <p>Exporte le premier $ de UB700 pour chaque PPN de la liste présente dans le presse-papier.</p>
 <p><em>Type de procédure : SUB</em></p>
 <p><a href="https://github.com/Alban-Peyrat/Scripts-WinIBW/blob/main/scripts/concepts.vbs">Consulter le script</a></p></div>
+</div>
 <div id="accessButtons">
 <button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
 <button id="buttonNB">Noir et Blanc</button>
@@ -623,7 +529,7 @@ Une fois les trois instances de celle-ci terminée, il remplace <code>De</code> 
 <li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
 </ul>
 </div>
-</div></body>
+</body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
 <!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>
