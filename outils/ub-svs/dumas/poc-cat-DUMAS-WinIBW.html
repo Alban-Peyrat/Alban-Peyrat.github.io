@@ -1,208 +1,158 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	<title>Alban Peyrat - Étude de faisabilité : catalogage semi-automatisé d'un document DUMAS dans le Sudoc</title>
-	<meta charset="UTF-8">
-	<link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
-	<link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+<title>Alban Peyrat : Documentation du générateur de notice UNIMARC d'une thèse d'exercice déposée sur DUMAS (BU SVS)</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
 </head>
 <body>
 <header>
-	<a href="https://alban-peyrat.github.io">
-		<span id="headerPres">Présentation et documentation de mes outils numériques</span>
-	</a>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
 </header>
 <div id="contenu">
-	<div id="pageName">Preuve de concept : catalogage semi-automatisé d'un document DUMAS dans le Sudoc</div>
-  <ul>
-    <li><a href="./generateur-notice.html">Générateur notice bibliographique d'un thèse d'exercice déposée sur DUMAS</a></li>
-  </ul>
-
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<div class="toc">
+<ol type="I">
+<li><a href="#recuperer-les-donnees">Récupérer les données</a><ol type="A">
+<li><a href="#provenant-de-dumas">Provenant de DUMAS</a></li>
+</ol>
+</li>
+<li><a href="#transformer-les-donnees-en-unimarc">Transformer les données en UNIMARC</a></li>
+<li><a href="#generateur-de-notice-bibliographique-version-js">Générateur de notice bibliographique (version JS)</a></li>
+<li><a href="#importer-ces-donnees-dans-winibw">Importer ces données dans WinIBW</a></li>
+<li><a href="#code-du-script-winibw">Code du script WinIBW</a></li>
+<li><a href="#suite-du-projet">Suite du projet</a><ol type="1">
+<li><a href="#fonctionnalites-prevues-si-le-developpement-se-poursuit">Fonctionnalités prévues (si le développement se poursuit)</a></li>
+<li><a href="#etude-de-faisabilite">Étude de faisabilité</a></li>
+</ol>
+</li>
+<li><a href="#liste-de-ressources">Liste de ressources</a></li>
+<li><a href="#liste-des-erreurs">Liste des erreurs</a><ol type="a">
+<li><a href="#erreurs-visibles">Erreurs visibles</a></li>
+<li><a href="#erreurs-invisibles-commencent-par">Erreurs invisibles (commencent par #)</a></li>
+</ol>
+</li>
+</ol>
+</div></details>
+<div id="pageName">Documentation du générateur de notice UNIMARC d'une thèse d'exercice déposée sur DUMAS (BU SVS)</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/ub-svs\dumas">Accédez au dépôt GitHub de ub-svs\dumas</a></li>
+</ul>
+<div id="main">
 <p>Preuve de concept : catalogage semi-automatisé d'un document DUMAS dans le Sudoc</p>
-
 <p><strong>Suite à l'Actu des réseaux n°75 de décembre 2021 et de la présentation du <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/co/MarcXml2tei.html#OXiP0XaqCYhdbukhutyQif">webservice Marcxml2tei</a>, cet outil semble ne plus être nécessaire.</strong></p>
-	
 <p><em>Je travaille encore sur le projet. Fonctionnement à jour de la version 2.0, mais pas la documentation sur le fonctionnement</em></p>
-
-<h1 id="rcuprerlesdonnes">Récupérer les données</h1>
-
-<h2 id="provenantdedumas">Provenant de DUMAS</h2>
-
+<h1 id="recuperer-les-donnees">Récupérer les données</h1>
+<h2 id="provenant-de-dumas">Provenant de DUMAS</h2>
 <ul>
 <li>En utilisant <a href="https://api.archives-ouvertes.fr/docs/search">l'API Documents de HAL</a>, il est possible de récupérer un grand nombre de données entrées dans DUMAS, toutefois toutes ne sont pas accessibles.</li>
-
 <li>En effet, s'il est possible dans DUMAS de renseigner une langue pour les titres par exemples, il n'est pas possible (à ma connaissance) de récupérer cette information via cette API, tout comme il n'est pas non plus possible de récupérer la date de fin de l'embargo sur un document.</li>
-
-<li>Toutefois, un grand nombre de données reste accessible, proposées sous différents format (j'utiliserai le JSON) :
-
-
-<ul>
+<li>Toutefois, un grand nombre de données reste accessible, proposées sous différents format (j'utiliserai le JSON) :<ul>
 <li>la langue du document (<code>language_s</code>) ;</li>
-
 <li>l'URI du document (<code>uri_s</code>) ;</li>
-
 <li>les patronymes des auteurs (<code>authFirstName_s</code>) ;</li>
-
 <li>les prénoms des auteurs (<code>authLastName_s</code>) ;</li>
-
 <li>les noms complets des directeurs de thèse (<code>director_s</code>) ;</li>
-
 <li>l'identifiant HAL de la structure associée (<code>authStructId_i</code>) ;</li>
-
 <li>la spécialité (<code>dumas_degreeSpeciality_s</code>) ;</li>
-
 <li>le type de mémoire (<code>dumas_degreeType_s</code>) ;</li>
-
 <li>l'année de publication (<code>publicationDateY_i</code>) ;</li>
-
 <li>les titres du document (<code>title_s</code>) ;</li>
-
 <li>les mots-clefs renseignés (<code>keyword_s</code>) ;</li>
-
 <li>les résumés renseignés (<code>abstract_s</code>) ;</li>
-
 <li>le nombre de page (<code>page_s</code>) ;</li>
-
-<li>le document est en Open Access (<code>openAccess_bool</code>).</li></ul>
+<li>le document est en Open Access (<code>openAccess_bool</code>).</li>
+</ul>
 </li>
 </ul>
-
-<h1 id="transformerlesdonnesenunimarc">Transformer les données en UNIMARC</h1>
-
+<h1 id="transformer-les-donnees-en-unimarc">Transformer les données en UNIMARC</h1>
 <p>Il faut distinguer 2 types de champs UNIMARC à écrire :</p>
-
 <ul>
 <li>les champs (ou parties de champ) fixes ;</li>
-
 <li>les champs dépendants des informations rapatriées.</li>
 </ul>
-
 <p>Il est à noter que certains champs fixes dans cette preuve de concept ne sont absolument pas les mêmes d'une thèse à l'autre, en revanche, leur écriture via ce procédé sera toujours le même.
 En effet, ces champs-là nécessitent d'être modifiés manuellement :</p>
-
 <ul>
 <li>soit car l'information n'est pas présente dans DUMAS (illustrations, nombre de références, etc.),</li>
-
 <li>soit car l'information n'est pas accessible via l'API (embargo, langue du second titre, etc.).</li>
 </ul>
-
 <p>Aussi, puisque ce problème n'est pas résolvable, j'ai fait le choix de bloquer la validation au niveau de ces notices en précédant le champ d'un code :</p>
-
 <ul>
 <li><code>_DEL_</code> pour un champ à supprimer (l'indexation libre) ;</li>
-
 <li><code>_MOD_</code> pour un champ à modifier (le NNT) ;</li>
-
 <li><code>_VER_</code> pour un champ à vérifier (la 200).</li>
 </ul>
-
 <p>Tous les champs ne sont pas bloqués de cette manière.
 En effet, la 541 serait à vérifier, le <code>$z</code> étant pour le moment fixe.
 Toutefois, la majorité des seconds titres étant anglais, je pars du principe que l'information sera généralement vraie.
 De même, pour les 7XX, je ne les bloque pas car l'association de notices auteur est une étape qui, à mon avis, n'est pas oubliée des collègues.</p>
-
-<h1 id="gnrateurdenoticebibliographiqueversionjs">Générateur de notice bibliographique (version JS)</h1>
-
-<p>Afin d'à la fois <a href="#rcuprerlesdonnes">récupérer les données</a> et <a href="#transformerlesdonnesenunimarc">transformer les données en UNIMARC</a>, j'ai fait le choix lors de ma première étude de faisabilité de <a href="https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html">passer par mon site et d'utiliser du Javascript</a>.
+<h1 id="generateur-de-notice-bibliographique-version-js">Générateur de notice bibliographique (version JS)</h1>
+<p>Afin d'à la fois <a href="#recuperer-les-donnees">récupérer les données</a> et <a href="#transformer-les-donnees-en-unimarc">transformer les données en UNIMARC</a>, j'ai fait le choix lors de ma première étude de faisabilité de <a href="https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html">passer par mon site et d'utiliser du Javascript</a>.
 (Et je savais que faire le travail directement dans WinIBW serait pour moi une épreuve plus compliquée, d'où ce premier choix).</p>
-
 <p>Cette manière de générer les notices comporte toutefois un léger problème : la rétrocompatibilité du générateur avec Internet Explorer qui me joue parfois des tours.
 En effet, puisque, comme nous le verrons au prochain titre, c'est ce navigateur qui est utilisé par WinIBW pour se connecter à mon GitHub, et à mon plus grand malheur, toutes les fonctions Javascript ne sont pas apparement pas compatible avec celui-ci.
 Toutefois, ce procédé restera pour moi la manière privilégiée de travailler pour le moment car :</p>
-
 <ul>
 <li>je peux apporter des mises à jour au générateur sans que les utilisateurs n'aient à faire quoi que ce soit pour bénéficier de celles-ci ;</li>
-
 <li>je préfère travailler en javascript (et loin de l'éditeur de script de WinIBW).</li>
 </ul>
-
 <p>Voici maintenant les informations basiques sur ce générateur.
 Il ne prend en compte les 8 derniers caractères (espaces exclus) de ce qui est lui est entré dans le champ de saisie (ce qui supposément correspond à l'identifiant DUMAS <code>docId</code>).
 Voilà les champs créés par le générateur :</p>
-
 <ul>
 <li>008 : <code>008 $aOax3</code></li>
-
 <li>029 : <code>029 MOD ##$aFR$b</code> + l'année + <code>BORD</code> + <code>M</code>, <code>3</code>, <code>P</code> ou <code>O</code> selon le type de mémoire et la spécialité + <code>XXX</code> à modifier manuellement en le numéro de la thèse</li>
-
 <li>100 : <code>100 0#$a</code> + l'année</li>
-
 <li>101 : <code>101 0#$a</code>, <code>$c</code>, <code>$d</code>, <code>$g</code> avec la langue du document</li>
-
 <li>102 : <code>102 ##$aFR</code></li>
-
 <li>104 : <code>104 ##$ak$by$cy$dba$e0$ffre</code></li>
-
 <li>105 : <code>105 ##$ay$bm$ba$c0$d0$e0$fy$gy</code></li>
-
 <li>135 : <code>135 ##$ad$br</code></li>
-
 <li>181 : <code>181 ##$P01$ctxt</code></li>
-
 <li>182 : <code>182 ##$P01$cc</code></li>
-
 <li>183 : <code>183 ##$P01$aceb</code></li>
-
 <li>200 : <code>200 VER 1#$a</code> + le 1er titre renvoyé avec les <code>:</code> (espaces avant et après, espaces parès) remplacés en <code>$e</code> et le <code>@</code> placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + <code>$f</code> + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + <code>$gsous la direction de</code> + le premier directeur de thèse renvoyé</li>
-
 <li>214 : <code>214 #1$a</code> + l'année</li>
-
 <li>230 : <code>230 ##$aDonnées textuelles</code></li>
-
 <li>303 : <code>303 ##$aL'impression du document génère</code> + le nombre de page entouré d'espace + <code>f.</code></li>
-
 <li>304 : <code>304 ##$aTitre provenant de l'écran-titre</code></li>
-
 <li>310 : <code>310 MOD ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE</code> à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)</li>
-
 <li>320 : <code>320 MOD ##$aBibliogr. XX réf. Annexes</code> à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas</li>
-
 <li>328 : <code>328 #0$bThèse d'exercice$c</code> + domaine + spécialité si indiquée + <code>$eBordeaux$d</code> + l'année</li>
-
 <li>330 : <code>330 ##$a</code> + résumé (pour chaque résumé entré)</li>
-
 <li>337 : <code>337 ##$aConfiguration requise : un logiciel capable de lire un fichier au format : application/pdf</code></li>
-
 <li>541 : <code>541 ##$a</code> + le 2e titre renvoyé (même changements que celui en 200) + <code>$zeng</code></li>
-
 <li>610 : <code>610 DEL 0#$a</code> + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606</li>
-
 <li>608 : <code>608 ##$3027253139$2rameau</code></li>
-
 <li>700 : <code>700 #1$a</code> + nom de l'auteur + <code>$b</code> + prénom de l'auteur + <code>$4070</code> (pour chaque auteur renvoyé).
 Attention, écrit une <strong>700</strong> même s'il y a plusieurs auteurs</li>
-
 <li>701 : <code>701 #1$a</code> + nom complet du directeur de thèse renvoyé + <code>$4727</code> (pour chaque directeur de thèse renvoyé)</li>
-
 <li>711 : <code>711 02$3175206562$4295</code></li>
-
 <li>856 : <code>856 4#$qPDF$u</code> + l'URI du document renvoyé + <code>$2Accès au texte intégral</code></li>
 </ul>
-
-<h1 id="importercesdonnesdanswinibw">Importer ces données dans WinIBW</h1>
-
+<h1 id="importer-ces-donnees-dans-winibw">Importer ces données dans WinIBW</h1>
 <p><strong>À l'heure actuelle, il est nécessaire d'utiliser son navigateur puis de copier la notice en cliquant dessus et la coller dans WinIBW.</strong>
 Il est ensuite conseillé de lancer le script <code>delEspaceB4Tag</code> (code disponible ci-dessous).</p>
-
 <p>À l'heure actuelle, je passe par <a href="https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html">le générateur en javascript que j'avais déjà créé</a> pour importer les données dans WinIBW.
 En effet, à l'aide <a href="https://github.com/abes-esr/winibw-scripts/blob/master/user-scripts/idref/IdRef.vbs">du code source du script utilisateur IdRef développé par l'Abes</a>, j'ai réussi à me connecter à mon générateur et lancer les scripts internes à celui-ci.</p>
-
-<p>Aussi, la procédure que l'utilisateur doit faire une fois <a href="#codeduscriptwinibw">le script dans WinIBW</a> installé est simplissime :</p>
-
+<p>Aussi, la procédure que l'utilisateur doit faire une fois <a href="#code-du-script-winibw">le script dans WinIBW</a> installé est simplissime :</p>
 <ul>
 <li>copier le lien DUMAS de la thèse ;</li>
-
 <li>lancer le script dans WinIBW ;</li>
-
 <li>vérifier et compléter la notice générée.</li>
 </ul>
-
-<h1 id="codeduscriptwinibw">Code du script WinIBW</h1>
-
+<h1 id="code-du-script-winibw">Code du script WinIBW</h1>
 <p><strong>Le code ne fonctionne pas sur Internet Explorer pour le moment, il est donc impossible de directement importer la notice dans WinIBW.</strong>
-Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :</p>
-
-<pre><code>sub delEspaceB4Tag()
+Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :
+<code>sub delEspaceB4Tag()
   dim notice
   application.activeWindow.title.selectAll
   notice = application.activeWindow.title.selection
@@ -210,20 +160,17 @@ Il est fortement recommandé d'utiliser ce court script après avoir collé la n
     notice = replace(notice, chr(10) &amp; " ", chr(10))
   Wend
   application.activeWindow.title.insertText notice
-End Sub
-</code></pre>
-
+End Sub</code></p>
 <p><em>Version du 25/11/2021, non définitive</em></p>
-
-<pre><code>Sub these_catDumas()
+<p>```
+Sub these_catDumas()
 dim docId
   docId = application.activeWindow.clipboard
   docId = replace(docId, chr(13), "")
   docId = replace(docId, chr(10), "")
   docId = replace(docId, " ", "")
-  docId = Right(docId, 8)
-
-'Source : script IdRef de l'Abes
+  docId = Right(docId, 8)</p>
+<p>'Source : script IdRef de l'Abes
   set IE = nothing
     set shapp=createobject("shell.application")
      Dim InputTexte
@@ -239,218 +186,155 @@ dim docId
               end if
         end if
     err.clear
-    Next
+    Next</p>
+<pre><code>on error goto 0
+if IE is nothing then
+    'MsgBox  "Window Not Open"
+     Set IE = CreateObject("InternetExplorer.Application")
+end if
 
-    on error goto 0
-    if IE is nothing then
-        'MsgBox  "Window Not Open"
-         Set IE = CreateObject("InternetExplorer.Application")
-    end if
+'IE.Navigate2 "https://api.archives-ouvertes.fr/search/dumas/?q=docid:01911186&amp;wt=xml&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
+</code></pre>
+<p>IE.Navigate2 "https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html"  <br/>
+  Do While IE.readystate &lt;&gt; 4<br/>
+    Loop<br/>
+    Set IEDoc = IE.document</p>
+<pre><code>'Set inputURL = IEDoc.getElementById("inputURL")
+'inputURL = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&amp;wt=json&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
+'inputURL = "https://dumas.ccsd.cnrs.fr/dumas-01911186"
 
-    'IE.Navigate2 "https://api.archives-ouvertes.fr/search/dumas/?q=docid:01911186&amp;wt=xml&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"    
-  IE.Navigate2 "https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html"    
-  Do While IE.readystate &lt;&gt; 4  
-    Loop  
-    Set IEDoc = IE.document
-
-    'Set inputURL = IEDoc.getElementById("inputURL")
-    'inputURL = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&amp;wt=json&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
-    'inputURL = "https://dumas.ccsd.cnrs.fr/dumas-01911186"
-
-    Call IEDoc.parentWindow.execScript("main('"&amp;docId&amp;"')","JavaScript")
-
-'Permet de stopper le script WinIBW pour laisser le temps au générateur
-  ress_sleep 1
-
-    Set notice = IEDoc.getElementById("notice")
-'Fin de l'abes
-
-  application.activeWindow.Command "cre"
-  'Faire de la détection de ;_;ERREUR;_; + de si la notice est vide dire de réessayer puis si plusierus échec de passer par le site
-  application.activeWindow.Title.InsertText notice.innerText
-
-
-'L'abes encore parce que c'est quand même bien mieux de fermer Internet Explorer
+Call IEDoc.parentWindow.execScript("main('"&amp;docId&amp;"')","JavaScript")
+</code></pre>
+<p>'Permet de stopper le script WinIBW pour laisser le temps au générateur
+  ress_sleep 1</p>
+<pre><code>Set notice = IEDoc.getElementById("notice")
+</code></pre>
+<p>'Fin de l'abes</p>
+<p>application.activeWindow.Command "cre"
+  'Faire de la détection de ;<em>;ERREUR;</em>; + de si la notice est vide dire de réessayer puis si plusierus échec de passer par le site
+  application.activeWindow.Title.InsertText notice.innerText</p>
+<p>'L'abes encore parce que c'est quand même bien mieux de fermer Internet Explorer
 'Sauf qu'en fait ça augmente le nombre de renvois vide ahahahahah
 'Sauf si je sleep le script WinIBW pour laisser le temps à mon générateur ?
   IE.Quit
-  Set IE = Nothing
-
-End Sub
-</code></pre>
-
-<h1 id="suiteduprojet">Suite du projet</h1>
-
-<h2 id="fonctionnalitsprvuessiledveloppementsepoursuit">Fonctionnalités prévues (si le développement se poursuit)</h2>
-
+  Set IE = Nothing</p>
+<p>End Sub
+```</p>
+<h1 id="suite-du-projet">Suite du projet</h1>
+<h2 id="fonctionnalites-prevues-si-le-developpement-se-poursuit">Fonctionnalités prévues (si le développement se poursuit)</h2>
 <ul>
 <li>amélioration de la gestion des erreurs, notamment pour éviter que rien ne soit renvoyé simplement car 1 information a généré une erreur ;</li>
-
-<li>gestion des langues :
-
-
-<ul>
+<li>gestion des langues :<ul>
 <li>déterminer une langue principale, qui sera la langue du document indiquée en métadonnées ;</li>
-
 <li>à partir de la langue principale, si le résumé ou le titre contient deux entrées, déterminer la langue secondaire en considérant que une des deux langues est forcément le français et que si la langue principale est le français alors la seconde langue sera l'anglais ;</li>
-
-<li>ensuite la langue sera ajoutée en <code>101 $d</code> et <code>541 $z</code> en fonction de la présence ou non d'un second résumé ou second titre.</li></ul>
+<li>ensuite la langue sera ajoutée en <code>101 $d</code> et <code>541 $z</code> en fonction de la présence ou non d'un second résumé ou second titre.</li>
+</ul>
 </li>
-
 <li>générer la 310 uniquement si <code>openAccess_bool</code> renvoie <code>false</code> ;</li>
-
-<li>gestion des auteurs multiples :
-
-
-<ul>
+<li>gestion des auteurs multiples :<ul>
 <li>écrire le nombre correct de 700 puis passer en 701 ;</li>
-
-<li>écrire en 200 tous les auteurs avec des virgule comme séparateur sauf pour le dernier qui est séparé par <code>et</code> ;</li></ul>
+<li>écrire en 200 tous les auteurs avec des virgule comme séparateur sauf pour le dernier qui est séparé par <code>et</code> ;</li>
+</ul>
 </li>
-
 <li>génération des 7XX en même temps que la 200 pour éviter de repasser encore une fois sur les mêmes variables ;</li>
-
-<li>pour les directeurs de thèse, considérer par défaut que tout ce qui se trouve avant le premier espace est le prénom, la suite étant considérée par défaut comme patronyme (<a href="#tudedefaisabilit">voir l'étude de faisabilité pour comprendre plus en détail l'intérêt</a>) ;</li>
-
+<li>pour les directeurs de thèse, considérer par défaut que tout ce qui se trouve avant le premier espace est le prénom, la suite étant considérée par défaut comme patronyme (<a href="#etude-de-faisabilite">voir l'étude de faisabilité pour comprendre plus en détail l'intérêt</a>) ;</li>
 <li>les outils <em>amélioration</em>, qui visent à directement associer un PPN pour les autorités RAMEAU et mentions de responsabilité (et )qui seront évidemment facultatifs) ;</li>
-
 <li>dans ce cadre-là, créer manuellement des bases de contenu connu qui seront interrogées et renverront des PPN en cas de trouvailles.</li>
 </ul>
-
-<h2 id="tudedefaisabilit">Étude de faisabilité</h2>
-
+<h2 id="etude-de-faisabilite">Étude de faisabilité</h2>
 <ul>
 <li>récupérer l'information sur la spécialité via <a href="https://api.archives-ouvertes.fr/docs/ref">l'API des référentiels</a> (ou une autre) plutôt qu'utiliser une image fixe de la base.
 Compléter ensuite le résultat de l'API avec l'image de la base si l'API n'a rien renvoyé (ex : si la connexion a échoué).  </li>
-
 <li>dans le cadre des outils <em>amélioration</em>, essayer d'identifier via <a href="http://documentation.abes.fr/aideidrefdeveloppeur/index.html#UtiliserApiSolr">l'API Solr d'IdRef</a> les PPN correspondants à des autorités RAMEAU ou des mentions de responsabilité (voire des FMesh ?).
 Pour ces outils, si l'interrogation de la base manuelle est également activée, le recours à l'API n'interviendrait qu'après celui à la base manuelle puisque supposément la base manuelle est plus précise.
 Aussi, l'un des enjeux majeurs de cette étude de faisabilité sera de définir les critères qui permettront d'affirmer que le PPN correspond bien à ce que nous recherchons et n'est pas une erreur.</li>
-
 <li>dans le cadre d'une possible généralisation de l'outil (c'est-à-dire, cesser de créer des documents par défaut pour Bordeaux), récupérer les informations à partir de Wikidata.</li>
 </ul>
-
-<h1 id="listederessources">Liste de ressources</h1>
-
+<h1 id="liste-de-ressources">Liste de ressources</h1>
 <ul>
 <li><a href="https://data.archives-ouvertes.fr/doc/schema">Documentation data.archives-ouvertes.fr</a> ;</li>
-
 <li><a href="https://api.archives-ouvertes.fr/docs/search">API recherche d'un document dans data.archives-ouvertes.fr</a> ;</li>
-
 <li><a href="https://api.archives-ouvertes.fr/docs/ref">API référentiels dans data.archives-ouvertes.fr</a> ;</li>
-
 <li><a href="https://api.archives-ouvertes.fr/docs/oai">API OAI-PMH dans data.archives-ouvertes.fr</a> ;</li>
-
 <li>RDF d'un document : https://data.archives-ouvertes.fr/document/dumas-03133058v1.rdf ;</li>
-
 <li>JSON d'un document : https://data.archives-ouvertes.fr/document/dumas-03133058v1.json ;</li>
-
 <li>RDF d'un auteur : https://data.archives-ouvertes.fr/author/1.rdf ;</li>
-
 <li>JSON d'un auteur : https://data.archives-ouvertes.fr/author/1.json ;</li>
-
 <li>la requête utilisée : <code>https://api.archives-ouvertes.fr/search/dumas/?q=docid:12345678&amp;wt=json&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeType_s</code> ;</li>
-
-<li>récupérer l'information de l'université :
-
-
-<ul>
+<li>récupérer l'information de l'université :<ul>
 <li>ajouter <code>authStructId_i</code> à la requête, ce qui renvoie l'identifiant de la structure ;</li>
-
 <li>interroger une table manuellement créée pour récupérer les informations liées au NNT, à la 328 et à la 711 ;</li>
-
 <li>~~OU interroger <a href="https://api.archives-ouvertes.fr/docs/ref/resource/structure">l'API référentiel Structure</a> pour récupérer les informations, mais je ne suis pas sûr que cela soit la solution la plus efficace.~~
 ~~Toutefois, je doute de l'utilité sachant que ni l'autorité IdRef, ni <a href="http://documentation.abes.fr/sudoc/regles/LibellesUnivEtab.htm">le libellé de l'université / l'établissement français</a>, ni les spécificités du NNT ne se trouvent dans les informations renvoyables par l'API.~~
 ~~Si une tentative de lien entre référentiel aurait pu être possible pour récupérer au moins la 711, je crains que l'identifiant HAL ne soit présent ni dans IdRef, ni chez la BnF, ni dans VIAF, ni dans l'ISNI.~~
 ~~Aussi je pense que l'établissement du fichier manuel est plus facile~~
 <em>En fait il est possible de récupérer des informations grâce à WikiData qui contient bien l'identifiant HAL et le PPN IdRef de la structure.</em>
-<em>De là, nous pouvons établir un lien avec des fichiers basés sur les tables établies dans le GM du Sudoc (voir ci-dessous), en récupérant la forme internationale via l'API IdRef ?</em></li></ul>
+<em>De là, nous pouvons établir un lien avec des fichiers basés sur les tables établies dans le GM du Sudoc (voir ci-dessous), en récupérant la forme internationale via l'API IdRef ?</em></li>
+</ul>
 </li>
-
 <li><a href="https://www.wikidata.org/wiki/Wikidata:Database_reports/List_of_properties/all/fr">Liste des propriétés Wikidata</a> (identifiant IdRef: <code>P269</code>, identifiant HAL: <code>P6773</code>))
 Pour compléter les libellés, créer un fichier grâce à <a href="http://documentation.abes.fr/sudoc/regles/LibellesUnivEtab.htm">la table des libellés des universités et établissements français</a> (même si la fiabilité m'a l'air irrégulière pusique <code>Bordeaux</code> n'a pas d'entré comme c'est pourtant écrit plusieurs fois).
 Dans ce même fichier, indiquer le code court de l'université grâce <a href="http://documentation.abes.fr/sudoc/regles/CodesUnivEtab.htm">à la table des codes des universités et des établissements</a>.
 Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer le code final s'il existe une manière de faire, sinon Bordeaux restera le seul à générer ce code ;</li>
-
 <li><a href="https://query.wikidata.org/querybuilder/?uselang=fr">Assistant de requêtes Wikidata</a> ;</li>
-
 <li>requête pour récupérer l'identifiant Wikidata de l'Université de Bordeaux :
 <code>SELECT DISTINCT ?item ?itemLabel WHERE {
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
-{
-SELECT DISTINCT ?item WHERE {
-  ?item p:P6773 ?statement0.
-  ?statement0 (ps:P6773) "259761".
-}
-LIMIT 100
-}
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+  {
+    SELECT DISTINCT ?item WHERE {
+      ?item p:P6773 ?statement0.
+      ?statement0 (ps:P6773) "259761".
+    }
+    LIMIT 100
+  }
 }</code></li>
-
 <li>URI Wikidata associée à l'Université de Bordeaux (en JSON) : <code>https://www.wikidata.org/wiki/Special:EntityData/Q13344.json</code>.
 Accès au PPN IdRef à partir de là : <code>entities.Q13344.claims.P269[0].mainsnak.datavalue.value</code></li>
-
 <li>Chercher s'il existe des autorités pour la personne Jean-Claude Moissinac : <code>https://www.idref.fr/Sru/Solr?q=nom_s:moissinac%20AND%20prenom_s:jean-claude%20AND%20recordtype_z:a&amp;wt=json&amp;fl=ppn_z,nom_s,prenom_s,affcourt_z</code> ;</li>
-
 <li>Chercher s'il existe des autorités pour le sujet Urgences en pédiatrie : <code>https://www.idref.fr/Sru/Solr?q=subjectheading_t:(urgence*%20AND%20pediatr*)%20AND%20recordtype_z:r&amp;wt=json&amp;fl=ppn_z,subjectheading_s</code> ;</li>
 </ul>
-
-<h1 id="listedeserreurs">Liste des erreurs</h1>
-
-<h2 id="erreursvisibles">Erreurs visibles</h2>
-
+<h1 id="liste-des-erreurs">Liste des erreurs</h1>
+<h2 id="erreurs-visibles">Erreurs visibles</h2>
 <ul>
 <li><code>001</code> : la première propriété <code>dumas_degreeType_s</code> existante est différente de 12, 13 ou 30 qui sont les seules valeurs supposées normales.
 Peut être causée par une mauvais entrée des données dans DUMAS ou une réécriture de la variable dans le code avant cette vérification (ce qui ne devrait pas avoir lieu) ;</li>
-
 <li><code>002</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>publicationDateY_i</code> ;</li>
-
 <li><code>003</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>dumas_degreeType_s</code> ;</li>
-
 <li><code>004</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>language_s</code> ;</li>
-
 <li><code>005</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>abstract_s</code> ;</li>
-
 <li><code>006</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>page_s</code> ;</li>
-
 <li><code>007</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>openAccess_bool</code> ;</li>
-
 <li><code>008</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>uri_s</code> ;</li>
-
 <li><code>009</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>keyword_s</code> ;</li>
-
 <li><code>010</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>title_s</code> ;</li>
-
 <li><code>011</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>authStructId_i</code> ;</li>
-
 <li><code>012</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>authLastName_s</code> ;</li>
-
 <li><code>013</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>authFirstName_s</code> associé au numéro <code>authLastName_s</code> en cours de traitement ;</li>
-
 <li><code>014</code> : le résultat renvoyé par l'API ne contient pas la propriété <code>director_s</code> ;</li>
 </ul>
-
-<h2 id="erreursinvisiblescommencentpar">Erreurs invisibles (commencent par #)</h2>
-
+<h2 id="erreurs-invisibles-commencent-par">Erreurs invisibles (commencent par #)</h2>
 <ul>
 <li><code>#99</code> : <em>en implémentation</em></li>
-</ul>
+</ul></div>
+</div>
 <div id="accessButtons">
-	<button id="buttonZoom"><span style="font-size: 14px;">A</span>|<span style="font-size: 21px;">A</span>|A</button><br/>
-	<button id="buttonNB">Noir et Blanc</button>
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
 </div>
 <div id="divLiens">
-	<p>Liens vers les autres outils&nbsp;:</p>
-	<ul id="liens">
-		<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
-		<li><a href="https://alban-peyrat.github.io/WinIBW">WinIBW</a></li>
-		<li><a href="https://alban-peyrat.github.io/Louise">Louise</a></li>
-		<li><a href="https://alban-peyrat.github.io/HUBert">HUBert</a></li>
-		<li><a href="https://alban-peyrat.github.io/CoCo-SAlma">CoCo-SAlma</a></li>
-		<li><a href="https://alban-peyrat.github.io/ConStance">ConStance</a></li>
-		<li><a href="https://alban-peyrat.github.io/ConAn">ConAn</a></li>
-	</ul>
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+</ul>
 </div>
 </body>
 <script src="https://alban-peyrat.github.io/accessibilite.js"></script>
-<script src="https://alban-peyrat.github.io/tableMatieres.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
 </html>

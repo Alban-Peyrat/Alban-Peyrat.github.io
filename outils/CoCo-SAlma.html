@@ -18,36 +18,36 @@
 <summary>
 <code>Table des matières (cliquez pour afficher / masquer)</code>
 </summary>
-<ul>
-<li><a href="#initialisation">Initialisation</a><ol>
+<div class="toc">
+<ol type="I">
+<li><a href="#initialisation">Initialisation</a><ol type="A">
 <li><a href="#ajouter-une-bibliotheque">Ajouter une bibliothèque</a></li>
 </ol>
 </li>
-<li><a href="#renseigner-la-liste-des-ppn">Renseigner la liste des PPN</a><ol>
+<li><a href="#renseigner-la-liste-des-ppn">Renseigner la liste des PPN</a><ol type="1">
 <li><a href="#a-partir-dune-liste-de-ppn-dalma">À partir d'une liste de PPN d'Alma</a></li>
 <li><a href="#a-partir-dune-liste-de-ppn-deja-etablie">À partir d'une liste de PPN déjà établie</a></li>
 </ol>
 </li>
-<li><a href="#generer-la-liste-pour-lexport-et-importer-les-donnees">Générer la liste pour l'export et importer les données</a><ol>
+<li><a href="#generer-la-liste-pour-lexport-et-importer-les-donnees">Générer la liste pour l'export et importer les données</a><ol type="a">
 <li><a href="#cas-n-1-vous-avez-importe-la-liste-de-ppn-originale-depuis-alma">Cas n° 1 : vous avez importé la liste de PPN originale depuis Alma</a></li>
 <li><a href="#cas-n-2-votre-liste-de-ppn-originale-ne-vient-pas-dalma">Cas n° 2 : votre liste de PPN originale ne vient pas d'Alma</a></li>
 </ol>
 </li>
 <li><a href="#lancement-de-lanalyse">Lancement de l'analyse</a></li>
 <li><a href="#fonctionnement">Fonctionnement</a></li>
-<li><a href="#resultats">Résultats</a><ol>
+<li><a href="#resultats">Résultats</a><ol type="i">
 <li><a href="#quelques-precisions-sur-les-resultats">Quelques précisions sur les résultats</a></li>
 </ol>
 </li>
 <li><a href="#nettoyer-une-fois-acheve">Nettoyer une fois achevé</a></li>
-</ul></details>
+</ol>
+</div></details>
 <div id="pageName">CoCo-SAlma - Contrôle des correspondances des cotes Sudoc-Alma</div>
 <ul id="lienGitHub">
 <li><a href="https://github.com/Alban-Peyrat/CoCo-SAlma">Accédez au dépôt GitHub de CoCo-SAlma</a></li>
 </ul>
-<div id="main"><div class="toc">
-
-</div>
+<div id="main">
 <p>Coco-Salma est un outil visant spécifiquement à contrôler la correspondance des cotes pour un PPN entre les données d'exemplaire du Sudoc en utilisant <a href="http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/index.html#SudocMarcXML">le webservice MARCXML de l'Abes</a> et les holdings d'Alma. N'étant personnellement pas fan de posséder un document dans plusieurs localisations, elle signale également la présence de plusieurs cotes.</p>
 <p><strong>Évitez d'avoir d'autres fichiers Excel ouverts pendant l'analyse (dans le cas où une erreur de programmation pourrait faire intéragir Constance avec des fichiers non prévus).</strong></p>
 <p><em>Version du 14/10/2021. En cours de réécriture.</em></p>
