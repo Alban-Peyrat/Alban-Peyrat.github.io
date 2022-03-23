@@ -13,6 +13,10 @@
 <span id="headerPres">Présentation et documentation de mes outils numériques</span>
 </a>
 </header>
+<div id="accessButtons">
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
+</div>
 <div id="contenu">
 <details id="tableMatieres">
 <summary>
@@ -25,7 +29,7 @@
 <li><a href="#a-partir-dune-liste-de-ppn-deja-etablie">À partir d'une liste de PPN déjà établie</a></li>
 </ol>
 </li>
-<li><a href="#les-analyses">Les analyses</a><ol type="1">
+<li><a href="#les-analyses">Les analyses</a><ol type="A">
 <li><a href="#cs1-equivalence-champs-103-200f-idref">CS1 : équivalence champs 103 / 200$f (IdRef)</a></li>
 <li><a href="#cs2-presence-dun-lien-en-700">CS2 : présence d'un lien en 700</a></li>
 <li><a href="#cs3-presence-dun-lien-en-7xx">CS3 : présence d'un lien en 7XX</a></li>
@@ -105,10 +109,6 @@
 <h2 id="cs7-statistiques-dage-version-double-dates">CS7 : statistiques d'âge (version double dates)</h2>
 <p>Calcule l'âge moyen et l'âge médian d'une liste de PPN.</p>
 <p>Fusion de CS4 et CS5 : CS7 récupère à la fois l'année via la 100 et via la 21X puis calcule l'âge moyen et l'âge médian en fonction des deux méthodes. Le champ 100 est prioritaire, les résultats sont triés en fonction de celui-ci, la ligne est colorée de rouge si celui-ci est vide. Si la date en 21X est vide, seule la cellule correspondante est colorée. Les deux résultats sont affichés, ainsi que le nombre de titres exclus pour chacun d'entre eux.</p></div>
-</div>
-<div id="accessButtons">
-<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
-<button id="buttonNB">Noir et Blanc</button>
 </div>
 <div id="divLiens">
 <p>Liens vers les autres outils :</p>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Alban Peyrat : Python-WinIBW</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
+</header>
+<div id="accessButtons">
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="contenu">
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<div class="toc">
+<ol type="I">
+<li><a href="#installing-python-winibw">Installing Python-WinIBW</a><ol type="A">
+<li><a href="#using-install_python-winibwpy">Using install_python-winibw.py</a></li>
+<li><a href="#manually">Manually</a></li>
+</ol>
+</li>
+<li><a href="#setting-up-python-winibw-parameters">Setting up Python-WinIBW parameters</a></li>
+<li><a href="#winibw-initialisation">WinIBW initialisation</a></li>
+<li><a href="#how-to-use">How to use</a></li>
+<li><a href="#example">Example</a></li>
+</ol>
+</div></details>
+<div id="pageName">Python-WinIBW</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/WinIBW">Accédez au dépôt GitHub de WinIBW</a></li>
+</ul>
+<div id="main">
+<p>Python-WinIBW is a set of Javascript and Python scripts for easily using Python scripts with WinIBW.
+This tool only works with WinIBW's standart scripts (unless your WinIBW version can run <code>application.CallStdScriptFunction</code> in user scripts, which I'm pretty sure is not my case).
+Also, your computer must be able to run Python scripts.</p>
+<h1 id="installing-python-winibw">Installing Python-WinIBW</h1>
+<p><em>Note: this installation will only apply to the computer you are using, but it should be possible to install it for your WinIBW profile.
+If you do, please thoroughly check every link in the files and don't forget that you can replace <code>BinDir</code> by <code>ProfD</code> in WinIBW's utilities special methods.</em></p>
+<p><strong>Do not run WinIBW (or be running it) during the installation.</strong></p>
+<h2 id="using-install_python-winibwpy">Using <code>install_python-winibw.py</code></h2>
+<ul>
+<li>Download the <code>python-winibw</code> folder <a href="https://alban-peyrat.github.io/outils/WinIBW/tree/main/scripts/python-winibw">from my WinIBW repository</a>;</li>
+<li>If the path to your WinIBW's root folder is not <code>C:\oclcpica\WinIBW30</code>, edit <code>install_python-winibw.py</code> and change the value of <code>WINIBW_ROOT_FOLDER</code> accordingly;</li>
+<li>Execute the script.</li>
+</ul>
+<h2 id="manually">Manually</h2>
+<ul>
+<li>Download the <code>python-winibw</code> folder <a href="https://alban-peyrat.github.io/outils/WinIBW/tree/main/scripts/python-winibw">from my WinIBW repository</a>;</li>
+<li>Go to your WinIBW's root folder and create the subfolders <code>SCOOP/scripts</code>;</li>
+<li>Inside <code>SCOOP/scripts</code>, place the <code>python-winibw</code> folder;</li>
+<li>Go back to your WinIBW's root folder, and edit <code>defaults/pref/setup.js</code> (make a copy of the file first just to be safe);</li>
+<li>At the top of the document, add <code>pref("ibw.standardScripts.script.pythWinIBW", "resource:/SCOOP/scripts/python-winibw/pythWinIBW.js");</code>;</li>
+<li>Save and quit the document.</li>
+</ul>
+<h1 id="setting-up-python-winibw-parameters">Setting up Python-WinIBW parameters</h1>
+<p>Python-WinIBW has a textual file (<code>python_parameters</code>) that defines various parameters.
+You must at least define <code>python_path</code> before using Python-WinIBW.
+To define them for both python scripts and WinIBW scripts, edit the <code>python_parameters</code> file.
+It is build as a JSON file but it doesn't support tables / lists or object / dictionaries inside the main one.
+As such, every key / value pair should be in the same object.</p>
+<p>Here is a list of restrictions with this file (due to the way I parse it):</p>
+<ul>
+<li>keys shouldn't have a <code>:</code> inside them;</li>
+<li>strings values must be declared between <code>""</code>, not <code>''</code>;</li>
+<li><code>python_path</code>, <code>pyth_to_js_file</code>, <code>js_to_pyth_file</code> and <code>clean_pyth_files</code> must exist.</li>
+</ul>
+<p>Other than that, you're free to add any additionnal parameter you want to it.</p>
+<p>Finally, please check in <code>get_python_parameters.py</code> if the absolute path to <code>python_parameters</code> is correct.</p>
+<h1 id="winibw-initialisation">WinIBW initialisation</h1>
+<p>Once Python-WinIBW is installed and <code>python_parameters</code> properly defined, WinIBW will define the global variable <code>pythPar</code> <em>(returned by the function <code>__get_python_parameters()</code>)</em> as the content of <code>python_parameters</code> and will run some checks on it everytime you initiliase WinIBW.
+Two types of check are runned:</p>
+<ul>
+<li>key definition: WinIBW will check if <code>python_path</code>, <code>pyth_to_js_file</code>, <code>js_to_pyth_file</code> and <code>clean_pyth_files</code> exist as keys inside <code>pythPar</code> (error message = <code>is not defined</code>);</li>
+<li>file existence: WinIBW will check if <code>python_path</code> and <code>clean_pyth_files</code> point to an existing file (error message = <code>does not point to an existing file</code>).
+This <strong>does not</strong> mean that the files in question are the one they are supposed to be.</li>
+</ul>
+<p>If one (or more) of the checks fails, a message box will appear displaying all the problems and the reason of the error.
+<strong>Do note that this message box will not stop you from running any script that uses Python-WinIBW.</strong>
+But some of those errors will eventually lead to an error running a script using Python-WinIBW.</p>
+<h1 id="how-to-use">How to use</h1>
+<p><em>Reminder: Python-WinIBW must have been <a href="#setting-up-python-winibw-parameters">set up</a> at least once before you can use it.</em></p>
+<p><em>This procedure only covers keypoints. Also, remember that <code>pythPar</code> is a global variable and, as such, you can access it in your WinIBW scripts.</em></p>
+<ul>
+<li>Execute a standart WinIBW script;</li>
+<li>If you need to transfer data from the beginning of this script to the python script, write it in the <code>js_to_pyth_file</code> file using WinIBW's <code>FileOutput</code> object;</li>
+<li>Execute the <code>__execute_python()</code> WinIBW script using the absolute path to the python module as a parameter;</li>
+<li>In the python module, import the module <code>get_python_parameters</code> and store its <code>main()</code> returned value in a variable;</li>
+<li>If needed, retrieve data from <code>js_to_pyth_file</code>;</li>
+<li>Write any data you wish to transfer to WinIBW to the <code>pyth_to_js_file</code> file;</li>
+<li>Back in the WinIBW script <em>(you might need to pause WinIBW to let the python script fully execute)</em>, retrieve the data using WinIBW's <code>FileInput</code> object;</li>
+<li>At the end of the WinIBW script, run <code>__clean_python_temp_file()</code> to delete the two temporary files (<code>js_to_pyth_file</code> and <code>pyth_to_js_file</code>).</li>
+</ul>
+<p><em>If you need help with the WinIBW <code>FileInput</code> and <code>FileOutput</code> objects, see</em> Scripting in WinIBW3 <em>part 4 "Utility objects".</em>
+<em>You can access the 1.17 version <a href="https://github.com/abes-esr/winibw-scripts/blob/3f374e37151ab686fd1423cc21195b997d7df4b9/documentation/Scripting_in_WinIBW3.7.0.pdf">in the Abes's GitHub</a> (or just googling it).</em></p>
+<h1 id="example">Example</h1>
+<p><em>not yet published</em></p></div>
+</div>
+<div id="divLiens">
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
+</html>
