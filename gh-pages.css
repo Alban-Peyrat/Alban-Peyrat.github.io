@@ -116,6 +116,10 @@ code {
 	border-radius: 3px;
 }
 
+img {
+	max-width: 800px;	
+}
+
 /*https://developer.mozilla.org/fr/docs/Web/HTML/Element/details#personnaliser_le_marqueur_de_révélation*/
 details > summary::-webkit-details-marker {
   display: none;
