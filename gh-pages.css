@@ -106,6 +106,10 @@ button {font-size: 36px;
 	list-style-type: none;
 }
 
+.hljs * {
+	all:  revert;
+}
+
 code {
 	font-family: Calibri;
 	font-style: italic;
