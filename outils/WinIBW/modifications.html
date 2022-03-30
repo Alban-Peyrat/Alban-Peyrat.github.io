@@ -140,7 +140,7 @@
 <ul>
 <li>ajout de la documentation pour les scripts (<code>get</code>, chantiers thèse, concepts et <code>goToTag</code> exclus, qui pour une majorité nécessitent des modifications importantes) ;</li>
 <li>modifications mineures de <code>addUA400</code> et nettoyage du code ;</li>
-<li><code>findUA200aUA200b</code> : correction d'un bug qui supprimait la dernière lettre de la partie rejetée si la 200 ne comprenait pas de <code>$</code> après le <code>$b</code> ;</li>
+<li><code>findUA200aUA200b</code> : correction d'un bug qui supprimait la dernière lettre de la partie rejetée si la 200 ne comprenait pas de <code class="highlight-marc"></code> après le <code class="highlight-marc"><span class="subCode">$b</span></code> ;</li>
 <li><code>addUB700S3</code> :<ul>
 <li>n'utilise plus le presse papier ;</li>
 <li>suppression de la partie du code spécifique au chantier thèse. Un script personnel regroupant celui-ci et la partie supprimée a été créé ;</li>
@@ -160,7 +160,7 @@
 <li><code>addAutFromUB</code> : génère un squelette de notice auteur à partir d'une notice bibliographique ;</li>
 <li><code>addUB7XX</code> : ajoute une <code>7XX</code>, avec un fonctionnement similaire à <code>addSujetRAMEAU</code> ;</li>
 <li><code>chantierThese_getJuryForExcel</code> : récupère des données de la thèse pour l'exporter vers Excel ;</li>
-<li><code>chantierThese_addJuryFromExcel</code> : ajoute à la notice bibliographique une <code>200$g</code>, une <code>314</code> et les <code>701</code> prévues par Excel ;</li>
+<li><code>chantierThese_addJuryFromExcel</code> : ajoute à la notice bibliographique une <code class="highlight-marc">200<span class="subCode">$g</span></code>, une <code>314</code> et les <code>701</code> prévues par Excel ;</li>
 <li><code>chantierThese_addJuryAut</code>: ajoute une notice d'autorité auteur à partir de l'extraction de <code>chantierThese_getJuryforExcel</code> ;</li>
 <li><code>ress_getTag</code> : renvoie la valeur du/des champs/sous-champs voulus (une phase de test est prévue) ;</li>
 </ul>
@@ -199,7 +199,7 @@
 <ul>
 <li>scripts de type <code>get</code> : vérification de l'utilisation du presse-papier et restituer le presse-papier présent avant le lancement du script s'il est réécrit ;</li>
 <li><code>addUA400</code> (et associés) : adapter à <code>getTag</code>, mettre des majuscules si nécessaire, gérer les autres informations ;</li>
-<li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code>$b</code> ;</li>
+<li><code>decompUA200enUA400</code> : gérer les cas où l'indicateurs 2 est <code>0</code> ainsi que l'absence de <code class="highlight-marc"><span class="subCode">$b</span></code> ;</li>
 <li>correction du malfonctionnement probable de <code>addBibgFinChap</code> ;</li>
 <li>nettoyage et correction de code et des commentaires de début de script ;</li>
 <li>séparation des scripts de chantier thèses.</li>
