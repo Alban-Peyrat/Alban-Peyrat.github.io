@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Alban Peyrat : Bookmarklet</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script></head>
+<body>
+<header>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
+</header>
+<div id="accessButtons">
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="contenu">
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<div class="toc">
+<ol type="I">
+<li><a href="#alma">Alma</a><ol type="A">
+<li><a href="#ajouter-les-codes-statistiques-pour-la-medecine-ub">Ajouter les codes statistiques pour la médecine (UB)</a></li>
+<li><a href="#ajouter-les-codes-statistiques-pour-lodontologie-ub">Ajouter les codes statistiques pour l'odontologie (UB)</a></li>
+</ol>
+</li>
+<li><a href="#idref">Idref</a><ol type="A">
+<li><a href="#passer-en-recherche-nom-de-personne">Passer en recherche nom de personne</a></li>
+<li><a href="#passer-en-recherche-experte-nom-de-famille">Passer en recherche experte nom de famille</a></li>
+<li><a href="#passer-en-recherche-experte-nom-de-famille-et-prenom">Passer en recherche experte nom de famille et prénom</a></li>
+</ol>
+</li>
+</ol>
+</div></details>
+<div id="pageName">Bookmarklet</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/bookmarklet">Accédez au dépôt GitHub de bookmarklet</a></li>
+</ul>
+<div id="main">
+<p><em>Rappel : pour mettre des bookmarklets, ajouter un nouveau marque-page dans votre navigateur et renseigner les lignes de codes associées comme étant l'URL.</em></p>
+<p><em>Les codes sur cette page ne sont qu'un copier-coller du <a href="https://github.com/Alban-Peyrat/bookmarklet/blob/main/bookmarklets.js">fichier originel</a> à un instant T.
+Ce fichier reste la source principale pour consulter la dernière version d'un script.</em></p>
+<h1 id="alma">Alma</h1>
+<h2 id="ajouter-les-codes-statistiques-pour-la-medecine-ub">Ajouter les codes statistiques pour la médecine (UB)</h2>
+<p><em>Exclusif à l'Université de Bordeaux (ou en tout cas, développé exclusivement pour elle).</em></p>
+<p>Vous devez vous rendre dans un premier temps sur l'onglet <code>Notes</code> de la page de votre exemplaire.
+Le script renseignera la note statistique 1 comme <code>U00 A destination de la communauté universitaire</code> et la note statistique 2 comme <code>FAB : Médecine et spécialités</code>, puis enregistrera les modifications.</p>
+<p>Le code (version du 30/03/2022) :</p>
+<pre><code language="language-javascript">javascript: (() =&gt; {
+  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1")[0].value = "U00";
+  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_2")[0].value = "FAB";
+  document.getElementById("PAGE_BUTTONS_cbuttonsave").click()
+})();</code></pre>
+<h2 id="ajouter-les-codes-statistiques-pour-lodontologie-ub">Ajouter les codes statistiques pour l'odontologie (UB)</h2>
+<p><em>Exclusif à l'Université de Bordeaux (ou en tout cas, développé exclusivement pour elle).</em></p>
+<p>Vous devez vous rendre dans un premier temps sur l'onglet <code>Notes</code> de la page de votre exemplaire.
+Le script renseignera la note statistique 1 comme <code>U00 A destination de la communauté universitaire</code> et la note statistique 2 comme <code>FC0 : Odontologie</code>, puis enregistrera les modifications.</p>
+<p>Le code (version du 30/03/2022) :</p>
+<pre><code language="language-javascript">javascript: (() =&gt; {
+  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1")[0].value = "U00";
+  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_2")[0].value = "FC0";
+  document.getElementById("PAGE_BUTTONS_cbuttonsave").click()
+})();</code></pre>
+<h1 id="idref">Idref</h1>
+<h2 id="passer-en-recherche-nom-de-personne">Passer en recherche nom de personne</h2>
+<p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
+Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
+Sélectionne ensuite <code>Nom de personne</code> dans le type d'autorité voulue.
+Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de recherche</code>.</p>
+<p>Le code (version du 30/03/2022) :</p>
+<pre><code language="language-javascript">javascript: (() =&gt; {
+  clearAll();
+  document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
+  var list = document.getElementsByName("ComboIndex");
+  
+  for(var ii=0; ii&lt;list.length; ii++) {
+    if(list[ii].value == "persname_t:#val#"){
+      list[ii].checked = true;
+    }
+  }
+  document.getElementById("Text1").focus();
+})();</code></pre>
+<h2 id="passer-en-recherche-experte-nom-de-famille">Passer en recherche experte nom de famille</h2>
+<p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
+Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
+Sélectionne ensuite <code>Expert</code> dans le type d'autorité voulue.
+Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Termes de recherche</code> en préremplissant le champ avec <code>nom_t:</code>.</p>
+<p>Le code (version du 30/03/2022) :</p>
+<pre><code language="language-javascript">javascript: (() =&gt; {
+  clearAll();
+  document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
+  document.getElementById("Text1").value = "nom_t:";
+  
+  var list = document.getElementsByName("ComboIndex");
+  for(var ii=0; ii&lt;list.length; ii++) {
+    if(list[ii].value == "#val#"){
+      list[ii].checked = true;
+    }
+  }
+  document.getElementById("Text1").focus();
+})();</code></pre>
+<h2 id="passer-en-recherche-experte-nom-de-famille-et-prenom">Passer en recherche experte nom de famille et prénom</h2>
+<p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
+Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
+Sélectionne ensuite <code>Expert</code> dans le type d'autorité voulue.
+Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Termes de recherche</code> en préremplissant le champ avec <code>nom_t: AND prenom_t:</code>.</p>
+<p>Le code (version du 30/03/2022) :</p>
+<pre><code language="language-javascript">javascript: (() =&gt; {
+  clearAll();
+  document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
+  var list = document.getElementsByName("ComboIndex");
+  document.getElementById("Text1").value = "nom_t: AND prenom_t:";
+  
+  for(var ii=0; ii&lt;list.length; ii++) {
+    if(list[ii].value == "#val#"){
+      list[ii].checked = true;
+    }
+  }
+  document.getElementById("Text1").focus();
+})();</code></pre></div>
+</div>
+<div id="divLiens">
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
+</html>
