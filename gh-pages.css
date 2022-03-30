@@ -122,8 +122,9 @@ code {
 
 .highlight-marc .subCode {
 	font-family: inherit;
+	font-size: inherit;
 	font-weight: bold;
-	color: #F8FF66
+	color: #F8FF66;
 }
 
 img {
