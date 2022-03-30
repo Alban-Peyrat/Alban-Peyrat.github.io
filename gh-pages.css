@@ -120,6 +120,12 @@ code {
 	border-radius: 3px;
 }
 
+.highlight-marc .subCode {
+	font-family: inherit;
+	font-weight: bold;
+	color: #F8FF66
+}
+
 img {
 	max-width: 800px;	
 }
