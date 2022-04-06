@@ -6,7 +6,9 @@
 <meta charset="utf-8"/>
 <link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
 <link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
-</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script></head>
 <body>
 <header>
 <a href="https://alban-peyrat.github.io">
@@ -95,7 +97,7 @@ En effet, ces champs-là nécessitent d'être modifiés manuellement :</p>
 <li><code>_VER_</code> pour un champ à vérifier (la 200).</li>
 </ul>
 <p>Tous les champs ne sont pas bloqués de cette manière.
-En effet, la 541 serait à vérifier, le <code>$z</code> étant pour le moment fixe.
+En effet, la 541 serait à vérifier, le <code class="highlight-marc"><span class="subCode">$z</span></code> étant pour le moment fixe.
 Toutefois, la majorité des seconds titres étant anglais, je pars du principe que l'information sera généralement vraie.
 De même, pour les 7XX, je ne les bloque pas car l'association de notices auteur est une étape qui, à mon avis, n'est pas oubliée des collègues.</p>
 <h1 id="generateur-de-notice-bibliographique-version-js">Générateur de notice bibliographique (version JS)</h1>
@@ -112,35 +114,35 @@ Toutefois, ce procédé restera pour moi la manière privilégiée de travailler
 Il ne prend en compte les 8 derniers caractères (espaces exclus) de ce qui est lui est entré dans le champ de saisie (ce qui supposément correspond à l'identifiant DUMAS <code>docId</code>).
 Voilà les champs créés par le générateur :</p>
 <ul>
-<li>008 : <code>008 $aOax3</code></li>
-<li>029 : <code>029 MOD ##$aFR$b</code> + l'année + <code>BORD</code> + <code>M</code>, <code>3</code>, <code>P</code> ou <code>O</code> selon le type de mémoire et la spécialité + <code>XXX</code> à modifier manuellement en le numéro de la thèse</li>
-<li>100 : <code>100 0#$a</code> + l'année</li>
-<li>101 : <code>101 0#$a</code>, <code>$c</code>, <code>$d</code>, <code>$g</code> avec la langue du document</li>
-<li>102 : <code>102 ##$aFR</code></li>
-<li>104 : <code>104 ##$ak$by$cy$dba$e0$ffre</code></li>
-<li>105 : <code>105 ##$ay$bm$ba$c0$d0$e0$fy$gy</code></li>
-<li>135 : <code>135 ##$ad$br</code></li>
-<li>181 : <code>181 ##$P01$ctxt</code></li>
-<li>182 : <code>182 ##$P01$cc</code></li>
-<li>183 : <code>183 ##$P01$aceb</code></li>
-<li>200 : <code>200 VER 1#$a</code> + le 1er titre renvoyé avec les <code>:</code> (espaces avant et après, espaces parès) remplacés en <code>$e</code> et le <code>@</code> placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + <code>$f</code> + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + <code>$gsous la direction de</code> + le premier directeur de thèse renvoyé</li>
-<li>214 : <code>214 #1$a</code> + l'année</li>
-<li>230 : <code>230 ##$aDonnées textuelles</code></li>
-<li>303 : <code>303 ##$aL'impression du document génère</code> + le nombre de page entouré d'espace + <code>f.</code></li>
-<li>304 : <code>304 ##$aTitre provenant de l'écran-titre</code></li>
-<li>310 : <code>310 MOD ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE</code> à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)</li>
-<li>320 : <code>320 MOD ##$aBibliogr. XX réf. Annexes</code> à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas</li>
-<li>328 : <code>328 #0$bThèse d'exercice$c</code> + domaine + spécialité si indiquée + <code>$eBordeaux$d</code> + l'année</li>
-<li>330 : <code>330 ##$a</code> + résumé (pour chaque résumé entré)</li>
-<li>337 : <code>337 ##$aConfiguration requise : un logiciel capable de lire un fichier au format : application/pdf</code></li>
-<li>541 : <code>541 ##$a</code> + le 2e titre renvoyé (même changements que celui en 200) + <code>$zeng</code></li>
-<li>610 : <code>610 DEL 0#$a</code> + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606</li>
-<li>608 : <code>608 ##$3027253139$2rameau</code></li>
-<li>700 : <code>700 #1$a</code> + nom de l'auteur + <code>$b</code> + prénom de l'auteur + <code>$4070</code> (pour chaque auteur renvoyé).
+<li>008 : <code class="highlight-marc">008 <span class="subCode">$a</span>Oax3</code></li>
+<li>029 : <code class="highlight-marc">029 MOD ##<span class="subCode">$a</span>FR<span class="subCode">$b</span></code> + l'année + <code>BORD</code> + <code>M</code>, <code>3</code>, <code>P</code> ou <code>O</code> selon le type de mémoire et la spécialité + <code>XXX</code> à modifier manuellement en le numéro de la thèse</li>
+<li>100 : <code class="highlight-marc">100 0#<span class="subCode">$a</span></code> + l'année</li>
+<li>101 : <code class="highlight-marc">101 0#<span class="subCode">$a</span></code>, <code class="highlight-marc"><span class="subCode">$c</span></code>, <code class="highlight-marc"><span class="subCode">$d</span></code>, <code class="highlight-marc"><span class="subCode">$g</span></code> avec la langue du document</li>
+<li>102 : <code class="highlight-marc">102 ##<span class="subCode">$a</span>FR</code></li>
+<li>104 : <code class="highlight-marc">104 ##<span class="subCode">$a</span>k<span class="subCode">$b</span>y<span class="subCode">$c</span>y<span class="subCode">$d</span>ba<span class="subCode">$e</span>0<span class="subCode">$f</span>fre</code></li>
+<li>105 : <code class="highlight-marc">105 ##<span class="subCode">$a</span>y<span class="subCode">$b</span>m<span class="subCode">$b</span>a<span class="subCode">$c</span>0<span class="subCode">$d</span>0<span class="subCode">$e</span>0<span class="subCode">$f</span>y<span class="subCode">$g</span>y</code></li>
+<li>135 : <code class="highlight-marc">135 ##<span class="subCode">$a</span>d<span class="subCode">$b</span>r</code></li>
+<li>181 : <code class="highlight-marc">181 ##<span class="subCode">$P</span>01<span class="subCode">$c</span>txt</code></li>
+<li>182 : <code class="highlight-marc">182 ##<span class="subCode">$P</span>01<span class="subCode">$c</span>c</code></li>
+<li>183 : <code class="highlight-marc">183 ##<span class="subCode">$P</span>01<span class="subCode">$a</span>ceb</code></li>
+<li>200 : <code class="highlight-marc">200 VER 1#<span class="subCode">$a</span></code> + le 1er titre renvoyé avec les <code>:</code> (espaces avant et après, espaces parès) remplacés en <code class="highlight-marc"><span class="subCode">$e</span></code> et le <code>@</code> placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + <code class="highlight-marc"><span class="subCode">$f</span></code> + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + <code class="highlight-marc"><span class="subCode">$g</span>sous la direction de</code> + le premier directeur de thèse renvoyé</li>
+<li>214 : <code class="highlight-marc">214 #1<span class="subCode">$a</span></code> + l'année</li>
+<li>230 : <code class="highlight-marc">230 ##<span class="subCode">$a</span>Données textuelles</code></li>
+<li>303 : <code class="highlight-marc">303 ##<span class="subCode">$a</span>L'impression du document génère</code> + le nombre de page entouré d'espace + <code>f.</code></li>
+<li>304 : <code class="highlight-marc">304 ##<span class="subCode">$a</span>Titre provenant de l'écran-titre</code></li>
+<li>310 : <code class="highlight-marc">310 MOD ##<span class="subCode">$a</span>Thèse sous embargo jusqu'au JOUR/MOIS/ANNÉE</code> à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)</li>
+<li>320 : <code class="highlight-marc">320 MOD ##<span class="subCode">$a</span>Bibliogr. XX réf. Annexes</code> à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas</li>
+<li>328 : <code class="highlight-marc">328 #0<span class="subCode">$b</span>Thèse d'exercice<span class="subCode">$c</span></code> + domaine + spécialité si indiquée + <code class="highlight-marc"><span class="subCode">$e</span>Bordeaux<span class="subCode">$d</span></code> + l'année</li>
+<li>330 : <code class="highlight-marc">330 ##<span class="subCode">$a</span></code> + résumé (pour chaque résumé entré)</li>
+<li>337 : <code class="highlight-marc">337 ##<span class="subCode">$a</span>Configuration requise : un logiciel capable de lire un fichier au format : application/pdf</code></li>
+<li>541 : <code class="highlight-marc">541 ##<span class="subCode">$a</span></code> + le 2e titre renvoyé (même changements que celui en 200) + <code class="highlight-marc"><span class="subCode">$z</span>eng</code></li>
+<li>610 : <code class="highlight-marc">610 DEL 0#<span class="subCode">$a</span></code> + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606</li>
+<li>608 : <code class="highlight-marc">608 ##<span class="subCode">$3</span>027253139<span class="subCode">$2</span>rameau</code></li>
+<li>700 : <code class="highlight-marc">700 #1<span class="subCode">$a</span></code> + nom de l'auteur + <code class="highlight-marc"><span class="subCode">$b</span></code> + prénom de l'auteur + <code class="highlight-marc"><span class="subCode">$4</span>070</code> (pour chaque auteur renvoyé).
 Attention, écrit une <strong>700</strong> même s'il y a plusieurs auteurs</li>
-<li>701 : <code>701 #1$a</code> + nom complet du directeur de thèse renvoyé + <code>$4727</code> (pour chaque directeur de thèse renvoyé)</li>
-<li>711 : <code>711 02$3175206562$4295</code></li>
-<li>856 : <code>856 4#$qPDF$u</code> + l'URI du document renvoyé + <code>$2Accès au texte intégral</code></li>
+<li>701 : <code class="highlight-marc">701 #1<span class="subCode">$a</span></code> + nom complet du directeur de thèse renvoyé + <code class="highlight-marc"><span class="subCode">$4</span>727</code> (pour chaque directeur de thèse renvoyé)</li>
+<li>711 : <code class="highlight-marc">711 02<span class="subCode">$3</span>175206562<span class="subCode">$4</span>295</code></li>
+<li>856 : <code class="highlight-marc">856 4#<span class="subCode">$q</span>PDF<span class="subCode">$u</span></code> + l'URI du document renvoyé + <code class="highlight-marc"><span class="subCode">$2</span>Accès au texte intégral</code></li>
 </ul>
 <h1 id="importer-ces-donnees-dans-winibw">Importer ces données dans WinIBW</h1>
 <p><strong>À l'heure actuelle, il est nécessaire d'utiliser son navigateur puis de copier la notice en cliquant dessus et la coller dans WinIBW.</strong>
@@ -155,8 +157,8 @@ En effet, à l'aide <a href="https://github.com/abes-esr/winibw-scripts/blob/mas
 </ul>
 <h1 id="code-du-script-winibw">Code du script WinIBW</h1>
 <p><strong>Le code ne fonctionne pas sur Internet Explorer pour le moment, il est donc impossible de directement importer la notice dans WinIBW.</strong>
-Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :
-<code>sub delEspaceB4Tag()
+Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :</p>
+<pre><code language="language-vbscript">sub delEspaceB4Tag()
   dim notice
   application.activeWindow.title.selectAll
   notice = application.activeWindow.title.selection
@@ -164,17 +166,17 @@ Il est fortement recommandé d'utiliser ce court script après avoir collé la n
     notice = replace(notice, chr(10) &amp; " ", chr(10))
   Wend
   application.activeWindow.title.insertText notice
-End Sub</code></p>
+End Sub</code></pre>
 <p><em>Version du 25/11/2021, non définitive</em></p>
-<p>```
-Sub these_catDumas()
+<pre><code language="language-vbscript">Sub these_catDumas()
 dim docId
   docId = application.activeWindow.clipboard
   docId = replace(docId, chr(13), "")
   docId = replace(docId, chr(10), "")
   docId = replace(docId, " ", "")
-  docId = Right(docId, 8)</p>
-<p>'Source : script IdRef de l'Abes
+  docId = Right(docId, 8)
+  
+'Source : script IdRef de l'Abes
   set IE = nothing
     set shapp=createobject("shell.application")
      Dim InputTexte
@@ -190,40 +192,44 @@ dim docId
               end if
         end if
     err.clear
-    Next</p>
-<pre><code>on error goto 0
-if IE is nothing then
-    'MsgBox  "Window Not Open"
-     Set IE = CreateObject("InternetExplorer.Application")
-end if
+    Next
 
-'IE.Navigate2 "https://api.archives-ouvertes.fr/search/dumas/?q=docid:01911186&amp;wt=xml&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
-</code></pre>
-<p>IE.Navigate2 "https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html"  <br/>
-  Do While IE.readystate &lt;&gt; 4<br/>
-    Loop<br/>
-    Set IEDoc = IE.document</p>
-<pre><code>'Set inputURL = IEDoc.getElementById("inputURL")
-'inputURL = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&amp;wt=json&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
-'inputURL = "https://dumas.ccsd.cnrs.fr/dumas-01911186"
+    on error goto 0
+    if IE is nothing then
+        'MsgBox  "Window Not Open"
+         Set IE = CreateObject("InternetExplorer.Application")
+    end if
 
-Call IEDoc.parentWindow.execScript("main('"&amp;docId&amp;"')","JavaScript")
-</code></pre>
-<p>'Permet de stopper le script WinIBW pour laisser le temps au générateur
-  ress_sleep 1</p>
-<pre><code>Set notice = IEDoc.getElementById("notice")
-</code></pre>
-<p>'Fin de l'abes</p>
-<p>application.activeWindow.Command "cre"
-  'Faire de la détection de ;<em>;ERREUR;</em>; + de si la notice est vide dire de réessayer puis si plusierus échec de passer par le site
-  application.activeWindow.Title.InsertText notice.innerText</p>
-<p>'L'abes encore parce que c'est quand même bien mieux de fermer Internet Explorer
+    'IE.Navigate2 "https://api.archives-ouvertes.fr/search/dumas/?q=docid:01911186&amp;wt=xml&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"    
+  IE.Navigate2 "https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html"    
+  Do While IE.readystate &lt;&gt; 4  
+    Loop  
+    Set IEDoc = IE.document
+    
+    'Set inputURL = IEDoc.getElementById("inputURL")
+    'inputURL = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&amp;wt=json&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
+    'inputURL = "https://dumas.ccsd.cnrs.fr/dumas-01911186"
+
+    Call IEDoc.parentWindow.execScript("main('"&amp;docId&amp;"')","JavaScript")
+
+'Permet de stopper le script WinIBW pour laisser le temps au générateur
+  ress_sleep 1
+
+    Set notice = IEDoc.getElementById("notice")
+'Fin de l'abes
+  
+  application.activeWindow.Command "cre"
+  'Faire de la détection de ;_;ERREUR;_; + de si la notice est vide dire de réessayer puis si plusierus échec de passer par le site
+  application.activeWindow.Title.InsertText notice.innerText
+  
+
+'L'abes encore parce que c'est quand même bien mieux de fermer Internet Explorer
 'Sauf qu'en fait ça augmente le nombre de renvois vide ahahahahah
 'Sauf si je sleep le script WinIBW pour laisser le temps à mon générateur ?
   IE.Quit
-  Set IE = Nothing</p>
-<p>End Sub
-```</p>
+  Set IE = Nothing
+
+End Sub</code></pre>
 <h1 id="suite-du-projet">Suite du projet</h1>
 <h2 id="fonctionnalites-prevues-si-le-developpement-se-poursuit">Fonctionnalités prévues (si le développement se poursuit)</h2>
 <ul>
@@ -231,7 +237,7 @@ Call IEDoc.parentWindow.execScript("main('"&amp;docId&amp;"')","JavaScript")
 <li>gestion des langues :<ul>
 <li>déterminer une langue principale, qui sera la langue du document indiquée en métadonnées ;</li>
 <li>à partir de la langue principale, si le résumé ou le titre contient deux entrées, déterminer la langue secondaire en considérant que une des deux langues est forcément le français et que si la langue principale est le français alors la seconde langue sera l'anglais ;</li>
-<li>ensuite la langue sera ajoutée en <code>101 $d</code> et <code>541 $z</code> en fonction de la présence ou non d'un second résumé ou second titre.</li>
+<li>ensuite la langue sera ajoutée en <code class="highlight-marc">101 <span class="subCode">$d</span></code> et <code class="highlight-marc">541 <span class="subCode">$z</span></code> en fonction de la présence ou non d'un second résumé ou second titre.</li>
 </ul>
 </li>
 <li>générer la 310 uniquement si <code>openAccess_bool</code> renvoie <code>false</code> ;</li>
@@ -281,8 +287,9 @@ Pour compléter les libellés, créer un fichier grâce à <a href="http://docum
 Dans ce même fichier, indiquer le code court de l'université grâce <a href="http://documentation.abes.fr/sudoc/regles/CodesUnivEtab.htm">à la table des codes des universités et des établissements</a>.
 Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer le code final s'il existe une manière de faire, sinon Bordeaux restera le seul à générer ce code ;</li>
 <li><a href="https://query.wikidata.org/querybuilder/?uselang=fr">Assistant de requêtes Wikidata</a> ;</li>
-<li>requête pour récupérer l'identifiant Wikidata de l'Université de Bordeaux :
-<code>SELECT DISTINCT ?item ?itemLabel WHERE {
+<li>requête pour récupérer l'identifiant Wikidata de l'Université de Bordeaux :</li>
+</ul>
+<pre><code language="language-sparql">SELECT DISTINCT ?item ?itemLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
   {
     SELECT DISTINCT ?item WHERE {
@@ -291,7 +298,8 @@ Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer l
     }
     LIMIT 100
   }
-}</code></li>
+}</code></pre>
+<ul>
 <li>URI Wikidata associée à l'Université de Bordeaux (en JSON) : <code>https://www.wikidata.org/wiki/Special:EntityData/Q13344.json</code>.
 Accès au PPN IdRef à partir de là : <code>entities.Q13344.claims.P269[0].mainsnak.datavalue.value</code></li>
 <li>Chercher s'il existe des autorités pour la personne Jean-Claude Moissinac : <code>https://www.idref.fr/Sru/Solr?q=nom_s:moissinac%20AND%20prenom_s:jean-claude%20AND%20recordtype_z:a&amp;wt=json&amp;fl=ppn_z,nom_s,prenom_s,affcourt_z</code> ;</li>
@@ -328,10 +336,9 @@ Peut être causée par une mauvais entrée des données dans DUMAS ou une rééc
 <li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
 <li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
 <li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+<li><a href="https://alban-peyrat.github.io/special-pages/control-tools.html">Outils de contrôle du signalement et des collections</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/bookmarklet">Bookmarklets pour Alma et IdRef</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ub-svs">Page de la BU SVS (Université de Bordeaux)</a></li>
 </ul>
 </div>
 </body>

@@ -27,14 +27,17 @@
 <div class="toc">
 <ol type="I">
 <li><a href="#alma">Alma</a><ol type="A">
-<li><a href="#ajouter-les-codes-statistiques-pour-la-medecine-ub">Ajouter les codes statistiques pour la médecine (UB)</a></li>
-<li><a href="#ajouter-les-codes-statistiques-pour-lodontologie-ub">Ajouter les codes statistiques pour l'odontologie (UB)</a></li>
+<li><a href="#ajouter-les-codes-statistiques-ub">Ajouter les codes statistiques (UB)</a><ol type="1">
+<li><a href="#listes-des-codes-statistiques-busvs">Listes des codes statistiques (BUSVS)</a></li>
+</ol>
+</li>
 </ol>
 </li>
 <li><a href="#idref">Idref</a><ol type="A">
 <li><a href="#passer-en-recherche-nom-de-personne">Passer en recherche nom de personne</a></li>
 <li><a href="#passer-en-recherche-experte-nom-de-famille">Passer en recherche experte nom de famille</a></li>
 <li><a href="#passer-en-recherche-experte-nom-de-famille-et-prenom">Passer en recherche experte nom de famille et prénom</a></li>
+<li><a href="#passer-en-recherche-nom-commun-rameau">Passer en recherche nom commun RAMEAU</a></li>
 </ol>
 </li>
 </ol>
@@ -48,27 +51,58 @@
 <p><em>Les codes sur cette page ne sont qu'un copier-coller du <a href="https://github.com/Alban-Peyrat/bookmarklet/blob/main/bookmarklets.js">fichier originel</a> à un instant T.
 Ce fichier reste la source principale pour consulter la dernière version d'un script.</em></p>
 <h1 id="alma">Alma</h1>
-<h2 id="ajouter-les-codes-statistiques-pour-la-medecine-ub">Ajouter les codes statistiques pour la médecine (UB)</h2>
+<h2 id="ajouter-les-codes-statistiques-ub">Ajouter les codes statistiques (UB)</h2>
 <p><em>Exclusif à l'Université de Bordeaux (ou en tout cas, développé exclusivement pour elle).</em></p>
-<p>Vous devez vous rendre dans un premier temps sur l'onglet <code>Notes</code> de la page de votre exemplaire.
-Le script renseignera la note statistique 1 comme <code>U00 A destination de la communauté universitaire</code> et la note statistique 2 comme <code>FAB : Médecine et spécialités</code>, puis enregistrera les modifications.</p>
-<p>Le code (version du 30/03/2022) :</p>
-<pre><code language="language-javascript">javascript: (() =&gt; {
-  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1")[0].value = "U00";
-  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_2")[0].value = "FAB";
-  document.getElementById("PAGE_BUTTONS_cbuttonsave").click()
+<p>Vous devez vous rendre sur votre exemplaire.
+Le script renseignera la note statistique 1 et la note statistique 2 puis enregistrera les modifications.</p>
+<p>Afin de choisir les notes, modifiez la valeur de <code>noteStat1</code> et / ou <code>noteStat2</code> en associant le code de 3 caractères se situant au début du code voulu (exemple : <code>U00</code> pour <code>A destination de la communauté universitaire</code>).
+Si une alerte vous signalant que les codes statistiques n'ont pas pu être appliqués apparaît souvent, vous pouvez augmenter la valeur de <code>temps</code>.
+Cette variable s'exprime en millisecondes (1 seconde est sa valeur par défaut donc).
+Elle est utilisée si vous exécutez le script depuis une page autre que la page <code>Notes</code> d'une notice d'exemplaire et sert à attendre qu'Alma charge correctement la page voulue.
+Si le problème a toujours lieu, le fonctionnement d'Alma a peut-être changé et je vous invite à revenir vers moi.</p>
+<p>Pour les collègues de la BUSVS, vous trouverez <a href="#listes-des-codes-statistiques-busvs">sous le code une liste des codes statistiques pouvant vous intéresser</a>.</p>
+<p>Le code (version du 06/04/2022) :</p>
+<pre><code language="language-javascript">javascript:(function(){
+  /* La valeur des codes stats correspond aux 3 premiers caractères de la note */
+  let noteStat1 = "U00";
+  let noteStat2 = "FAB";
+  let temps = 1000; /* in milliseconds */
+  
+  function addCodesStats(hasWaited){
+    if ((hasWaited) &amp;&amp; (document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1").length == 0)){
+        alert("Les codes statistiques n'ont pas pu être appliqués car la page n'a pas totalement chargée.\nRelancez le script sur la page \"Notes\" de l'exemplaire ou attribuez les notes manuellement.");
+    }else {
+        document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1")[0].value = noteStat1;
+        document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_2")[0].value = noteStat2;
+        document.getElementById("PAGE_BUTTONS_cbuttonsave").click(); /* this saves and quits */
+    }
+  }
+
+  try { /* Checks if this is the notes page */
+    addCodesStats(false);
+  } catch (e) { /* If it's not, goes on it and waits for the previously set time */
+    document.getElementById("cresource_editornotes").click();
+    let timeout = window.setTimeout(addCodesStats, temps, true);
+  }
 })();</code></pre>
-<h2 id="ajouter-les-codes-statistiques-pour-lodontologie-ub">Ajouter les codes statistiques pour l'odontologie (UB)</h2>
-<p><em>Exclusif à l'Université de Bordeaux (ou en tout cas, développé exclusivement pour elle).</em></p>
-<p>Vous devez vous rendre dans un premier temps sur l'onglet <code>Notes</code> de la page de votre exemplaire.
-Le script renseignera la note statistique 1 comme <code>U00 A destination de la communauté universitaire</code> et la note statistique 2 comme <code>FC0 : Odontologie</code>, puis enregistrera les modifications.</p>
-<p>Le code (version du 30/03/2022) :</p>
-<pre><code language="language-javascript">javascript: (() =&gt; {
-  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1")[0].value = "U00";
-  document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_2")[0].value = "FC0";
-  document.getElementById("PAGE_BUTTONS_cbuttonsave").click()
-})();</code></pre>
+<h3 id="listes-des-codes-statistiques-busvs">Listes des codes statistiques (BUSVS)</h3>
+<p>Ci-dessous, la liste des codes statistiques susceptibles de vous intéresser :</p>
+<ul>
+<li>Note statistique 1 :<ul>
+<li><code>U00</code> : A destination de la communauté universitaire ;</li>
+<li><code>UEM</code> : A usage de formation - manuel ;</li>
+</ul>
+</li>
+<li>Note statistique 2 :<ul>
+<li><code>FA0</code> : Médecine ;</li>
+<li><code>FAB</code> : Médecine et spécialités ;</li>
+<li><code>FB0</code> : Pharmacie ;</li>
+<li><code>FC0</code> : Odontologie ;</li>
+</ul>
+</li>
+</ul>
 <h1 id="idref">Idref</h1>
+<p>Attention, ces scripts ne modifient pas la partie <code>Filtres</code> de l'interface, si vous souhaitez les utiliser, employez la procédure normale.</p>
 <h2 id="passer-en-recherche-nom-de-personne">Passer en recherche nom de personne</h2>
 <p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
@@ -124,6 +158,25 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
     }
   }
   document.getElementById("Text1").focus();
+})();</code></pre>
+<h2 id="passer-en-recherche-nom-commun-rameau">Passer en recherche nom commun RAMEAU</h2>
+<p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
+Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
+Sélectionne ensuite <code>Nom commun</code> dans le type d'autorité voulue, puis le filtre <code>RAMEAU</code> dans <code>Type de notice</code>.
+Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de recherche</code>.</p>
+<p>Le code (version du 06/04/2022) :</p>
+<pre><code language="language-javascript">javascript: (() =&gt; {
+  clearAll();
+  document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
+  var list = document.getElementsByName("ComboIndex");
+  
+  for(var ii=0; ii&lt;list.length; ii++) {
+    if(list[ii].value == "subjectheading_t:#val#"){
+      list[ii].checked = true;
+    }
+  }
+  document.getElementById("recordtype_z_Rameau").checked = true;
+  document.getElementById("Text1").focus();
 })();</code></pre></div>
 </div>
 <div id="divLiens">
@@ -133,10 +186,9 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
 <li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
 <li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
 <li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/CoCo-SAlma">CoCo-SAlma</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/ConStance">ConStance</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/ConAn">ConAn</a></li>
-<li><a href="https://alban-peyrat.github.io/outils/CorWin">CorWin</a></li>
+<li><a href="https://alban-peyrat.github.io/special-pages/control-tools.html">Outils de contrôle du signalement et des collections</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/bookmarklet">Bookmarklets pour Alma et IdRef</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ub-svs">Page de la BU SVS (Université de Bordeaux)</a></li>
 </ul>
 </div>
 </body>
