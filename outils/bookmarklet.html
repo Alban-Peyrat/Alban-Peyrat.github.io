@@ -104,13 +104,12 @@ Si le problème a toujours lieu, le fonctionnement d'Alma a peut-être changé e
 </li>
 </ul>
 <h1 id="idref">Idref</h1>
-<p>Attention, ces scripts ne modifient pas la partie <code>Filtres</code> de l'interface, si vous souhaitez les utiliser, employez la procédure normale.</p>
 <h2 id="passer-en-recherche-nom-de-personne">Passer en recherche nom de personne</h2>
 <p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Nom de personne</code> dans le type d'autorité voulue.
 Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de recherche</code>.</p>
-<p>Le code (version du 30/03/2022) :</p>
+<p>Le code (version du 07/04/2022) :</p>
 <pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
@@ -118,7 +117,7 @@ Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de rech
 
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "persname_t:#val#"){
-      list[ii].checked = true;
+      list[ii].click();
     }
   }
   document.getElementById("Text1").focus();
@@ -129,7 +128,7 @@ Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de rech
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Expert</code> dans le type d'autorité voulue.
 Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Termes de recherche</code> en préremplissant le champ avec <code>nom_t:</code>.</p>
-<p>Le code (version du 30/03/2022) :</p>
+<p>Le code (version du 07/04/2022) :</p>
 <pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
@@ -138,7 +137,7 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
   var list = document.getElementsByName("ComboIndex");
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "#val#"){
-      list[ii].checked = true;
+      list[ii].click();
     }
   }
   document.getElementById("Text1").focus();
@@ -149,7 +148,7 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Expert</code> dans le type d'autorité voulue.
 Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Termes de recherche</code> en préremplissant le champ avec <code>nom_t: AND prenom_t:</code>.</p>
-<p>Le code (version du 30/03/2022) :</p>
+<p>Le code (version du 07/04/2022) :</p>
 <pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
@@ -158,7 +157,7 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
 
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "#val#"){
-      list[ii].checked = true;
+      list[ii].click();
     }
   }
   document.getElementById("Text1").focus();
@@ -169,7 +168,7 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Nom commun</code> dans le type d'autorité voulue, puis le filtre <code>RAMEAU</code> dans <code>Type de notice</code>.
 Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de recherche</code>.</p>
-<p>Le code (version du 06/04/2022) :</p>
+<p>Le code (version du 07/04/2022) :</p>
 <pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
@@ -177,7 +176,7 @@ Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de rech
 
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "subjectheading_t:#val#"){
-      list[ii].checked = true;
+      list[ii].click();
     }
   }
   document.getElementById("recordtype_z_Rameau").checked = true;
