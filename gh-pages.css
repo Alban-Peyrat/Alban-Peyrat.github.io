@@ -128,6 +128,21 @@ code {
 	color: #F8FF66;
 }
 
+.highlight-marc .tag {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: bold;
+	color: #9FDEFF;
+}
+
+.highlight-marc .inds {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: bold;
+	color: #b6b18b;
+}
+
+
 img {
 	max-width: 800px;	
 }
