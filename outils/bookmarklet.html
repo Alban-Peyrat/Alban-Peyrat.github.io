@@ -8,6 +8,7 @@
 <link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
 <script>hljs.highlightAll();</script></head>
 <body>
 <header>
@@ -62,12 +63,12 @@ Elle est utilisée si vous exécutez le script depuis une page autre que la page
 Si le problème a toujours lieu, le fonctionnement d'Alma a peut-être changé et je vous invite à revenir vers moi.</p>
 <p>Pour les collègues de la BUSVS, vous trouverez <a href="#listes-des-codes-statistiques-busvs">sous le code une liste des codes statistiques pouvant vous intéresser</a>.</p>
 <p>Le code (version du 06/04/2022) :</p>
-<pre><code language="language-javascript">javascript:(function(){
+<pre><code class="language-Javascript">javascript:(function(){
   /* La valeur des codes stats correspond aux 3 premiers caractères de la note */
   let noteStat1 = "U00";
   let noteStat2 = "FAB";
   let temps = 1000; /* in milliseconds */
-  
+
   function addCodesStats(hasWaited){
     if ((hasWaited) &amp;&amp; (document.getElementsByName("pageBean.itemMd.dnx.physicalItemTable.statisticsNote_1").length == 0)){
         alert("Les codes statistiques n'ont pas pu être appliqués car la page n'a pas totalement chargée.\nRelancez le script sur la page \"Notes\" de l'exemplaire ou attribuez les notes manuellement.");
@@ -84,7 +85,8 @@ Si le problème a toujours lieu, le fonctionnement d'Alma a peut-être changé e
     document.getElementById("cresource_editornotes").click();
     let timeout = window.setTimeout(addCodesStats, temps, true);
   }
-})();</code></pre>
+})();
+</code></pre>
 <h3 id="listes-des-codes-statistiques-busvs">Listes des codes statistiques (BUSVS)</h3>
 <p>Ci-dessous, la liste des codes statistiques susceptibles de vous intéresser :</p>
 <ul>
@@ -109,29 +111,30 @@ Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> 
 Sélectionne ensuite <code>Nom de personne</code> dans le type d'autorité voulue.
 Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de recherche</code>.</p>
 <p>Le code (version du 30/03/2022) :</p>
-<pre><code language="language-javascript">javascript: (() =&gt; {
+<pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
   var list = document.getElementsByName("ComboIndex");
-  
+
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "persname_t:#val#"){
       list[ii].checked = true;
     }
   }
   document.getElementById("Text1").focus();
-})();</code></pre>
+})();
+</code></pre>
 <h2 id="passer-en-recherche-experte-nom-de-famille">Passer en recherche experte nom de famille</h2>
 <p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Expert</code> dans le type d'autorité voulue.
 Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Termes de recherche</code> en préremplissant le champ avec <code>nom_t:</code>.</p>
 <p>Le code (version du 30/03/2022) :</p>
-<pre><code language="language-javascript">javascript: (() =&gt; {
+<pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
   document.getElementById("Text1").value = "nom_t:";
-  
+
   var list = document.getElementsByName("ComboIndex");
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "#val#"){
@@ -139,37 +142,39 @@ Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Terme
     }
   }
   document.getElementById("Text1").focus();
-})();</code></pre>
+})();
+</code></pre>
 <h2 id="passer-en-recherche-experte-nom-de-famille-et-prenom">Passer en recherche experte nom de famille et prénom</h2>
 <p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Expert</code> dans le type d'autorité voulue.
 Enfin, passe le focus à la fin de la zone de saisie dans la section <code>Termes de recherche</code> en préremplissant le champ avec <code>nom_t: AND prenom_t:</code>.</p>
 <p>Le code (version du 30/03/2022) :</p>
-<pre><code language="language-javascript">javascript: (() =&gt; {
+<pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
   var list = document.getElementsByName("ComboIndex");
   document.getElementById("Text1").value = "nom_t: AND prenom_t:";
-  
+
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "#val#"){
       list[ii].checked = true;
     }
   }
   document.getElementById("Text1").focus();
-})();</code></pre>
+})();
+</code></pre>
 <h2 id="passer-en-recherche-nom-commun-rameau">Passer en recherche nom commun RAMEAU</h2>
 <p>Fonctionne sur n'importe quelle page d'IdRef tant que l'URL est <code>https://www.idref.fr/autorites.jsp</code>.
 Commence une nouvelle recherche en exécutant le script <code>clearAll()</code> (ce que fait le bouton <code>Nouvelle recherche</code>), puis définit le tri par <code>De A à Z</code>.
 Sélectionne ensuite <code>Nom commun</code> dans le type d'autorité voulue, puis le filtre <code>RAMEAU</code> dans <code>Type de notice</code>.
 Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de recherche</code>.</p>
 <p>Le code (version du 06/04/2022) :</p>
-<pre><code language="language-javascript">javascript: (() =&gt; {
+<pre><code class="language-Javascript">javascript: (() =&gt; {
   clearAll();
   document.getElementById("ComboTri").value = "&amp;sort=affcourt_z asc";
   var list = document.getElementsByName("ComboIndex");
-  
+
   for(var ii=0; ii&lt;list.length; ii++) {
     if(list[ii].value == "subjectheading_t:#val#"){
       list[ii].checked = true;
@@ -177,7 +182,8 @@ Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de rech
   }
   document.getElementById("recordtype_z_Rameau").checked = true;
   document.getElementById("Text1").focus();
-})();</code></pre></div>
+})();
+</code></pre></div>
 </div>
 <div id="divLiens">
 <p>Liens vers les autres outils :</p>

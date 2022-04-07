@@ -7,9 +7,15 @@
 <link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
 <link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
-<script integrity="sha384-pA3mpJvEhf/IyTTsw12TX+ddwHnNWAKnzCciMJXDDhSTuLoG2WOwZF90suJw6hk5" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
-<script integrity="sha384-nXIAIIg2Ktcs/Bam/v2lEA31CET1vVWNgh5+yEvCiAy7UCWKP40bq8iKP7Vexks5" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
-<script>hljs.highlightAll();</script></head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
+<script>hljs.highlightAll();</script><script>window.addEventListener('load', function() {
+var fencedMarc = document.querySelectorAll(".nohighlight.highlight-marc")
+for(let ii=0;ii<fencedMarc.length;ii++){
+	fencedMarc[ii].classList.remove("nohighlight");
+  fencedMarc[ii].classList.add("hljs");
+}
+})</script></head>
 <body>
 <header>
 <a href="https://alban-peyrat.github.io">
@@ -159,7 +165,7 @@ En effet, à l'aide <a href="https://github.com/abes-esr/winibw-scripts/blob/mas
 <h1 id="code-du-script-winibw">Code du script WinIBW</h1>
 <p><strong>Le code ne fonctionne pas sur Internet Explorer pour le moment, il est donc impossible de directement importer la notice dans WinIBW.</strong>
 Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :</p>
-<pre><code language="language-vbscript">sub delEspaceB4Tag()
+<pre><code class="language-VBScript">sub delEspaceB4Tag()
   dim notice
   application.activeWindow.title.selectAll
   notice = application.activeWindow.title.selection
@@ -167,16 +173,17 @@ Il est fortement recommandé d'utiliser ce court script après avoir collé la n
     notice = replace(notice, chr(10) &amp; " ", chr(10))
   Wend
   application.activeWindow.title.insertText notice
-End Sub</code></pre>
+End Sub
+</code></pre>
 <p><em>Version du 25/11/2021, non définitive</em></p>
-<pre><code language="language-vbscript">Sub these_catDumas()
+<pre><code class="language-VBScript">Sub these_catDumas()
 dim docId
   docId = application.activeWindow.clipboard
   docId = replace(docId, chr(13), "")
   docId = replace(docId, chr(10), "")
   docId = replace(docId, " ", "")
   docId = Right(docId, 8)
-  
+
 'Source : script IdRef de l'Abes
   set IE = nothing
     set shapp=createobject("shell.application")
@@ -206,7 +213,7 @@ dim docId
   Do While IE.readystate &lt;&gt; 4  
     Loop  
     Set IEDoc = IE.document
-    
+
     'Set inputURL = IEDoc.getElementById("inputURL")
     'inputURL = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&amp;wt=json&amp;fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeSubject_s"
     'inputURL = "https://dumas.ccsd.cnrs.fr/dumas-01911186"
@@ -218,11 +225,11 @@ dim docId
 
     Set notice = IEDoc.getElementById("notice")
 'Fin de l'abes
-  
+
   application.activeWindow.Command "cre"
   'Faire de la détection de ;_;ERREUR;_; + de si la notice est vide dire de réessayer puis si plusierus échec de passer par le site
   application.activeWindow.Title.InsertText notice.innerText
-  
+
 
 'L'abes encore parce que c'est quand même bien mieux de fermer Internet Explorer
 'Sauf qu'en fait ça augmente le nombre de renvois vide ahahahahah
@@ -230,7 +237,8 @@ dim docId
   IE.Quit
   Set IE = Nothing
 
-End Sub</code></pre>
+End Sub
+</code></pre>
 <h1 id="suite-du-projet">Suite du projet</h1>
 <h2 id="fonctionnalites-prevues-si-le-developpement-se-poursuit">Fonctionnalités prévues (si le développement se poursuit)</h2>
 <ul>
@@ -275,10 +283,10 @@ Aussi, l'un des enjeux majeurs de cette étude de faisabilité sera de définir 
 <li>récupérer l'information de l'université :<ul>
 <li>ajouter <code>authStructId_i</code> à la requête, ce qui renvoie l'identifiant de la structure ;</li>
 <li>interroger une table manuellement créée pour récupérer les informations liées au NNT, à la 328 et à la 711 ;</li>
-<li>~~OU interroger <a href="https://api.archives-ouvertes.fr/docs/ref/resource/structure">l'API référentiel Structure</a> pour récupérer les informations, mais je ne suis pas sûr que cela soit la solution la plus efficace.~~
-~~Toutefois, je doute de l'utilité sachant que ni l'autorité IdRef, ni <a href="http://documentation.abes.fr/sudoc/regles/LibellesUnivEtab.htm">le libellé de l'université / l'établissement français</a>, ni les spécificités du NNT ne se trouvent dans les informations renvoyables par l'API.~~
-~~Si une tentative de lien entre référentiel aurait pu être possible pour récupérer au moins la 711, je crains que l'identifiant HAL ne soit présent ni dans IdRef, ni chez la BnF, ni dans VIAF, ni dans l'ISNI.~~
-~~Aussi je pense que l'établissement du fichier manuel est plus facile~~
+<li><del>OU interroger <a href="https://api.archives-ouvertes.fr/docs/ref/resource/structure">l'API référentiel Structure</a> pour récupérer les informations, mais je ne suis pas sûr que cela soit la solution la plus efficace.</del>
+<del>Toutefois, je doute de l'utilité sachant que ni l'autorité IdRef, ni <a href="http://documentation.abes.fr/sudoc/regles/LibellesUnivEtab.htm">le libellé de l'université / l'établissement français</a>, ni les spécificités du NNT ne se trouvent dans les informations renvoyables par l'API.</del>
+<del>Si une tentative de lien entre référentiel aurait pu être possible pour récupérer au moins la 711, je crains que l'identifiant HAL ne soit présent ni dans IdRef, ni chez la BnF, ni dans VIAF, ni dans l'ISNI.</del>
+<del>Aussi je pense que l'établissement du fichier manuel est plus facile</del>
 <em>En fait il est possible de récupérer des informations grâce à WikiData qui contient bien l'identifiant HAL et le PPN IdRef de la structure.</em>
 <em>De là, nous pouvons établir un lien avec des fichiers basés sur les tables établies dans le GM du Sudoc (voir ci-dessous), en récupérant la forme internationale via l'API IdRef ?</em></li>
 </ul>
@@ -290,7 +298,7 @@ Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer l
 <li><a href="https://query.wikidata.org/querybuilder/?uselang=fr">Assistant de requêtes Wikidata</a> ;</li>
 <li>requête pour récupérer l'identifiant Wikidata de l'Université de Bordeaux :</li>
 </ul>
-<pre><code language="language-sparql">SELECT DISTINCT ?item ?itemLabel WHERE {
+<pre><code class="language-SQL">SELECT DISTINCT ?item ?itemLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
   {
     SELECT DISTINCT ?item WHERE {
@@ -299,7 +307,8 @@ Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer l
     }
     LIMIT 100
   }
-}</code></pre>
+}
+</code></pre>
 <ul>
 <li>URI Wikidata associée à l'Université de Bordeaux (en JSON) : <code>https://www.wikidata.org/wiki/Special:EntityData/Q13344.json</code>.
 Accès au PPN IdRef à partir de là : <code>entities.Q13344.claims.P269[0].mainsnak.datavalue.value</code></li>
@@ -307,6 +316,10 @@ Accès au PPN IdRef à partir de là : <code>entities.Q13344.claims.P269[0].main
 <li>Chercher s'il existe des autorités pour le sujet Urgences en pédiatrie : <code>https://www.idref.fr/Sru/Solr?q=subjectheading_t:(urgence*%20AND%20pediatr*)%20AND%20recordtype_z:r&amp;wt=json&amp;fl=ppn_z,subjectheading_s</code> ;</li>
 </ul>
 <h1 id="liste-des-erreurs">Liste des erreurs</h1>
+<pre><code class="nohighlight highlight-marc"><span class="tag">200</span> <span class="inds">1#</span><span class="subCode">$a</span>@Test<span class="subCode">$f</span>AlP
+<span class="tag">214</span> <span class="inds">#0</span><span class="subCode">$a</span>Bordeaux<span class="subCode">$c</span>Université de Bordeaux<span class="subCode">$d</span>2022
+<span class="tag">700</span> <span class="inds">#1</span><span class="subCode">$3</span>123456789<span class="subCode">$4</span>070
+</code></pre>
 <h2 id="erreurs-visibles">Erreurs visibles</h2>
 <ul>
 <li><code>001</code> : la première propriété <code>dumas_degreeType_s</code> existante est différente de 12, 13 ou 30 qui sont les seules valeurs supposées normales.
