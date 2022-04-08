@@ -9,13 +9,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
-<script>hljs.highlightAll();</script><script>window.addEventListener('load', function() {
-var fencedMarc = document.querySelectorAll(".nohighlight.highlight-marc")
-for(let ii=0;ii<fencedMarc.length;ii++){
-	fencedMarc[ii].classList.remove("nohighlight");
-  fencedMarc[ii].classList.add("hljs");
-}
-})</script></head>
+<script>hljs.highlightAll();</script></head>
 <body>
 <header>
 <a href="https://alban-peyrat.github.io">
@@ -316,10 +310,6 @@ Accès au PPN IdRef à partir de là : <code>entities.Q13344.claims.P269[0].main
 <li>Chercher s'il existe des autorités pour le sujet Urgences en pédiatrie : <code>https://www.idref.fr/Sru/Solr?q=subjectheading_t:(urgence*%20AND%20pediatr*)%20AND%20recordtype_z:r&amp;wt=json&amp;fl=ppn_z,subjectheading_s</code> ;</li>
 </ul>
 <h1 id="liste-des-erreurs">Liste des erreurs</h1>
-<pre><code class="nohighlight highlight-marc"><span class="tag">200</span> <span class="inds">1#</span><span class="subCode">$a</span>@Test<span class="subCode">$f</span>AlP
-<span class="tag">214</span> <span class="inds">#0</span><span class="subCode">$a</span>Bordeaux<span class="subCode">$c</span>Université de Bordeaux<span class="subCode">$d</span>2022
-<span class="tag">700</span> <span class="inds">#1</span><span class="subCode">$3</span>123456789<span class="subCode">$4</span>070
-</code></pre>
 <h2 id="erreurs-visibles">Erreurs visibles</h2>
 <ul>
 <li><code>001</code> : la première propriété <code>dumas_degreeType_s</code> existante est différente de 12, 13 ou 30 qui sont les seules valeurs supposées normales.
