@@ -45,7 +45,9 @@ header {
 h1 {
 	font-size: 25px;
 	color: #9FDEFF;
-	text-indent: 6em;
+	border: solid;
+	text-align: center;
+	padding: 8px;
 }
 
 h2 {
