@@ -48,6 +48,11 @@
 <li><a href="#passer-en-recherche-nom-commun-rameau">Passer en recherche nom commun RAMEAU</a></li>
 </ol>
 </li>
+<li><a href="#wayback-machine">Wayback Machine</a><ol type="A">
+<li><a href="#rechercher-lurl-actuelle">Rechercher l'URL actuelle</a></li>
+<li><a href="#rechercher-une-url">Rechercher une URL</a></li>
+</ol>
+</li>
 </ol>
 </div></details>
 <div id="pageName">Bookmarklet</div>
@@ -239,16 +244,16 @@ Lors du clic sur la spécialité voulue, ajoute :</p>
 <ul>
 <li>le <code>Type de mémoire</code> comme <code>Thèse de pharmacie</code>,</li>
 <li>le <code>Domaine de formation</code> comme <code>Sciences de la vie et de la santé</code>,</li>
-<li>les <code>Domaines HAL</code> <code>Sciences du Vivant [q-bio]</code> et <code>Médecine humaine et pathologie</code></li>
+<li>les <code>Domaines HAL</code> <code>Sciences du Vivant [q-bio]</code> et <code>Sciences pharmaceutiques</code></li>
 <li>la <code>Spécialité</code> comme celle sélectionnée (attention, l'appellation affichée ne correspond pas forcément à l'intitulé dans DUMAS).</li>
 </ul>
-<p>Le code (version du 08/04/2022) :</p>
+<p>Le code (version du 08/04/2022 - domaines HAL corrigés) :</p>
 <pre><code class="language-Javascript">javascript:(function(){
     let typeMemoire = 13; /* dumas_degreeType */
     let domaineFormation = 48; /* dumas_degreeSubject */
     let specialite = 5; /* dumas_degreeSpeciality */
     /* All that text is unnecessary is probably */
-    let domaineHal = '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.mhep" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Médecine humaine et pathologie&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Médecine humaine et pathologie&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;'; /*  */
+    let domaineHal = '&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style="display: block" class="margin-top-5"&gt;&lt;input type="hidden" value="sdv.sp" name="domain[]"&gt;&lt;span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 0px&amp;quot;&gt;Sciences du Vivant [q-bio]&lt;/span&gt;&lt;span style=&amp;quot;display: block; text-align: left; padding-left: 15px&amp;quot;&gt;&lt;i class=&amp;quot;glyphicon glyphicon-share-alt&amp;quot; style=&amp;quot;transform: scaleY(-1);&amp;quot;&gt;&lt;/i&gt; Sciences pharmaceutiques&lt;/span&gt;"&gt;&lt;i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"&gt;&lt;/i&gt;&lt;span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;"&gt;Sciences pharmaceutiques&lt;/span&gt;&lt;button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"&gt;&lt;i class="glyphicon glyphicon-trash"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/span&gt;&lt;/li&gt;'; /*  */
 
     /* List of specialities in pharmacy */
     const listSpe = {
@@ -392,6 +397,29 @@ Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de rech
   }
   document.getElementById("recordtype_z_Rameau").checked = true;
   document.getElementById("Text1").focus();
+})();
+</code></pre>
+<h1 id="wayback-machine">Wayback Machine</h1>
+<h2 id="rechercher-lurl-actuelle">Rechercher l'URL actuelle</h2>
+<p>Recherche l'URL de la page actuelle dans la Wayback Machine.</p>
+<p>Le code (version du 28/04/2022) :</p>
+<pre><code class="language-Javascript">javascript:(function(){
+    /* Searches the current URL in the Wayabck Machine*/
+    /* Gets current URL */
+    const url = window.location.href;
+    /* Navigates to the Wayback Machine*/
+    document.location.replace("https://web.archive.org/web/*/" + url);
+})();
+</code></pre>
+<h2 id="rechercher-une-url">Rechercher une URL</h2>
+<p>Ouvre une boîte de dialoge dans laquelle l'on colle l'URL dont l'on souhaite consulter les archives, puis la recherche après validation.</p>
+<p>Le code (version du 28/04/2022) :</p>
+<pre><code class="language-Javascript">javascript:(function(){
+    /* Searches a prompted URL in the Wayabck Machine*/
+    /* Gets the wanetd URL */
+    var url = window.prompt("Collez l'URL voulue :");
+    /* Navigates to the Wayback Machine*/
+    document.location.replace("https://web.archive.org/web/*/" + url);
 })();
 </code></pre></div>
 </div>
