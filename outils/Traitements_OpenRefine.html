@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Alban Peyrat : Traitements_OpenRefine</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
+<script>hljs.highlightAll();</script></head>
+<body>
+<header>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
+</header>
+<div id="accessButtons">
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="contenu">
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<div class="toc">
+<ol type="I">
+<li><a href="#liste-des-traitements">Liste des traitements</a></li>
+<li><a href="#communs-des-traitements">Communs des traitements</a><ol type="A">
+<li><a href="#isolement-et-formatage-du-ppn-pour-le-sudoc">Isolement et formatage du PPN pour le Sudoc</a></li>
+<li><a href="#isolement-de-la-cote-depuis-un-export-titres-physiques-dalma">Isolement de la cote depuis un export Titres physiques d'Alma</a></li>
+<li><a href="#isolement-de-la-cote-du-sudoc">Isolement de la cote du Sudoc</a></li>
+<li><a href="#rappels-pour-les-requetes">Rappels pour les requêtes</a></li>
+<li><a href="#rappels-pour-retraiter-sur-excel-ensuite">Rappels pour retraiter sur Excel ensuite</a></li>
+</ol>
+</li>
+</ol>
+</div></details>
+<div id="pageName">Traitements_OpenRefine</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/Traitements_OpenRefine">Accédez au dépôt GitHub de Traitements_OpenRefine</a></li>
+</ul>
+<div id="main">
+<p>Procédures pour différents traitements dans Open Refine</p>
+<h1 id="liste-des-traitements">Liste des traitements</h1>
+<ul>
+<li><a href="./nb_bib_loc_sudoc.html">Nombre de bibliothèques localisées dans le Sudoc (ex-Projet P.A.)</a></li>
+<li><a href="./ctrl_corr_cot_sudoc_alma.html">Contrôle des correspondances des cotes Sudoc-Alma (ex-CoCo-SAlma)</a></li>
+<li><a href="./multiple_eds.html">Détection de multiples éditions d'un même titre (ex-CA3)</a></li>
+</ul>
+<h1 id="communs-des-traitements">Communs des traitements</h1>
+<p>Liste d'informations communes à plusieurs / tous les traitements</p>
+<h2 id="isolement-et-formatage-du-ppn-pour-le-sudoc">Isolement et formatage du PPN pour le Sudoc</h2>
+<p>Le code ci-dessous permet d'isoler et formater les PPN selon cette logique :</p>
+<ul>
+<li>Recherche <code>(PPN)</code> dans la cellule, s'il le trouve, prend les 9 prochains caractères,</li>
+<li>Sinon, recherche <code>PPN</code> <em>(suivi d'un espace)</em> dans la cellule, s'il le trouve, prend les 9 prochains caractères,</li>
+<li>Sinon, recherche <code>PPN</code> <em>(sans espace après)</em> dans la cellule, s'il le trouve, prend les 9 prochains caractères,</li>
+<li>Sinon, vérifie s'il y a 9 caractères dans la cellule après avoir retirer les espaces de début et de fin <strong>et</strong> s'il y a 9 caractères dans la cellule après avoir supprimer tous carctères qui n'est ni un chiffre, ni <code>X</code> : si les deux conditions sont remplis, prend la valeur de la cellule en retirant les espaces de début et de fin,</li>
+<li>Sinon, vérifie s'il y a moins de 9 caractères dans la cellule après avoir retirer les espaces de début et de fin <strong>et</strong> s'il y a moins 9 caractères dans la cellule après avoir supprimer tous carctères qui n'est ni un chiffre, ni <code>X</code> <strong>et</strong> si les longueurs des deux vérifications précédentes sont égales : si les trois conditions sont remplis, prend la valeur de la cellule en retirant les espaces de début et de fin et rajoute devant autant de 0 que nécessaire pour atteindre les 9 caractères.</li>
+</ul>
+<pre><code class="language-Python">import re
+reg = "(?![X])\D+"
+ind = value.find("(PPN)")+5
+if ind != 4:
+    return value[ind:ind+9]
+elif value.find("PPN ") != -1:
+    return value[value.find("PPN ")+4:value.find("PPN ")+13]
+elif value.find("PPN") != -1:
+    return value[value.find("PPN")+3:value.find("PPN ")+12]
+elif len(value.strip()) == 9 and len(re.sub(reg, "", str(value))) == 9:
+    return value.strip()
+elif len(value.strip()) &lt; 9 and len(re.sub(reg, "", str(value))) &lt; 9 and len(re.sub(reg, "", str(value))) == len(value.strip()):
+    return "0" * (9-len(value.strip())) + value.strip()
+else:
+    return "XXXXXXXXX"
+</code></pre>
+<h2 id="isolement-de-la-cote-depuis-un-export-titres-physiques-dalma">Isolement de la cote depuis un export <code>Titres physiques</code> d'Alma</h2>
+<p>Le code ci-dessous permet d'isoler les cotes associées à une bibliothèque pour un titre donné dans un export <code>Titres physiques</code> d'Alma.
+La variable <code>lib</code> doit contenir le nom affiché dans les exports Alma pour la bibliothèque voulue.
+Si plusieurs cotes sont détectées, elles seront par défaut séparées par des <code>;</code>.</p>
+<p>La détection fonctionne selon la logique suivante :</p>
+<ul>
+<li>Divise la cellule (de la colonne <code>Disponibilité</code>) en utilisant comme séparateur le retour à la ligne,</li>
+<li>Pour chaque holding résultant de la division, vérifie si le nom de la bibliothèque s'y trouve : s'il n'y est pas, passe à la holding suivante,</li>
+<li>S'il s'y trouve, vérifie s'il y a un <code>;</code> (séparateur se trouvant avant la cote),</li>
+<li>Si un <code>;</code> est trouvé, la valeur de la cote pour cette holding est tout ce qui se trouve entre le premier <code>;</code> et la première <code>(</code> situé après le premier <code>;</code>, à laquelle sont retirés les espaces de début et de fin,</li>
+<li>Si aucun <code>;</code> n'est trouvé, renvoie <code>[Ex. sans cote]</code>,</li>
+<li>Une fois toutes les holdings traitées, vérifie le nombre de holdings associées à la bibliothèque qui ont été identifiées :<ul>
+<li>S'il n'y a en aucune, renvoie comme valeur finale <code>[Pas d'holding]</code>,</li>
+<li>S'il y a en a au moins une, renvoie toutes les cotes triées par ordre croissant.</li>
+</ul>
+</li>
+</ul>
+<p>Quelques points de vigilance :</p>
+<ul>
+<li>Si la localisation contient un <code>;</code>, la cote renvoyée peut être erronée,</li>
+<li>Si la cote contient une <code>(</code>, la cote renvoyée peut être erronée,</li>
+<li>Si le champ <code>Numérotation A</code> d'au moins 1 exemplaire de la holding est complété, la détection échouera puisque aucune <code>(</code> ne se trouvera après le <code>;</code>,</li>
+<li>Il y a probablement d'autres cas susceptibles de provoquer une mauvaise détection de la cote, mais la majorité des cas sont pris en compte par ce script.</li>
+</ul>
+<pre><code class="language-Python">lib = "BU SVS - Josy Reiffers"
+cote = []
+for hold in value.split("\n"):
+    if lib in hold:
+        if ";" in hold:
+            ind = hold.find(";")
+            cote.append(hold[ind+1:hold[ind:].find("(")+ind].strip())
+        else:
+            cote.append("[Ex. sans cote]")
+if len(cote) &gt; 0:
+    cote.sort()
+else:
+    cote.append("[Pas d'holding]")
+return ";".join(cote)
+</code></pre>
+<h2 id="isolement-de-la-cote-du-sudoc">Isolement de la cote du Sudoc</h2>
+<p>Le code ci-dessous permet de lister les cotes associées à un RCR dans le Sudoc.
+La variable <code>rcr</code> doit être modifiée si nécessaire.
+Si plusieurs cotes sont détectées, elles seront par défaut séparées par des <code>;</code>.</p>
+<p>Les résultats possibles sont :</p>
+<ul>
+<li><code>[Erreur requête]</code> : la requête n'a pas été exécutée ou n'a pas renvoyée de résultat,</li>
+<li><code>[PPN incorrect]</code> : <strong>(ne s'affiche jamais)</strong> la requête a renvoyée un résultat qui n'est pas une notice en UNIMARC (parce que je dois gérer les erreurs de requêtes plutôt que de faire cette solution),</li>
+<li><code>[Ex. sans cote]</code> : une <code>930</code> avec le RCR est bien détectée mais elle n'a pas de <code class="highlight-marc"><span class="subCode">$a</span></code>,</li>
+<li>cote : la valeur du <code class="highlight-marc"><span class="subCode">$a</span></code> de la <code>930</code> avec le RCR,</li>
+<li><code>[Pas de loc.]</code> : aucune <code>930</code> ne correspond au RCR</li>
+</ul>
+<p>Les cotes sont triées par ordre croissant avant d'être renvoyées.</p>
+<pre><code class="language-Python">rcr = "330632101"
+
+if value is None:
+    return "[Erreur requête]"
+
+cote = []
+from xml.etree import ElementTree as ET
+element = ET.fromstring(value.encode("utf-8"))
+if element.find("controlfield[@tag='001']") == None:
+    return "[PPN incorrect]" #HTTP 404 is returned supposedly, so this doesn't happen
+for loc in element.findall(".//datafield[@tag='930']"):
+    if loc.find("subfield[@code='b']").text == rcr:
+        # Checks if there's a $a
+        if loc.find("subfield[@code='a']") != None:
+            cote.append(loc.find("subfield[@code='a']").text)
+        else:
+            cote.append("[Ex. sans cote]")
+if len(cote) &gt; 0:
+    cote.sort()
+else:
+    cote.append("[Pas de loc.]")
+return ";".join(cote)
+</code></pre>
+<h2 id="rappels-pour-les-requetes">Rappels pour les requêtes</h2>
+<p><em>Throttle speed</em> définit l'intervalle entre les requêtes.
+<strong><a href="https://docs.openrefine.org/manual/columnediting#add-column-by-fetching-urls">Il n'est pas recommandé de le définir à moins de 1000 ms</a>.</strong></p>
+<h2 id="rappels-pour-retraiter-sur-excel-ensuite">Rappels pour retraiter sur Excel ensuite</h2>
+<p>Pour remplacer par un retour à la ligne dans Excel, entrez le caractère correspondant à <code>Alt+010</code>.</p></div>
+</div>
+<div id="divLiens">
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/special-pages/control-tools.html">Outils de contrôle du signalement et des collections</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/bookmarklet">Bookmarklets pour Alma et IdRef</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ub-svs">Page de la BU SVS (Université de Bordeaux)</a></li>
+</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
+</html>

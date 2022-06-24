@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Alban Peyrat : Détection de multiples éditions d'un même titre (ex-CA3)</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
+<script>hljs.highlightAll();</script></head>
+<body>
+<header>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
+</header>
+<div id="accessButtons">
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="contenu">
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<div class="toc">
+<ol type="I">
+<li><a href="#interpreter-les-resultats">Interpréter les résultats</a></li>
+<li><a href="#procedure">Procédure</a><ol type="A">
+<li><a href="#open-refine">Open Refine</a></li>
+</ol>
+</li>
+</ol>
+</div></details>
+<div id="pageName">Détection de multiples éditions d'un même titre (ex-CA3)</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/Traitements_OpenRefine">Accédez au dépôt GitHub de Traitements_OpenRefine</a></li>
+</ul>
+<div id="main">
+<p>Le but de ce traitement est de déterminer pour une liste de PPN donnée si d'autres éditions du titre sont présentes dans la bibliothèque.
+Il serait plus exact de l'appeler <em>Détection de multiples expressions d'une même oeuvre</em> car c'est ce qui se passe réellement.</p>
+<h1 id="interpreter-les-resultats">Interpréter les résultats</h1>
+<p>Ci-dessous, la signification de chaque colonne :</p>
+<ul>
+<li><code>Numéro de notice</code> : la liste originelle servant à générer la colonne des PPNs normalisés,</li>
+<li><code>PPN</code> : le PPN normalisé à partir de la colonne précédente.
+Prend la valeur <code>XXXXXXXXX</code> si la détection du PPN a échouée <a href="../../#isolement-et-formatage-du-ppn-pour-le-sudoc">(cliquez pour plus de détails sur cette procédure)</a>,</li>
+<li><code>579 ?</code> : la valeur du PPN présent en <code>579</code> (= PPN de la notice de l'oeuvre) dans la notice SUDOC du titre.
+Prend la valeur <code>XXXXXXXXX</code> s'il n'y a pas de <code>579</code>.</li>
+<li><code>PPNs liés</code> : l'ensemble des PPNs de notices bibliographiques liées à la notice d'oeuvre (inclus le PPN servant à obtenir celui de la notice d'oeuvre), séparés par <code>,</code>,</li>
+<li><code>Résultats</code> : la liste des PPNs autres que celui de la colonne <code>PPN</code> qui possèdent au moins une holding (<code>AVA</code>) dans Alma pour la bibliothèque renseignée.
+Chaque cote est suivie du nombre d'exemplaires disponibles et du nombres d'exemplaires total.
+Les PPNs sont séparés par des <code>;</code>, les différentes holdings par des <code>--</code>.</li>
+</ul>
+<h1 id="procedure">Procédure</h1>
+<h2 id="open-refine">Open Refine</h2>
+<ul>
+<li>Créez un nouveau projet qui ne contient qu'une seule colonne <code>Numéro de notice</code> contenant liste de PPN originelle.</li>
+<li>Créez une colonne <code>PPN</code> basée sur la colonne <code>Numéro de notice</code> en utilisant l'expression <code>Python / Jython</code> suivante :</li>
+</ul>
+<pre><code class="language-Python">import re
+reg = "(?![X])\D+"
+ind = value.find("(PPN)")+5
+if ind != 4:
+    return value[ind:ind+9]
+elif value.find("PPN ") != -1:
+    return value[value.find("PPN ")+4:value.find("PPN ")+13]
+elif value.find("PPN") != -1:
+    return value[value.find("PPN")+3:value.find("PPN ")+12]
+elif len(value.strip()) == 9 and len(re.sub(reg, "", str(value))) == 9:
+    return value.strip()
+elif len(value.strip()) &lt; 9 and len(re.sub(reg, "", str(value))) &lt; 9 and len(re.sub(reg, "", str(value))) == len(value.strip()):
+    return "0" * (9-len(value.strip())) + value.strip()
+else:
+    return "XXXXXXXXX"
+</code></pre>
+<ul>
+<li>Créez une colonne <code>Sudoc MARCXML</code> basée sur la colonne <code>PPN</code> utilisant des URLs en utilisant l'expression <code>GREL</code> suivante :</li>
+</ul>
+<pre><code class="language-GREL">if(value != "XXXXXXXXX", "https://www.sudoc.fr/"+value+".xml", null)
+</code></pre>
+<ul>
+<li>Créez une colonne <code>579 ?</code> basée sur la colonne <code>Sudoc MARCXML</code> en utilisant l'expression <code>Python / Jython</code> suivante :</li>
+</ul>
+<pre><code class="language-Python">from xml.etree import ElementTree as ET
+element = ET.fromstring(value.encode("utf-8"))
+
+u579 = element.find("./datafield[@tag='579']")
+if u579 == None:
+  return "XXXXXXXXX"
+else:
+  return u579.find("subfield[@code='3']").text
+</code></pre>
+<ul>
+<li>Créez une colonne <code>IdRef Biblio</code> basée sur la colonne <code>579 ?</code> utilisant des URLs en utilisant l'expression <code>GREL</code> suivante :</li>
+</ul>
+<pre><code class="language-GREL">if(value != "XXXXXXXXX", "https://www.idref.fr/services/biblio/"+value, null)
+</code></pre>
+<ul>
+<li>Créez une colonne <code>PPNs liés</code> basée sur la colonne <code>IdRef Biblio</code> en utilisant l'expression <code>Python / Jython</code> suivante :</li>
+</ul>
+<pre><code class="language-Python">if value is None:
+    return None
+
+from xml.etree import ElementTree as ET
+element = ET.fromstring(value.encode("utf-8"))
+
+docs = element.findall(".//doc")
+ppns = []
+for doc in docs:
+  ppns.append(doc.find("ppn").text)
+return ",".join(ppns)
+</code></pre>
+<ul>
+<li>Créez une colonne <code>SRU Alma</code> basée sur la colonne <code>PPNs liés</code> utilisant des URLs en utilisant l'expression <code>GREL</code> suivante (<strong>pensez à remplacer <code>{SRU (UNM default)}</code> par la valeur associée dans le fichier <code>VALEURS_UB.txt</code></strong>) :</li>
+</ul>
+<pre><code class="language-GREL">if(value != null, "{SRU (UNM default)}" + "alma.other_system_number=" + value.split(",").join("%20or%20alma.other_system_number="), null)
+</code></pre>
+<ul>
+<li>Créez une colonne <code>Résultats</code> basée sur la colonne <code>SRU Alma</code> en utilisant l'expression <code>Python / Jython</code> suivante (<strong>pensez à changer la valeur de <code>bibID</code> (identifiant de la bibliothèque dans Alma) si nécessaire</strong>) :</li>
+</ul>
+<pre><code class="language-Python">bibID = "1302100000"
+ns = {'sru': 'http://www.loc.gov/zing/srw/',
+        'marc': 'http://www.loc.gov/MARC21/slim',
+        'unm': 'info:srw/schema/8/unimarcxml-v0.1'}
+
+if value is None:
+    return None
+
+from xml.etree import ElementTree as ET
+element = ET.fromstring(value.encode("utf-8"))
+
+records = element.findall(".//unm:record", ns)
+result = []
+for rec in records:
+  u035s = rec.findall("unm:datafield[@tag='035']", ns)
+  ppn = None
+  for u035 in u035s:
+    if "(PPN)" in u035.find("unm:subfield[@code='a']", ns).text:
+      ppn = u035.find("unm:subfield[@code='a']", ns).text.replace("(PPN)", "")
+  if ppn == None:
+    ppn = "[MMS ID] : " + rec.find("unm:controlfield[@tag='001']", ns).text
+  if ppn == cells["PPN"].value:
+    continue
+
+  AVAs = rec.findall(".//unm:datafield[@tag='AVA']", ns)
+  cotes = []
+  for AVA in AVAs:
+    if bibID == AVA.find("unm:subfield[@code='b']", ns).text:
+      cote = AVA.find("unm:subfield[@code='d']", ns).text
+      nbTotal = AVA.find("unm:subfield[@code='f']", ns).text
+      nbUnav = AVA.find("unm:subfield[@code='g']", ns).text
+      cotes.append("{} ({} / {})".format(cote, int(nbTotal)-int(nbUnav), nbTotal))
+  if cotes != []:
+    result.append(str(ppn) + " : " + " -- ".join(cotes))
+return ";".join(result)
+</code></pre>
+<ul>
+<li>Réorganisez les colonnes (<code>Sudoc MARCXML</code>, <code>IdRef Biblio</code>, et <code>SRU Alma</code> à supprimer, réorganiser l'ordre des colonnes, etc.).</li>
+<li>Exportez.</li>
+</ul></div>
+</div>
+<div id="divLiens">
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/special-pages/control-tools.html">Outils de contrôle du signalement et des collections</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/bookmarklet">Bookmarklets pour Alma et IdRef</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ub-svs">Page de la BU SVS (Université de Bordeaux)</a></li>
+</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
+</html>

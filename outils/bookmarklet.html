@@ -48,6 +48,10 @@
 <li><a href="#passer-en-recherche-nom-commun-rameau">Passer en recherche nom commun RAMEAU</a></li>
 </ol>
 </li>
+<li><a href="#planno">Planno</a><ol type="A">
+<li><a href="#colorer-son-nom-dans-les-plannings">Colorer son nom dans les plannings</a></li>
+</ol>
+</li>
 <li><a href="#wayback-machine">Wayback Machine</a><ol type="A">
 <li><a href="#rechercher-lurl-actuelle">Rechercher l'URL actuelle</a></li>
 <li><a href="#rechercher-une-url">Rechercher une URL</a></li>
@@ -397,6 +401,29 @@ Enfin, passe le focus sur la zone de saisie dans la section <code>Termes de rech
   }
   document.getElementById("recordtype_z_Rameau").checked = true;
   document.getElementById("Text1").focus();
+})();
+</code></pre>
+<h1 id="planno">Planno</h1>
+<h2 id="colorer-son-nom-dans-les-plannings">Colorer son nom dans les plannings</h2>
+<p>Colore, pour tous plannings de la page, l'arrière-plan de la cellule du nom renseigné.
+Vous devez remplacer le nom renseigné après le <code>=</code> de <code>nom</code> par l'exacte forme de votre nom écrite dans Planno.
+Vous pouvez également choisir la couleur en modifiant la valeur de <code>couleur</code>, en utilisant le nom anglais de la couleur ou un code CSS.
+<a href="https://developer.mozilla.org/fr/docs/Web/CSS/color_value#les_mots-clés">Voici un tableau avec une liste de couleurs si vous voulez (il faut descendre un peu)</a>.</p>
+<p>Le code (version du 20/06/2022) :</p>
+<pre><code class="language-Javascript">javascript:(function(){
+  var nom = "Peyrat A."; /* Nom de la personne */
+  var couleur = "red"; /* Nom de la couleur (en anglais) ou notation de la couleur en CSS si vous connaissez*/
+
+  var tables = document.getElementsByClassName("tabsemaine1");
+  for (let ii = 0; ii &lt; tables.length; ii++){
+    let cells = tables[ii].getElementsByTagName("td");
+    for (let jj = 0; jj &lt; cells.length; jj++) {
+      let txt = cells[jj].getElementsByTagName("span");
+      if ((txt.length &gt; 0) &amp;&amp; (txt[0].textContent.indexOf(nom) &gt; -1)) {
+        cells[jj].style.backgroundColor = couleur;
+      }
+    }
+  }
 })();
 </code></pre>
 <h1 id="wayback-machine">Wayback Machine</h1>

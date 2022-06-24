@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Alban Peyrat : Nombre de bibliothèques localisées dans le Sudoc (ex-Projet P.A.)</title>
+<meta charset="utf-8"/>
+<link href="https://alban-peyrat.github.io/ico_logo_AP.png" rel="icon" type="image/png"/>
+<link href="https://alban-peyrat.github.io/gh-pages.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/an-old-hope.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/vbscript.min.js"></script>
+<script>hljs.highlightAll();</script></head>
+<body>
+<header>
+<a href="https://alban-peyrat.github.io">
+<span id="headerPres">Présentation et documentation de mes outils numériques</span>
+</a>
+</header>
+<div id="accessButtons">
+<button id="buttonZoom"><span style="font-size: 18px;">A</span>|<span style="font-size: 27px;">A</span>|A</button><br/>
+<button id="buttonNB">Noir et Blanc</button>
+</div>
+<div id="contenu">
+<details id="tableMatieres">
+<summary>
+<code>Table des matières (cliquez pour afficher / masquer)</code>
+</summary>
+<div class="toc">
+<ol type="I">
+<li><a href="#interpreter-les-resultats">Interpréter les résultats</a></li>
+<li><a href="#procedure">Procédure</a><ol type="A">
+<li><a href="#creation-de-la-liste">Création de la liste</a></li>
+<li><a href="#open-refine">Open Refine</a></li>
+</ol>
+</li>
+</ol>
+</div></details>
+<div id="pageName">Nombre de bibliothèques localisées dans le Sudoc (ex-Projet P.A.)</div>
+<ul id="lienGitHub">
+<li><a href="https://github.com/Alban-Peyrat/Traitements_OpenRefine">Accédez au dépôt GitHub de Traitements_OpenRefine</a></li>
+</ul>
+<div id="main">
+<p>Le but de ce traitement est de pouvoir déterminer pour une liste de PPN donnée le nombre de bibliothèques également localisées dans le Sudoc.</p>
+<h1 id="interpreter-les-resultats">Interpréter les résultats</h1>
+<p>Ci-dessous, la signification de chaque colonne :</p>
+<ul>
+<li><code>Numéro de notice</code> : les numéros de notice associé au titre dans Alma,</li>
+<li><code>PPN</code> : le PPN qui a été isolé à partir de la colonne précédente.
+Prend la valeur <code>XXXXXXXXX</code> si la détection du PPN a échouée <a href="../../#isolement-et-formatage-du-ppn-pour-le-sudoc">(cliquez pour plus de détails sur cette procédure)</a>,</li>
+<li><code>Cotes</code> : la ou les valeurs des cotes si un export Alma est utilisé <a href="../../#isolement-de-la-cote-depuis-un-export-titres-physiques-dalma">(cliquez pour plus de détails sur cette procédure)</a>,</li>
+<li><code>Notre bib. est localisée</code> : <code>OUI</code> si le RCR est localisé, sinon <code>NON</code>,</li>
+<li><code>Nb de bib. localisées</code> : le nombre total <strong>d'autres</strong> bibliothèques localisées (le RCR renseigné est exclu du compte).
+Prend la valeur <code>0</code> si la requête au service Multiwhere n'a pas eu lieu ou a échoué,</li>
+<li><code>À conserver</code> :<ul>
+<li><code>CONSERVER</code> : le nombre d'autres bibliothèques localisées est <strong>strictement</strong> supérieur au seuil renseigné,</li>
+<li><code>DÉSHERBER</code> : le nombre d'autres bibliothèques localisées est inférieur <strong>ou égal</strong> au seuil renseigné,</li>
+<li><code>VÉRIFIER</code> : la requête au service Multiwhere n'a pas eu lieu ou a échoué (pas de détails sur l'échec).</li>
+</ul>
+</li>
+</ul>
+<h1 id="procedure">Procédure</h1>
+<h2 id="creation-de-la-liste">Création de la liste</h2>
+<p>Exportez d'Alma des <strong>Titres physiques</strong> ou créer une liste de PPN.
+Créez ensuite un fichier contenant uniquement la colonne <code>Numéro de notice</code> (et la colonne <code>Disponibilité</code> si vous souhaitez exporter les cotes).</p>
+<h2 id="open-refine">Open Refine</h2>
+<ul>
+<li>Ouvrez le fichier (ou importez les données dans un nouveau projet).</li>
+<li>Créez une colonne <code>PPN</code> basée sur la colonne <code>Numéro de notice</code> en utilisant l'expression <code>Python / Jython</code> suivante :</li>
+</ul>
+<pre><code class="language-Python">import re
+reg = "(?![X])\D+"
+ind = value.find("(PPN)")+5
+if ind != 4:
+    return value[ind:ind+9]
+elif value.find("PPN ") != -1:
+    return value[value.find("PPN ")+4:value.find("PPN ")+13]
+elif value.find("PPN") != -1:
+    return value[value.find("PPN")+3:value.find("PPN ")+12]
+elif len(value.strip()) == 9 and len(re.sub(reg, "", str(value))) == 9:
+    return value.strip()
+elif len(value.strip()) &lt; 9 and len(re.sub(reg, "", str(value))) &lt; 9 and len(re.sub(reg, "", str(value))) == len(value.strip()):
+    return "0" * (9-len(value.strip())) + value.strip()
+else:
+    return "XXXXXXXXX"
+</code></pre>
+<ul>
+<li><em>Optionnel :</em> Créez une colonne <code>Cotes</code> basée sur la colonne <code>Disponibilité</code> en utilisant l'expression <code>Python / Jython</code> suivante (<strong>pensez à changer la valeur de <code>lib</code> si nécessaire (nom dans Alma)</strong>) :</li>
+</ul>
+<pre><code class="language-Python">lib = "BU SVS - Josy Reiffers"
+cote = []
+for hold in value.split("\n"):
+    if lib in hold:
+        if ";" in hold:
+            ind = hold.find(";")
+            cote.append(hold[ind+1:hold[ind:].find("(")+ind].strip())
+        else:
+            cote.append("[Ex. sans cote]")
+if len(cote) &gt; 0:
+    cote.sort()
+else:
+    cote.append("[Pas d'holding]")
+return ";".join(cote)
+</code></pre>
+<ul>
+<li>Créez une colonne <code>Réponse Multiwhere</code> basée sur la colonne <code>PPN</code> utilisant des URLs en utilisant l'expression <code>GREL</code> suivante :</li>
+</ul>
+<pre><code class="language-GREL">if(value != "XXXXXXXXX", "https://www.sudoc.fr/services/multiwhere/"+value+".xml", null)
+</code></pre>
+<ul>
+<li>Créez une colonne <code>Nb de bib. localisée</code> basée sur la colonne <code>Réponse Multiwhere</code> en utilisant l'expression <code>Python / Jython</code> suivante (<strong>pensez à changer la valeur de <code>rcr</code> et de <code>seuil</code> si nécessaire</strong>) :</li>
+</ul>
+<pre><code class="language-Python">rcr = "330632101"
+seuil = 5
+
+if value is None:
+    return "NON;0;VÉRIFIER"
+
+from xml.etree import ElementTree as ET
+element = ET.fromstring(value.encode("utf-8"))
+for query in element.findall(".//query"):
+    # On regarde si une localisation existe pour le PPN
+    # Original by Alexandre Faure (louxfaure) in Sudoc/services/alma_to_sudoc.py
+    for library in query.findall(".//library"):
+        if rcr == library.find("rcr").text:
+            is_located = "OUI"
+            break
+        is_located = "NON"
+    if is_located :
+        nbBib = len(query.findall(".//library"))-1
+    else :
+        nbBib = len(query.findall(".//library"))
+    if nbBib &gt; seuil:
+        return str(is_located) + ";" + str(nbBib) + ";" + "DÉSHERBER"
+    else:
+        return str(is_located) + ";" + str(nbBib) + ";" + "CONSERVER"
+</code></pre>
+<ul>
+<li>Divisez la colonne <code>Nb de bib. localisée</code> en utilisant <code>;</code> comme séparateur, ce qui donnera les colonnes :<ul>
+<li><code>Notre bib. est localisée</code></li>
+<li><code>Nb de bib. localisées</code></li>
+<li><code>À conserver</code></li>
+</ul>
+</li>
+<li>Réorganisez les colonnes (<code>Réponse Multiwhere</code> et <code>Disponibilité</code> à supprimer, réorganiser l'ordre des colonnes, etc.).</li>
+<li>Exportez.</li>
+</ul></div>
+</div>
+<div id="divLiens">
+<p>Liens vers les autres outils :</p>
+<ul id="liens">
+<li><a href="https://alban-peyrat.github.io">Accueil</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/WinIBW">WinIBW</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/Louise">Louise</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/HUBert">HUBert</a></li>
+<li><a href="https://alban-peyrat.github.io/special-pages/control-tools.html">Outils de contrôle du signalement et des collections</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/bookmarklet">Bookmarklets pour Alma et IdRef</a></li>
+<li><a href="https://alban-peyrat.github.io/outils/ub-svs">Page de la BU SVS (Université de Bordeaux)</a></li>
+</ul>
+</div>
+</body>
+<script src="https://alban-peyrat.github.io/accessibilite.js"></script>
+<!-- <script src="https://alban-peyrat.github.io/tableMatieres.js"></script> -->
+</html>
